@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+  ]>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc toc="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes"?>
+<?rfc iprnotified="no" ?>
+<?rfc strict="yes" ?>
+<rfc category="std" ipr="trust200902"
+     docName="draft-berger-manet-dlep-da-credit-extension-00">
+
+<front>
+<title abbrev="DLEP Sub-Data Items">DLEP Sub-Data Item Definition</title> 
+   <author initials='L.' surname="Berger" fullname='Lou Berger'>
+    <organization>LabN Consulting, L.L.C.</organization>
+    <address>
+       <email>lberger@labn.net</email>
+    </address>
+    </author>
+
+   <author initials='D.' surname="Wiggins" fullname='David Wiggins'>
+    <organization>Lincoln Laboratory</organization>
+    <address>
+      <postal>
+        <street>Massachusetts Institute of Technology</street>
+        <street>244 Wood Street</street>
+        <city>Lexington</city>
+        <region>MA</region>
+        <code>02420-9108</code>
+      </postal>
+       <email>David.Wiggins@ll.mit.edu</email>
+    </address>
+   </author>
+   
+   <author initials='TBD' surname="" fullname='TBD'>
+    <organization></organization>
+    <address>
+       <email>TBD</email>
+    </address>
+    </author>
+  <date/>
+  <abstract>
+<t>
+  This document defines a generic structure for information that can
+  be carried within DLEP Data Items.  Such Sub-Data Items are defined
+  to facilitate lists and option information carried within a single
+  Data Item. The use of Sub-Data Items within specific Data Items will
+  be specified in future documents.
+</t>
+</abstract>
+</front>
+
+<middle>
+<section anchor="sec-1" title="Introduction">
+<t>
+  The Dynamic Link Event Protocol (DLEP) is defined in <xref
+  target="I-D.ietf-manet-dlep"/>. It provides the exchange of link
+  related control information between DLEP peers.  DLEP peers are 
+  comprised of a modem and a router. DLEP defines a base set of
+  mechanisms as well as support for possible extensions.  This
+  document defines one such extension.
+</t>
+<t>
+  The base DLEP specification supports messages and Data Items.  Data
+  Items provide information elements that may be used as defined in
+  different messages.  The specific contents of Data Items vary per Data
+  Item.  This document defines an generic information element that may
+  be reused when constructing future Data Item definitions.  These new
+  elements are referred to as "Sub-Data Items", or "Sub-DIs".  They
+  follow a format which is often referred to as TLV (for type, length,
+  value) formats.
+</t>
+<t>
+  This document does not define any specific usage of Sub-DIs or any
+  Data Items.  This is left to future DLEP extension documents.
+</t>
+<section anchor="sec-1.1" title="Key Words">
+<t>
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14, RFC 2119 <xref target="RFC2119"/>.
+</t>
+</section>
+</section>
+<section anchor="sec-theory" title="Extension Overview">
+  <t>
+    TBD
+  </t>
+</section>
+
+<section anchor="sec-format" title="Sub-Data Items">
+  <t>
+    The format of the Sub-Data Item is:
+  </t>
+  <t>
+    <figure>
+<artwork>
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |             Type              |             Length            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                             Value                             :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</artwork>
+    </figure>
+  </t>
+  <t>
+    <list style="hanging">
+      <t hangText="Sub-DI Type (2 octets):">
+        <vspace blankLines="1"/>
+        This field indicates the type and structure of the information
+        contained in the Value field.  The type field MUST be
+        interpreted in the context of the Data Item in which it is
+        carried.
+        <vspace blankLines="1"/>
+        Note that the value carried in this field will typically be
+        registered in the IANA registry defined below in <xref
+        target="sec-iana"/>.
+      </t>
+      <t hangText="Length (2 octets):">
+        <vspace blankLines="1"/>
+        This field MUST be set to the size, in octets (bytes), of the
+        Value field.  This field MAY be zero, i.e., the Value field may
+        be omitted.  There is no requirement for this value 
+        to be divisible by 4, or for the Value field to padded for
+        alignment purposes.
+      </t>
+      <t hangText="Value (variable length):">
+        <vspace blankLines="1"/>
+        A variable length field, formatted according to the value of the
+        Type field.  This field can be omitted for certain types.
+      </t>
+    </list>
+  </t>
+</section>
+
+<section anchor="sec-di-usage" title="Sub-Data Item Usage">
+  <t>
+    Sub-Data Items may be carried in any Data Item whose definition
+    includes a format which allows for Sub-Data Items.  The specific
+    values of Sub-Data Items which may be carried must be included in
+    the definition. The format of the Sub-Data Item must also be
+    defined, either in the same document or by reference.  New Sub-Data
+    Item types must be assigned by IANA, per <xref
+      target="sec-iana"/>. 
+  </t>
+  
+</section>
+  
+<section anchor="sec-example" title="Example Usage">
+  <t>
+    The format of a Data Item carrying one or more SUB-DIs would
+    generically be composed of Data Item specific fields, followed by
+    one or more Sub-Data Items.
+  </t>
+  <t>
+    <figure>
+      <artwork>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data Item Type                | Length                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                           DI Field 1                          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                           DI Field ...                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         DLEP Sub-DI ...                       |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                              ...                              |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         DLEP Sub-DI ...                       |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</artwork>
+    </figure>
+  </t>
+  
+  <t>
+    See (TBD Future document) for a specific example usage. [LB to be moved...]
+  </t>
+  <t>
+    <figure>
+      <artwork>
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Data Item Type                | Length                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |   Num Queues  | Scale |              Reserved                 |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                       Queue Sub-DI 1                          |
+    |                                                               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                       Queue Sub-DI 2                          |
+    |                                                               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                              ...                              |
+    |                                                               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                       Queue Sub-DI N                          |
+    |                                                               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+    Where N would equal Num Queues
+
+    and the Num Queues Sub-Data Item would have the following format:
+
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |             Type = 1          |   Length = (4 + Num DSCPs)    |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |   Num DSCPs   |             Queue Size                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  DS Field 1   |  DS Field 2   |     ...       |     ...       |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    :     ...       |  DS Field Qn  |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+     Where Qn = Num DSCPs
+
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Data Item Type                | Length                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           DI Field 1                          |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           DI Field ...                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                         DLEP Sub-DI ...                       |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    :                              ...                              |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                         DLEP Sub-DI ...                       |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</artwork>
+    </figure>
+  </t>
+</section>
+
+<section anchor="sec-compat" title="Compatibility and Error Processing">
+<t>
+  DLEP Sub-DIs MUST not appear be used in any Data Item that is not
+  defined to carry.  Only Sub-DI types defined as part of a Data Item's
+  definition may be present in a Data Item.  Note a specific Data Item
+  may be defined to support unknown Sub-DI types, but this is not the
+  default.  A node which receives a Data Item containing an undefined
+  Sub-DI type MUST (DO TBD ERROR PROCESSING.)
+</t>
+</section>
+
+<section anchor="sec-sec" title="Security Considerations">
+  <t>
+
+   This document does not introduce any security issue beyond those
+   documented in <xref target="I-D.ietf-manet-dlep"/>.  The approach
+   taken to Security in that document apply equally when using Sub-DIs. 
+</t>
+</section>
+<section anchor="sec-iana" title="IANA Considerations">
+  <t>
+    This document requests the establishment of a new IANA registry.
+  </t>
+  <section anchor="sec-iana-ext" title="Sub-Data Item Type Registry">
+    <t>TBD
+    </t>
+    <t>Assignment policy is TBD
+    </t>
+    <texttable anchor="table_et" title="Registry Format">
+      <preamble></preamble>
+      <ttcol>Value</ttcol> <ttcol>Name</ttcol><ttcol>Description</ttcol><ttcol>Reference</ttcol>
+      <c>0</c> <c>Reserved</c> <c>Reserved Value</c> <c>[This document]</c> 
+      <postamble></postamble>
+    </texttable>
+  </section>
+</section>
+</middle>
+
+<?rfc needLines="20"?>
+<back>
+<references title="Normative References">
+  <?rfc include="reference.I-D.draft-ietf-manet-dlep-26.xml"?>
+  <?rfc include="reference.RFC.2119"?>
+</references>
+<references title="Informative References">
+  <?rfc include="reference.I-D.draft-cheng-manet-dlep-da-credit-extension-00.xml"?>
+</references>
+<?rfc needLines="100"?>
+<!--
+<section title="Acknowledgments">
+   <t>
+   </t>
+   <vspace blankLines="100"/></t>
+</section> 
+-->
+</back>
+</rfc>
+
+<!-- Local Variables: -->
+<!-- fill-column:72 -->
+<!-- End: -->
