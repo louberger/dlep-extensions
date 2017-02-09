@@ -1,0 +1,904 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>DLEP DiffServ Aware Credit Windowing Extension</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.1.1" rel="Chapter" title="1.1 Key Words"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Extension Overview"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Extension Usage and Identification"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Extension Messages"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Credit Control Message"/>
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Credit Control Response Message"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Extension Data Items"/>
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Queue Parameters"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 DiffServ Aware (DA) Credit Grant"/>
+<link href="#rfc.section.5.3" rel="Chapter" title="5.3 DiffServ Aware (DA) Credit Window Status"/>
+<link href="#rfc.section.5.4" rel="Chapter" title="5.4 DiffServ Aware (DA) Credit Request"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Compatibility"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 Security Considerations"/>
+<link href="#rfc.section.8" rel="Chapter" title="8 IANA Considerations"/>
+<link href="#rfc.section.8.1" rel="Chapter" title="8.1 Extension Type Value"/>
+<link href="#rfc.section.8.2" rel="Chapter" title="8.2 Message Values"/>
+<link href="#rfc.section.8.3" rel="Chapter" title="8.3 Data Item Values"/>
+<link href="#rfc.references" rel="Chapter" title="9 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="9.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="9.2 Informative References"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.5.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Cheng, B., Wiggins, D., and L. Berger" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-manet-dlep-da-credit-extension-00" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-2-9" />
+  <meta name="dct.abstract" content="This document defines an extension to the DLEP protocol that enables a DiffServ aware credit-windowing scheme for destination-specific flow control.  " />
+  <meta name="description" content="This document defines an extension to the DLEP protocol that enables a DiffServ aware credit-windowing scheme for destination-specific flow control.  " />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">Network Working Group</td>
+  <td class="right">B. Cheng</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">D. Wiggins</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Standards Track</td>
+  <td class="right">Lincoln Laboratory</td>
+</tr>
+<tr>
+  <td class="left">Expires: August 13, 2017</td>
+  <td class="right">L. Berger</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">LabN Consulting, L.L.C.</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">February 9, 2017</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">DLEP DiffServ Aware Credit Windowing Extension<br />
+  <span class="filename">draft-ietf-manet-dlep-da-credit-extension-00</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>This document defines an extension to the DLEP protocol that enables a DiffServ aware credit-windowing scheme for destination-specific flow control.  </p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on August 13, 2017.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<ul><li>1.1.   <a href="#rfc.section.1.1">Key Words</a></li>
+</ul><li>2.   <a href="#rfc.section.2">Extension Overview</a></li>
+<li>3.   <a href="#rfc.section.3">Extension Usage and Identification</a></li>
+<li>4.   <a href="#rfc.section.4">Extension Messages</a></li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Credit Control Message</a></li>
+<li>4.2.   <a href="#rfc.section.4.2">Credit Control Response Message</a></li>
+</ul><li>5.   <a href="#rfc.section.5">Extension Data Items</a></li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Queue Parameters</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">DiffServ Aware (DA) Credit Grant</a></li>
+<li>5.3.   <a href="#rfc.section.5.3">DiffServ Aware (DA) Credit Window Status</a></li>
+<li>5.4.   <a href="#rfc.section.5.4">DiffServ Aware (DA) Credit Request</a></li>
+</ul><li>6.   <a href="#rfc.section.6">Compatibility</a></li>
+<li>7.   <a href="#rfc.section.7">Security Considerations</a></li>
+<li>8.   <a href="#rfc.section.8">IANA Considerations</a></li>
+<ul><li>8.1.   <a href="#rfc.section.8.1">Extension Type Value</a></li>
+<li>8.2.   <a href="#rfc.section.8.2">Message Values</a></li>
+<li>8.3.   <a href="#rfc.section.8.3">Data Item Values</a></li>
+</ul><li>9.   <a href="#rfc.references">References</a></li>
+<ul><li>9.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>9.2.   <a href="#rfc.references.2">Informative References</a></li>
+</ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#sec-1" id="sec-1">Introduction</a></h1>
+<p id="rfc.section.1.p.1">The Dynamic Link Event Protocol (DLEP) is defined in <a href="#I-D.ietf-manet-dlep">[I-D.ietf-manet-dlep]</a>. It provides the exchange of link related control information between DLEP peers.  DLEP peers are comprised of a modem and a router. DLEP defines a base set of mechanisms as well as support for possible extensions.  This document defines one such extension.  </p>
+<p id="rfc.section.1.p.2">The base DLEP specification does not include any flow control capability.  There are various flow control theoretically possible with DLEP.  For example, a credit-windowing scheme for destination-specific flow control which provides aggregate flow control for both modem and routers has been proposed in <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a>.  </p>
+<p id="rfc.section.1.p.3">This document defines a DLEP extension which provides flow control for DiffServ <a href="#RFC2475">[RFC2475]</a> traffic sent from a router to a modem. Flow control is provided for multiple DSCPs (differentiated services codepoint), which are grouped into logical sets of logical queues. The extension defined in this document is referred to as "DiffServ Aware Credit Windowing" or, more simply, the "DA Credit" extension.  </p>
+<p id="rfc.section.1.p.4">This document defines a new DLEP Extension Type Value in <a href="#sec-ext-type">Section 3</a> which is used to indicate the use of the extension. Two new messages are defined in <a href="#sec-msgs">Section 4</a>, and four new DLEP Data Items in <a href="#sec-data-items">Section 5</a>.  </p>
+<h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#sec-1.1" id="sec-1.1">Key Words</a></h1>
+<p id="rfc.section.1.1.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14, RFC 2119 <a href="#RFC2119">[RFC2119]</a>.  </p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#sec-theory" id="sec-theory">Extension Overview</a></h1>
+<p id="rfc.section.2.p.1">The DA Credit extension can be used to support credit based flow control of traffic sent from a router to a modem.  The extension can be used to support DiffServ and non-DiffServ based flow control.  Both types of DLEP endpoints, i.e., a router and a modem, negotiate the use of extension during session initialization, see Section 5.2 <a href="#I-D.ietf-manet-dlep">[I-D.ietf-manet-dlep]</a>.  </p>
+<p id="rfc.section.2.p.2">When the extension is to be used, a modem passes to a router its known DSCPs, if any. DSCPs are grouped by logical queues, each of which are given a logical queue index.  The queue index zero (0) is special and is used for any DSCP value, including 0, which is not otherwise identified by the modem.  The modem also provides a size, in bytes, of the logical queue for informative and, potential, future uses. Currently, only DSCP to logical queue index value mapping is used in flow control operation.  </p>
+<p id="rfc.section.2.p.3">The DA Credit extension supports credit based flow control on a per MAC address destination, per queue index basis.  Modems provide the initial size of the associated "Credit Window", i.e., the amount in octets (bytes) that may be sent by the router to the modem, when a MAC destination becomes reachable and, optionally, when its rate information changes. "Credit Increments", i.e., increases in a Credit Window size, are provided using new "Credit Control" messages.  A router provides its view of the Credit Window, which is known as "status", in Destination Up Response and the new "Credit Control Response" messages.  Routers can also request credits using the new "Credit Control" message.  </p>
+<p id="rfc.section.2.p.4">Credit information, both grants and status, is provided in new credit grant related data items.  Each data item contains a single credit value that applies to one or more queue indexes.  Different (grant and status) values for different queue indexes can be provided in a single message by including multiple grant data items.  The values indicate a number of octets (bytes), including MAC headers on the router to modem link, that may be sent.  </p>
+<p id="rfc.section.2.p.5">Note that credit information related to different destination MAC addresses is always passed in different DLEP messages.  </p>
+<p/>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#sec-ext-type" id="sec-ext-type">Extension Usage and Identification</a></h1>
+<p id="rfc.section.3.p.1">The use of the extension defined in this document SHOULD be configurable.  To indicate that the DiffServ Aware Credit Windowing Extension is to be used, an implementation MUST include the DiffServ Aware Credit Windowing Type Value in the Extensions Supported Data Item. The Extensions Supported Data Item is sent and processed according to <a href="#I-D.ietf-manet-dlep">[I-D.ietf-manet-dlep]</a>.  </p>
+<p id="rfc.section.3.p.2">The DiffServ Aware Credit Windowing Extension Type Value is TBA1, see <a href="#sec-iana">Section 8</a>.  </p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#sec-msgs" id="sec-msgs">Extension Messages</a></h1>
+<p id="rfc.section.4.p.1">Two new messages are defined by this extension: the Credit Control and the Credit Control Response message.  Sending and receiving both message types MUST be supported by any implementation that advertises use of this extension per <a href="#sec-ext-type">Section 3</a>.  </p>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#sec-cc-msg" id="sec-cc-msg">Credit Control Message</a></h1>
+<p id="rfc.section.4.1.p.1">Credit Control Messages are sent by modems to provide Credit Increments. For messages sent by modems, only one message per MAC address can be outstanding at one time.  That is, a modem MUST NOT send a second (or any subsequent) message containing the same MAC Address until a Credit Control Response message is received from its peer router with that MAC address.  </p>
+<p id="rfc.section.4.1.p.2">Credit Control Messages MAY be sent by routers, e.g., to request credits or provide window status.  No specific response message is required from a message transaction perspective.  </p>
+<p id="rfc.section.4.1.p.3">[TBD: Should anything be said about sending, or limiting, multiple credit requests?] </p>
+<p id="rfc.section.4.1.p.4">The Message Type value in the DLEP Message Header is set to TBA2.  </p>
+<p id="rfc.section.4.1.p.5">The message MUST contain a DLEP MAC Address Data Item.  </p>
+<p id="rfc.section.4.1.p.6">A message sent by a modem, MUST contain one or more DiffServ Aware Credit Grant data items as defined below in <a href="#sec-di-grant">Section 5.2</a>.  A router receiving this message MUST respond with a Credit Control Response Message.  </p>
+<p id="rfc.section.4.1.p.7">A message sent by a router, MUST contain the DiffServ Aware Credit Request data item defined below in <a href="#sec-di-request">Section 5.4</a>.  A modem receiving this message MUST provide a Credit Increment for the indicated MAC address and queue indexes via a new Credit Control Message.  </p>
+<p id="rfc.section.4.1.p.8">Specific processing associated with each Credit data item is provided below.  </p>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#sec-ccr-msg" id="sec-ccr-msg">Credit Control Response Message</a></h1>
+<p id="rfc.section.4.2.p.1">Credit Control Response Messages are sent by routers to report the current Credit Window for a destination.  </p>
+<p id="rfc.section.4.2.p.2">The Message Type value in the DLEP Message Header is set to TBA3.  </p>
+<p id="rfc.section.4.2.p.3">The message MUST contain a DLEP MAC Address Data Item.  </p>
+<p id="rfc.section.4.2.p.4">A message sent by a router, MUST contain one or more DiffServ Aware Credit Window Status data items as defined below in <a href="#sec-di-status">Section 5.3</a>.  </p>
+<p id="rfc.section.4.2.p.5">Specific processing associated with the DA Credit Window Status data item is provided below.  </p>
+<p/>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#sec-data-items" id="sec-data-items">Extension Data Items</a></h1>
+<p id="rfc.section.5.p.1">Four data items are defined by this extension. The Queue Parameters Data Item is used by a modem to provide information on the DSCPs it uses in forwarding.  The DA Credit Grant is used by a modem to provide credits to a router.  The DA Credit Request is used by a router to request additional credits.  The DA Credit Window Status is used to advertise the sender's view of number of available credits for synchronization purposes.  </p>
+<p id="rfc.section.5.p.2">The defined data items and operations are similar to those found in <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a>.  One notable difference from this extension is that in this document credits are never provided by the router to the modem.  </p>
+<h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#sec-di-qp" id="sec-di-qp">Queue Parameters</a></h1>
+<p id="rfc.section.5.1.p.1">The Queue Parameters Data Item is used by a modem to indicate DSCP values that may be independently controlled.  This data item MUST be included in a Session Initialization Response Message that also contains the DiffServ Aware Credit Windowing Extension Type Value in the Extensions Supported Data Item.  Updates to these parameters MAY be sent by a modem by including the data item in Session Update Messages.  </p>
+<p id="rfc.section.5.1.p.2">The Queue Parameters Data Item identifies DSCPs based on groups of logical queues. The number of logical queues is variable as is the number of DSCPs associated with each queue. A queue size (in bytes) is provided for informational purposes.  An implementation that does not support DSCPs would indicate 1 queue with 0 DSCPs, and the number of bytes that may be in its associated link transmit queue.  </p>
+<p id="rfc.section.5.1.p.3">The format of the Queue Parameters Data Item is: </p>
+<pre>
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Data Item Type                | Length                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |   Num Queues  | Scale |              Reserved                 |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |Num DSCPs Q0(0)|             Queue Size Q0                     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Num DSCPs Q1  |             Queue Size Q1                     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Num DSCPs Q2  |             Queue Size Q2                     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    :                                ...                            :
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Num DSCPs Qn  |             Queue Size Qn                     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  DS Field Q1  |  DS Field Q1  |  DS Field Q1  |  DS Field Q2  |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    :                                ...            |  DS Field Qn  |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+<p/>
+<pre>
+      Value  Scale
+      ------------
+          0   B - Bytes     (Octets)
+          1  KB - Kilobytes (B/1024)
+          2  MB - Megabytes (KB/1024)
+          3  GB - Gigabytes (MB/1024)
+        </pre>
+<pre>
+        0   1   2   3   4   5   6   7
+      +---+---+---+---+---+---+---+---+
+      |         DSCP          |  CU   |
+      +---+---+---+---+---+---+---+---+
+
+        DSCP: differentiated services codepoint
+        CU:   currently unused, MUST be zero
+        </pre>
+<p/>
+
+<dl>
+  <dt>Data Item Type:</dt>
+  <dd style="margin-left: 8">TBA4</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">Variable <br/><br/> Per <a href="#I-D.ietf-manet-dlep">[I-D.ietf-manet-dlep]</a> Length is the number of octets in the data item, excluding the Type and Length fields.  </dd>
+  <dt>Num Queues:</dt>
+  <dd style="margin-left: 8"><br/><br/> An 8-bit unsigned integer indicating the number of queues represented in the data item.  This field MUST contain a value of at least one (1). Note that this number is one larger than the largest queue index value included in the data item.  </dd>
+  <dt>Scale:</dt>
+  <dd style="margin-left: 8"><br/><br/> An 4-bit unsigned integer indicating the scale used in the Queue Size fields. The valid values are: </dd>
+  <dt>Reserved:</dt>
+  <dd style="margin-left: 8"><br/><br/> MUST be set to zero by the sender (a modem) and ignored by the receiver (a router).  </dd>
+  <dt>Num DSCPs Qn:</dt>
+  <dd style="margin-left: 8"><br/><br/> An 8-bit unsigned integer indicating the number of DSCPs associated with the indexed queue.  Other than the special case covered in the next paragraph, this field MUST contain a value of at least one (1).  Queue indexes start at zero (0) and the maximum queue index "Qn" is one less than the value carried in the Num Queues field. Queue indexes are implicit in the position in the data item.  <br/><br/> Queue index zero "Q0" is a special case. It is used for any traffic that does not carry a DSCP value represented in the data item.  Therefore the value of the Queue index zero field, "Num DSCPs Q0", field MUST be zero (0).  </dd>
+  <dt>Queue Size Qn:</dt>
+  <dd style="margin-left: 8"><br/><br/> A 24-bit unsigned integer representing the size, in the octet scale indicated by the Scale field, of the queue supporting traffic with the DSCPs associated with the queue index.  </dd>
+  <dt>DS Field Qn:</dt>
+  <dd style="margin-left: 8"><br/><br/> The data item contains a sequence of 8 bit DS Fields.  The position in the sequence identifies the associated queue index. The number of DS Fields present should equal the sum of all Num DSCPs field values.  <br/><br/> The DS Field structure is the same as <a href="#RFC2474">[RFC2474]</a>.  </dd>
+</dl>
+
+<p> </p>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#sec-di-grant" id="sec-di-grant">DiffServ Aware (DA) Credit Grant</a></h1>
+<p id="rfc.section.5.2.p.1">The DiffServ Aware, or DA, Credit Grant data item is used by a modem to provide credits to a router. One or more DA Credit Grant data items MAY be carried in the DLEP Destination Up, Destination Announce Response, Destination Update, and Credit Control messages.  Multiple DA Credit Grant data items in a single message are used to indicated different credit values for different logical queues.  </p>
+<p id="rfc.section.5.2.p.2">In Destination type messages, this data item provides the total number of octets available in the Credit Window to the destination indicated in the message for the specified logical queues.  In the Credit Control message, this data item provides an additional number of octets to be added to the Credit Window to the destination indicated in the message for the specified logical queues.  </p>
+<p id="rfc.section.5.2.p.3">Logical queues are identified using a Queue Index as defined above in <a href="#sec-di-qp">Section 5.1</a>.  Multiple Queue Indexes MAY be present to allow for the case where same credit information applies to multiple queues. As mentioned above, multiple DA Credit Grant Data Items MAY be present to provide different queue-specific credit information in one message. The special Queue Index value of 255 is used to indicate that the credit information applies to all queues.  </p>
+<p id="rfc.section.5.2.p.4">The format of the DA Credit Grant Data Item is: </p>
+<pre>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data Item Type                | Length                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         Credit Value                          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         Credit value                          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  Queue Index  |               ...                             :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                                ...            |  Queue Index  |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+<p/>
+<p/>
+
+<dl>
+  <dt>Data Item Type:</dt>
+  <dd style="margin-left: 8">TBA5</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">Variable <br/><br/> Per <a href="#I-D.ietf-manet-dlep">[I-D.ietf-manet-dlep]</a>, Length is the number of octets in the data item, excluding the Type and Length fields. It will equal 8 plus the number of Queue Index fields carried in the data item and MUST be at least 9.  </dd>
+  <dt>Credit Value:</dt>
+  <dd style="margin-left: 8"><br/><br/> A 64-bit unsigned integer representing the credits, in octets, to be applied to the Credit Window.  This value includes MAC headers as seen on the link between the modem and router.</dd>
+  <dt>Queue Index:</dt>
+  <dd style="margin-left: 8"><br/><br/> One or more 8-bit fields used to indicate a queue index defined by a Queue Parameters Data Item.  The special value of 255 indicates that the information in the data item applies to all queue indexes.  </dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.5.2.p.7">Receive processing of this data item is based on the message in which it is carried.  When this data item is received in a Destination type message, the Credit Window of the indicated destination MAC address and indicated queue indexes MUST be set to the value contained in the Credit Value field.  </p>
+<p id="rfc.section.5.2.p.8">When this data item is received in a Credit Control message, the Credit Window of the indicated destination MAC address and indicated queue indexes MUST be increased by the value contained in the Credit Value field. If the increase results in a window overflow, i.e., the Credit Window resulting after the increase is smaller than the original Credit Window, the Credit Window must be set to its maximum (0xFFFFFFFFFFFFFFFF).  </p>
+<p id="rfc.section.5.2.p.9">Independent of the received message, the receiving router MUST send a DA Credit Window Status data item or items reflecting the resulting Credit Window value of each modified queue index.  When the Credit Grant data item is received in a Destination Up message, the DA Credit Window Status data item(s) MUST be sent in the corresponding Destination Up Response message. In all other cases, the a Credit Control message MUST be sent.  </p>
+<h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#sec-di-status" id="sec-di-status">DiffServ Aware (DA) Credit Window Status</a></h1>
+<p id="rfc.section.5.3.p.1">The DiffServ Aware, or DA, Credit Window Status data item is used by a router to report the current Credit Window to its peer modem.  One or more DA Credit Window Status data items MAY be carried in a Destination Up Response message or a Credit Control Response message.  As discussed above, the Destination Up Response message is used when the data item is sent in response to a Destination Up message, and the Credit Control Response message is sent in response to a Credit Control message.  Multiple DA Credit Window Status data items in a single message are used to indicated different credit window values for different logical queues.  </p>
+<p id="rfc.section.5.3.p.2">Similar to the DA Credit Grant, logical queues are identified using a Queue Index as defined above in <a href="#sec-di-qp">Section 5.1</a>.  Multiple Queue Indexes MAY be present to allow for the case where same credit information applies to multiple queues. Multiple DA Credit Window Status Data Items are used to provide different queue-specific credit window information in one message. The special Queue Index value of 255 is used to indicate that the Credit Window information applies to all queues.  </p>
+<p id="rfc.section.5.3.p.3">The format of the DA Credit Window Status Data Item is: </p>
+<pre>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data Item Type                | Length                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         Credit Window                         :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                         Credit Window                         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  Queue Index  |               ...                             :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                                ...            |  Queue Index  |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+<p/>
+<p/>
+
+<dl>
+  <dt>Data Item Type:</dt>
+  <dd style="margin-left: 8">TBA6</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">Variable <br/><br/> Per <a href="#I-D.ietf-manet-dlep">[I-D.ietf-manet-dlep]</a> Length is the number of octets in the data item, excluding the Type and Length fields. It will equal 8 plus the number of Queue Index fields carried in the data item and MUST be at least 9.  </dd>
+  <dt>Credit Window:</dt>
+  <dd style="margin-left: 8"><br/><br/> A 64-bit unsigned integer, indicating the current number of credits, in octets, available for the router to send to the modem.  This is referred to as the Modem Receive Window in <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a>.  </dd>
+  <dt>Queue Index:</dt>
+  <dd style="margin-left: 8"><br/><br/> One or more 8-bit fields used to indicate a queue index defined by a Queue Parameters Data Item.  The special value of 255 indicates that the information in the data item applies to all queue indexes.  </dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.5.3.p.6">The receiving modem SHOULD check the received Credit Window value against the outstanding credits available at the time the last Credit Increment associated with the indicated MAC address and Queue Indexes were sent.  If the values significantly differ, i.e., greater than can be accounted for based on observed data frames, then the modem SHOULD send a Destination Update message carrying a DA Credit Grant data item to reset the associated Credit Window(s) to the data item indicated value.  Multiple values and queue indexes SHOULD be combined into a single Destination Update Control message when possible.  Alternatively, and also in cases where there are small differences, the modem MAY adjust the values sent in DA Credit Grant data items to account for the reported Credit Window.  </p>
+<h1 id="rfc.section.5.4"><a href="#rfc.section.5.4">5.4.</a> <a href="#sec-di-request" id="sec-di-request">DiffServ Aware (DA) Credit Request</a></h1>
+<p id="rfc.section.5.4.p.1">The DiffServ Aware, or DA, Credit Request Data Item data item is used by a router to request additional credits for a specific destination and Queue Index associated Credit window. DA Credit Request data items are carried in Credit Control messages, and only one DA Credit Request data item SHOULD be present in a message.  </p>
+<p id="rfc.section.5.4.p.2">Logical queues are identified using a Queue Index as defined above in <a href="#sec-di-qp">Section 5.1</a>.  Multiple Queue Indexes MAY be present to allow for the case where the credit request applies to multiple queues.  The special Queue Index value of 255 is used to indicate that a credit request is being made across all queues.  </p>
+<p id="rfc.section.5.4.p.3">The format of the DA Credit Request Data Item is: </p>
+<pre>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data Item Type                | Length                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  Queue Index  |               ...                             :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                                ...            |  Queue Index  |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+<p/>
+<p id="rfc.section.5.4.p.5">[LB note: a list of Queue Indexes is now supported as is special value 255.] </p>
+<p/>
+
+<dl>
+  <dt>Data Item Type:</dt>
+  <dd style="margin-left: 8">TBA7</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">Variable <br/><br/> Per <a href="#I-D.ietf-manet-dlep">[I-D.ietf-manet-dlep]</a> Length is the number of octets in the data item, excluding the Type and Length fields. It will equal the number of Queue Index fields carried in the data item and MUST be at least 1.  </dd>
+  <dt>Queue Index:</dt>
+  <dd style="margin-left: 8"><br/><br/> One or more 8-bit fields used to indicate a queue index defined by a Queue Parameters Data Item.  The special value of 255 indicates that the request applies to all queue indexes.  </dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.5.4.p.7">A modem receiving this data item MUST provide a Credit Increment for the indicated MAC address and queue indexes via a DA Credit Grant carried in a new Credit Control Message. Multiple values and queue indexes SHOULD be combined into a single Credit Control message when possible.  </p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#sec-compat" id="sec-compat">Compatibility</a></h1>
+<p id="rfc.section.6.p.1">Sessions established with both peers identified as supporting the DiffServ Aware Credit Windowing Extension Type, see <a href="#sec-ext-type">Section 3</a>, SHOULD NOT use the <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a> defined Credit data items.  If a node supporting the extension defined in this document, receives a <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a> defined data item, the recipient MUST treat the received credit information as applying to Queue Index zero (0).  </p>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#sec-sec" id="sec-sec">Security Considerations</a></h1>
+<p id="rfc.section.7.p.1">The extension introduces a DiffServ awareness to the mechanisms defined in <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a>.  The extension does not inherently introduce any additional threats above those documented in <a href="#I-D.ietf-manet-dlep">[I-D.ietf-manet-dlep]</a>.  The approach taken to Security in that document and <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a> apply equally when running the extension defined in this document.  </p>
+<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#sec-iana" id="sec-iana">IANA Considerations</a></h1>
+<p id="rfc.section.8.p.1">This document requests the assignment of 5 values by IANA.  All assignments are to registries defined by <a href="#I-D.ietf-manet-dlep">[I-D.ietf-manet-dlep]</a>.  </p>
+<h1 id="rfc.section.8.1"><a href="#rfc.section.8.1">8.1.</a> <a href="#sec-iana-ext" id="sec-iana-ext">Extension Type Value</a></h1>
+<p id="rfc.section.8.1.p.1">This document requests 1 new assignment to the DLEP Extensions Registry named "Extension Tyoe Values" in the range with the "Specification Required" policy. The requested value is as follows: </p>
+<div id="rfc.table.1"/>
+<div id="table_et"/>
+<p/>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <caption>Requested Extension Type Value</caption>
+  <thead>
+    <tr>
+      <th class="left">Code</th>
+      <th class="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="left">TBA1</td>
+      <td class="left">DiffServ Aware Credit Windowing</td>
+    </tr>
+  </tbody>
+</table>
+<p/>
+<h1 id="rfc.section.8.2"><a href="#rfc.section.8.2">8.2.</a> <a href="#sec-iana-msg" id="sec-iana-msg">Message Values</a></h1>
+<p id="rfc.section.8.2.p.1">This document requests 2 new assignments to the DLEP Message Registry named "Message Values" in the range with the "Specification Required" policy. The requested values are as follows: </p>
+<div id="rfc.table.2"/>
+<div id="table_msg"/>
+<p/>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <caption>Requested Message Values</caption>
+  <thead>
+    <tr>
+      <th class="left">Type Code</th>
+      <th class="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="left">TBA2</td>
+      <td class="left">Credit Control</td>
+    </tr>
+    <tr>
+      <td class="left">TBA3</td>
+      <td class="left">Credit Control Response</td>
+    </tr>
+  </tbody>
+</table>
+<p/>
+<h1 id="rfc.section.8.3"><a href="#rfc.section.8.3">8.3.</a> <a href="#sec-iana-di" id="sec-iana-di">Data Item Values</a></h1>
+<p id="rfc.section.8.3.p.1">This document requests 4 new assignments to the DLEP Data Item Registry named "Data Item Values" in the range with the "Specification Required" policy. The requested values are as follows: </p>
+<div id="rfc.table.3"/>
+<div id="table_di"/>
+<p/>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <caption>Requested Data Item Values</caption>
+  <thead>
+    <tr>
+      <th class="left">Type Code</th>
+      <th class="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="left">TBA4</td>
+      <td class="left">Queue Parameters</td>
+    </tr>
+    <tr>
+      <td class="left">TBA5</td>
+      <td class="left">DA Credit Grant</td>
+    </tr>
+    <tr>
+      <td class="left">TBA6</td>
+      <td class="left">DA Credit Window Status</td>
+    </tr>
+    <tr>
+      <td class="left">TBA7</td>
+      <td class="left">DA Credit Request</td>
+    </tr>
+  </tbody>
+</table>
+<p/>
+<h1 id="rfc.references"><a href="#rfc.references">9.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">9.1.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-manet-dlep">[I-D.ietf-manet-dlep]</b>
+      </td>
+      <td class="top"><a>Ratliff, S.</a>, <a>Jury, S.</a>, <a>Satterwhite, D.</a>, <a>Taylor, R.</a> and <a>(. (Unknown)</a>, "<a href="http://tools.ietf.org/html/draft-ietf-manet-dlep-24">Dynamic Link Exchange Protocol (DLEP)</a>", Internet-Draft draft-ietf-manet-dlep-24, July 2016.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2119">[RFC2119]</b>
+      </td>
+      <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">9.2.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</b>
+      </td>
+      <td class="top"><a>Ratliff, S.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-manet-credit-window-04">Credit Windowing extension for DLEP</a>", Internet-Draft draft-ietf-manet-credit-window-04, April 2016.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2474">[RFC2474]</b>
+      </td>
+      <td class="top"><a>Nichols, K.</a>, <a>Blake, S.</a>, <a>Baker, F.</a> and <a>D. Black</a>, "<a href="http://tools.ietf.org/html/rfc2474">Definition of the Differentiated Services Field (DS Field) in the IPv4 and IPv6 Headers</a>", RFC 2474, DOI 10.17487/RFC2474, December 1998.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2475">[RFC2475]</b>
+      </td>
+      <td class="top"><a>Blake, S.</a>, <a>Black, D.</a>, <a>Carlson, M.</a>, <a>Davies, E.</a>, <a>Wang, Z.</a> and <a>W. Weiss</a>, "<a href="http://tools.ietf.org/html/rfc2475">An Architecture for Differentiated Services</a>", RFC 2475, DOI 10.17487/RFC2475, December 1998.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Authors' Addresses</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Bow-Nan Cheng</span> 
+	  <span class="n hidden">
+		<span class="family-name">Cheng</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Lincoln Laboratory</span>
+	<span class="adr">
+	  <span class="vcardline">Massachusetts Institute of Technology</span>
+<span class="vcardline">244 Wood Street</span>
+
+	  <span class="vcardline">
+		<span class="locality">Lexington</span>,  
+		<span class="region">MA</span> 
+		<span class="code">02420-9108</span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:bcheng@ll.mit.edu">bcheng@ll.mit.edu</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">David Wiggins</span> 
+	  <span class="n hidden">
+		<span class="family-name">Wiggins</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Lincoln Laboratory</span>
+	<span class="adr">
+	  <span class="vcardline">Massachusetts Institute of Technology</span>
+<span class="vcardline">244 Wood Street</span>
+
+	  <span class="vcardline">
+		<span class="locality">Lexington</span>,  
+		<span class="region">MA</span> 
+		<span class="code">02420-9108</span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:David.Wiggins@ll.mit.edu">David.Wiggins@ll.mit.edu</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Lou Berger</span> 
+	  <span class="n hidden">
+		<span class="family-name">Berger</span>
+	  </span>
+	</span>
+	<span class="org vcardline">LabN Consulting, L.L.C.</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:lberger@labn.net">lberger@labn.net</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>

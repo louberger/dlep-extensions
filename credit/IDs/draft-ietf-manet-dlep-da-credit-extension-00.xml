@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+  ]>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc toc="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes"?>
+<?rfc iprnotified="no" ?>
+<?rfc strict="yes" ?>
+<rfc category="std" ipr="trust200902"
+     docName="draft-ietf-manet-dlep-da-credit-extension-00">
+
+<front>
+<title abbrev="DLEP DA Credit Extension">DLEP DiffServ Aware Credit Windowing 
+Extension</title> 
+   <author initials='B.' surname="Cheng" fullname='Bow-Nan Cheng'>
+    <organization>Lincoln Laboratory</organization>
+    <address>
+      <postal>
+        <street>Massachusetts Institute of Technology</street>
+        <street>244 Wood Street</street>
+        <city>Lexington</city>
+        <region>MA</region>
+        <code>02420-9108</code>
+      </postal>
+       <email>bcheng@ll.mit.edu</email>
+    </address>
+    </author>
+   <author initials='D.' surname="Wiggins" fullname='David Wiggins'>
+    <organization>Lincoln Laboratory</organization>
+    <address>
+      <postal>
+        <street>Massachusetts Institute of Technology</street>
+        <street>244 Wood Street</street>
+        <city>Lexington</city>
+        <region>MA</region>
+        <code>02420-9108</code>
+      </postal>
+       <email>David.Wiggins@ll.mit.edu</email>
+    </address>
+    </author>
+   <author initials='L.' surname="Berger" fullname='Lou Berger'>
+    <organization>LabN Consulting, L.L.C.</organization>
+    <address>
+       <email>lberger@labn.net</email>
+    </address>
+    </author>
+
+  <date/>
+  <abstract>
+<t>
+  This document defines an extension to the DLEP protocol that enables a
+  DiffServ aware credit-windowing scheme for destination-specific flow
+  control.
+</t>
+</abstract>
+</front>
+
+<middle>
+<section anchor="sec-1" title="Introduction">
+<t>
+  The Dynamic Link Event Protocol (DLEP) is defined in <xref
+  target="I-D.ietf-manet-dlep"/>. It provides the exchange of link
+  related control information between DLEP peers.  DLEP peers are 
+  comprised of a modem and a router. DLEP defines a base set of
+  mechanisms as well as support for possible extensions.  This
+  document defines one such extension.
+</t>
+<t>
+  The base DLEP specification does not include any flow control
+  capability.  There are various flow control theoretically possible
+  with DLEP.  For example, a credit-windowing scheme for
+  destination-specific flow control which provides aggregate flow
+  control for both modem and routers has been proposed in <xref
+  target="I-D.ietf-manet-credit-window"/>.
+</t>
+<t>
+  This document defines a DLEP extension which provides flow control for
+  DiffServ <xref target="RFC2475"/> traffic sent from a router to a
+  modem. Flow control is provided for multiple DSCPs (differentiated
+  services codepoint), which are grouped into logical sets of logical
+  queues. The extension defined in this document is referred to as
+  "DiffServ Aware Credit Windowing" or, more simply, the "DA Credit"
+  extension.
+</t>
+<t>
+  This document defines a new DLEP Extension Type Value in <xref
+  target="sec-ext-type"/> which is used to indicate the use of the
+  extension. Two new messages are defined in <xref
+  target="sec-msgs"/>, and four new DLEP Data Items in <xref
+  target="sec-data-items"/>.
+</t>
+<section anchor="sec-1.1" title="Key Words">
+<t>
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14, RFC 2119 <xref target="RFC2119"/>.
+</t>
+</section>
+</section>
+<section anchor="sec-theory" title="Extension Overview">
+  <t>
+    The DA Credit extension can be used to support credit based flow
+    control of traffic sent from a router to a modem.  The extension can
+    be used to support DiffServ and non-DiffServ based flow control.
+    Both types of DLEP endpoints, i.e., a router and a modem, negotiate
+    the use of extension during session initialization, see Section 5.2
+    <xref target="I-D.ietf-manet-dlep"/>.
+  </t>
+  <t>
+    When the extension is to be used, a modem passes to a router its
+    known DSCPs, if any. DSCPs are grouped by logical queues, each of
+    which are given a logical queue index.  The queue index zero (0) is
+    special and is used for any DSCP value, including 0, which is not
+    otherwise identified by the modem.  The modem also provides a size,
+    in bytes, of the logical queue for informative and, potential,
+    future uses. Currently, only DSCP to logical queue index value
+    mapping is used in flow control operation.
+  </t>
+  <t>
+    The DA Credit extension supports credit based flow control on a per
+    MAC address destination, per queue index basis.  Modems provide the
+    initial size of the associated "Credit Window", i.e., the amount in
+    octets (bytes) that may be sent by the router to the modem, when a
+    MAC destination becomes reachable and, optionally, when its rate
+    information changes. "Credit Increments", i.e., increases in a
+    Credit Window size, are provided using new "Credit Control"
+    messages.  A router provides its view of the Credit Window, which is
+    known as "status", in Destination Up Response and the new "Credit
+    Control Response" messages.  Routers can also request credits using
+    the new "Credit Control" message.
+  </t>
+  <t>
+    Credit information, both grants and status, is provided in new
+    credit grant related data items.  Each data item contains a single
+    credit value that applies to one or more queue indexes.  Different
+    (grant and status) values for different queue indexes can be
+    provided in a single message by including multiple grant data items.
+    The values indicate a number of octets (bytes), including MAC
+    headers on the router to modem link, that may be sent.
+  </t>
+  <t>
+    Note that credit information related to different destination MAC
+    addresses is always passed in different DLEP messages.
+  </t>
+<t>
+</t>
+</section>
+<section anchor="sec-ext-type" title="Extension Usage and Identification">
+<t>
+   The use of the extension defined in this document SHOULD be
+   configurable.  To indicate that the DiffServ Aware Credit Windowing
+   Extension is to be used, an implementation MUST include the DiffServ
+   Aware Credit Windowing Type Value in the Extensions Supported Data
+   Item. The Extensions Supported Data Item is sent and processed
+   according to <xref target="I-D.ietf-manet-dlep"/>.
+</t>
+<t>
+  The DiffServ Aware Credit Windowing Extension Type Value is TBA1, see
+  <xref target="sec-iana"/>.
+</t>
+</section>
+
+<section anchor="sec-msgs" title="Extension Messages">
+  <t>
+    Two new messages are defined by this extension: the Credit Control
+    and the Credit Control Response message.  Sending and receiving both
+    message types MUST be supported by any implementation that
+    advertises use of this extension per <xref target="sec-ext-type"/>.
+  </t>
+  <section anchor="sec-cc-msg" title="Credit Control Message">
+    <t>
+      Credit Control Messages are sent by modems to provide Credit
+      Increments. For messages sent by modems, only one message per MAC
+      address can be outstanding at one time.  That is, a modem MUST
+      NOT send a second (or any subsequent) message containing the same
+      MAC Address until a Credit Control Response message is received
+      from its peer router with that MAC address.
+    </t>
+    <t>
+      Credit Control Messages MAY be sent by routers, e.g., to request
+      credits or provide window status.  No specific response message is
+      required from a message transaction perspective.
+    </t>
+    <t>
+      [TBD: Should anything be said about sending, or limiting, multiple
+      credit requests?]
+    </t>
+    <t>
+      The Message Type value in the DLEP Message Header is set to TBA2.
+    </t>
+    <t>
+      The message MUST contain a DLEP MAC Address Data Item.
+    </t>
+    <t>
+      A message sent by a modem, MUST contain one or more DiffServ Aware
+      Credit Grant data items as defined below in <xref
+      target="sec-di-grant"/>.  A router receiving this message MUST
+      respond with a Credit Control Response Message.
+    </t>
+    <t>
+      A message sent by a router, MUST contain the DiffServ Aware Credit
+      Request data item defined below in <xref
+      target="sec-di-request"/>.  A modem receiving this message MUST
+      provide a Credit Increment for the indicated MAC address and queue
+      indexes via a new Credit Control Message.
+    </t>
+    <t>
+      Specific processing associated with each Credit data item is
+      provided below.
+    </t>
+  </section>
+  <section anchor="sec-ccr-msg" title="Credit Control Response Message">
+    <t>
+      Credit Control Response Messages are sent by
+      routers to report the current Credit Window for a destination.
+    </t>
+    <t>
+      The Message Type value in the DLEP Message Header is set to TBA3.
+    </t>
+    <t>
+      The message MUST contain a DLEP MAC Address Data Item.
+    </t>
+    <t>
+      A message sent by a router, MUST contain one or more DiffServ
+      Aware Credit Window Status data items as defined below in <xref
+      target="sec-di-status"/>.
+    </t>
+    <t>
+      Specific processing associated with the DA Credit Window Status
+      data item is provided below.
+    </t>
+    <t>
+    </t>
+  </section>
+</section>
+<section anchor="sec-data-items" title="Extension Data Items">
+<t>
+   Four data items are defined by this extension. The Queue Parameters
+   Data Item is used by a modem to provide information on the DSCPs it
+   uses in forwarding.
+   The DA Credit Grant is used by a modem to provide credits
+   to a router.
+   The DA Credit Request is used by a router to request additional
+   credits. 
+   The DA Credit Window Status is used to advertise the sender's view of
+   number of available credits for synchronization purposes.  
+</t>
+<t>
+  The defined data items and operations are similar to those found in
+  <xref target="I-D.ietf-manet-credit-window"/>.  One notable difference
+  from this extension is that in this document credits are never
+  provided by the router to the modem.
+</t>
+<section anchor="sec-di-qp" title="Queue Parameters">
+<t>
+  The Queue Parameters Data Item is used by a modem to indicate DSCP
+  values that may be independently controlled.  This data item MUST be
+  included in a Session Initialization Response Message that also
+  contains the DiffServ Aware Credit Windowing Extension Type Value in
+  the Extensions Supported Data Item.  Updates to these parameters MAY
+  be sent by a modem by including the data item in Session Update
+  Messages.
+</t>
+<t>
+  The Queue Parameters Data Item identifies DSCPs based on groups of
+  logical queues. The number of logical queues is variable as is the
+  number of DSCPs associated with each queue. A queue size (in bytes)
+  is provided for informational purposes.  An implementation that does
+  not support DSCPs would indicate 1 queue with 0 DSCPs, and the number
+  of bytes that may be in its associated link transmit queue.
+</t>
+<t>
+  The format of the Queue Parameters Data Item is:
+</t>
+<t>
+<figure>
+<artwork>
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Data Item Type                | Length                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |   Num Queues  | Scale |              Reserved                 |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |Num DSCPs Q0(0)|             Queue Size Q0                     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Num DSCPs Q1  |             Queue Size Q1                     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Num DSCPs Q2  |             Queue Size Q2                     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    :                                ...                            :
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Num DSCPs Qn  |             Queue Size Qn                     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  DS Field Q1  |  DS Field Q1  |  DS Field Q1  |  DS Field Q2  |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    :                                ...            |  DS Field Qn  |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</artwork>
+</figure>
+</t>
+<t>
+  <list style="hanging">
+    <t hangText="Data Item Type:">TBA4</t>
+    <t hangText="Length:">Variable
+      <vspace blankLines="1"/>
+      Per <xref target="I-D.ietf-manet-dlep"/> Length
+      is the number of octets in the data item, excluding the Type and
+      Length fields.
+    </t>
+    <t hangText="Num Queues:">
+      <vspace blankLines="1"/>
+      An 8-bit unsigned integer indicating the number of queues
+      represented in the data item.  This field MUST contain a value of
+      at least one (1). Note that this number is one
+      larger than the largest queue index value included in the data
+      item.
+    </t>
+    <t hangText="Scale:">
+      <vspace blankLines="1"/>
+      An 4-bit unsigned integer indicating the scale used in the Queue
+      Size fields. The valid values are:
+      <figure>
+        <artwork>
+      Value  Scale
+      ------------
+          0   B - Bytes     (Octets)
+          1  KB - Kilobytes (B/1024)
+          2  MB - Megabytes (KB/1024)
+          3  GB - Gigabytes (MB/1024)
+        </artwork>
+      </figure>
+    </t>
+    <t hangText="Reserved:">
+      <vspace blankLines="1"/>
+      MUST be set to zero by the sender (a modem) and ignored by the
+      receiver (a router).
+    </t>
+    <t hangText="Num DSCPs Qn:">
+      <vspace blankLines="1"/>
+      An 8-bit unsigned integer indicating the number of DSCPs
+      associated with the indexed queue.  Other than the special case
+      covered in the next paragraph, this field MUST contain a value of
+      at least one (1).  Queue indexes start at zero (0) and the maximum
+      queue index "Qn" is one less than the value carried in the Num
+      Queues field. Queue indexes are implicit in the position in the
+      data item.
+
+      <vspace blankLines="1"/>
+      Queue index zero "Q0" is a special case. It is used for any
+      traffic that does not carry a DSCP value represented in the data
+      item.  Therefore the value of the Queue index zero field, "Num
+      DSCPs Q0", field MUST be zero (0).
+    </t>
+    <t hangText="Queue Size Qn:">
+      <vspace blankLines="1"/>
+      A 24-bit unsigned integer representing the size, in the octet
+      scale indicated by the Scale field, of the queue supporting
+      traffic with the DSCPs associated with the queue index.
+    </t>
+    <t hangText="DS Field Qn:">
+      <vspace blankLines="1"/>
+      The data item contains a sequence of 8 bit DS Fields.  The
+      position in the sequence identifies the associated queue
+      index. The number of DS Fields present should equal the sum of all
+      Num DSCPs field values.  
+      <vspace blankLines="1"/>
+      The DS Field structure is the same as <xref target="RFC2474"/>.
+      <figure>
+        <artwork>
+        0   1   2   3   4   5   6   7
+      +---+---+---+---+---+---+---+---+
+      |         DSCP          |  CU   |
+      +---+---+---+---+---+---+---+---+
+
+        DSCP: differentiated services codepoint
+        CU:   currently unused, MUST be zero
+        </artwork>
+      </figure>
+    </t>
+  </list>
+    </t>
+</section>
+<section anchor="sec-di-grant" title="DiffServ Aware (DA) Credit Grant">
+<t>
+   The DiffServ Aware, or DA, Credit Grant data item is used by a modem
+   to provide credits to a router. One or more DA Credit Grant data
+   items MAY be carried in the DLEP Destination Up, Destination Announce
+   Response, Destination Update, and Credit Control messages.  Multiple
+   DA Credit Grant data items in a single message are used to indicated
+   different credit values for different logical queues.
+</t>
+<t>
+   In Destination type messages, this data item provides the total
+   number of octets available in the Credit Window to the destination
+   indicated in the message for the specified logical queues.  In the
+   Credit Control message, this data item provides an additional number
+   of octets to be added to the Credit Window to the destination
+   indicated in the message for the specified logical queues.
+</t>
+<t>
+   Logical queues are identified using a Queue Index as defined above in
+   <xref target="sec-di-qp"/>.  Multiple Queue Indexes MAY be present to
+   allow for the case where same credit information applies to multiple
+   queues. As mentioned above, multiple DA Credit Grant Data Items MAY
+   be present to provide different queue-specific credit information in
+   one message. The special Queue Index value of 255 is used to indicate
+   that the credit information applies to all queues.
+</t>
+<t>
+  The format of the DA Credit Grant Data Item is:
+</t>
+<t>
+<figure>
+<artwork>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data Item Type                | Length                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         Credit Value                          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         Credit value                          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  Queue Index  |               ...                             :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                                ...            |  Queue Index  |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</artwork>
+</figure>
+</t>
+<t>
+  <list style="hanging">
+    <t hangText="Data Item Type:">TBA5</t>
+    <t hangText="Length:">Variable
+      <vspace blankLines="1"/>
+      Per <xref target="I-D.ietf-manet-dlep"/>, Length
+      is the number of octets in the data item, excluding the Type and
+      Length fields. It will equal 8 plus the number of Queue Index
+      fields carried in the data item and MUST be at least 9.
+    </t>
+    <t hangText="Credit Value:">
+      <vspace blankLines="1"/>
+      A 64-bit unsigned integer representing the credits, in octets, to
+      be applied to the Credit Window.  This value includes MAC
+      headers as seen on the link between the modem and router.</t>
+    <t hangText="Queue Index:">
+      <vspace blankLines="1"/>
+      One or more 8-bit fields used to indicate a queue index defined by
+      a Queue Parameters Data Item.  The special value of 255 indicates
+      that the information in the data item applies to all queue indexes.
+    </t>
+  </list>
+</t>
+
+<t>
+  Receive processing of this data item is based on the message in which
+  it is carried.  When this data item is received in a Destination type
+  message, the Credit Window of the indicated destination MAC address
+  and indicated queue indexes MUST be set to the value contained in the
+  Credit Value field.  
+</t>
+<t>
+  When this data item is received in a Credit Control message, the
+  Credit Window of the indicated destination MAC address and indicated
+  queue indexes MUST be increased by the value contained in the Credit
+  Value field. If the increase results in a window overflow, i.e., the
+  Credit Window resulting after the increase is smaller than the
+  original Credit Window, the Credit Window must be set to its maximum
+  (0xFFFFFFFFFFFFFFFF).
+</t>
+<t>
+  Independent of the received message, the receiving router MUST send a
+  DA Credit Window Status data item or items reflecting the resulting
+  Credit Window value of each modified queue index.  When the Credit
+  Grant data item is received in a Destination Up message, the DA Credit
+  Window Status data item(s) MUST be sent in the corresponding
+  Destination Up Response message. In all other cases, the a Credit
+  Control message MUST be sent.
+</t>
+</section>
+
+<section anchor="sec-di-status" title="DiffServ Aware (DA) Credit Window Status">
+<t>
+   The DiffServ Aware, or DA, Credit Window Status data item is used by
+   a router to report the current Credit Window to its peer modem.  One
+   or more DA Credit Window Status data items MAY be carried in a
+   Destination Up Response message or a Credit Control Response message.
+   As discussed above, the Destination Up Response message is used when
+   the data item is sent in response to a Destination Up message, and
+   the Credit Control Response message is sent in response to a Credit
+   Control message.  Multiple DA Credit Window Status data items in a
+   single message are used to indicated different credit window values
+   for different logical queues.
+</t>
+<t>
+   Similar to the DA Credit Grant, logical queues are identified using a
+   Queue Index as defined above in <xref target="sec-di-qp"/>.  Multiple
+   Queue Indexes MAY be present to allow for the case where same credit
+   information applies to multiple queues. Multiple DA Credit Window
+   Status Data Items are used to provide different queue-specific credit
+   window information in one message. The special Queue Index value of
+   255 is used to indicate that the Credit Window information applies to
+   all queues.
+</t>
+
+<t>
+  The format of the DA Credit Window Status Data Item is:
+</t>
+<t>
+<figure>
+<artwork>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data Item Type                | Length                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         Credit Window                         :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                         Credit Window                         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  Queue Index  |               ...                             :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                                ...            |  Queue Index  |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</artwork>
+</figure>
+</t>
+<t>
+  <list style="hanging">
+    <t hangText="Data Item Type:">TBA6</t>
+    <t hangText="Length:">Variable
+      <vspace blankLines="1"/>
+      Per <xref target="I-D.ietf-manet-dlep"/> Length
+      is the number of octets in the data item, excluding the Type and
+      Length fields. It will equal 8 plus the number of Queue Index
+      fields carried in the data item and MUST be at least 9.
+    </t>
+    <t hangText="Credit Window:"> 
+      <vspace blankLines="1"/>
+      A 64-bit unsigned integer, indicating
+      the current number of credits, in octets, available for the
+      router to send to the modem.  This is referred to as the
+      Modem Receive Window in <xref
+      target="I-D.ietf-manet-credit-window"/>. 
+    </t>
+    <t hangText="Queue Index:">
+      <vspace blankLines="1"/>
+      One or more 8-bit fields used to indicate a queue index defined by
+      a Queue Parameters Data Item.  The special value of 255 indicates
+      that the information in the data item applies to all queue indexes.
+    </t>
+  </list>
+</t>
+<t>
+  The receiving modem SHOULD check the received Credit Window value
+  against the outstanding credits available at the time the last Credit
+  Increment associated with the indicated MAC address and Queue Indexes
+  were sent.  If the values significantly differ, i.e., greater than can
+  be accounted for based on observed data frames, then the modem SHOULD
+  send a Destination Update message carrying a DA Credit Grant data item
+  to reset the associated Credit Window(s) to the data item indicated
+  value.  Multiple values and queue indexes SHOULD be combined into a
+  single Destination Update Control message when possible.
+  Alternatively, and also in cases where there are small differences,
+  the modem MAY adjust the values sent in DA Credit Grant data items to
+  account for the reported Credit Window.
+  </t>
+</section>
+<section anchor="sec-di-request" title="DiffServ Aware (DA) Credit Request">
+<t>
+   The DiffServ Aware, or DA, Credit Request Data Item data item is used
+   by a router to request additional credits for a specific destination
+   and Queue Index associated Credit window. DA Credit Request data
+   items are carried in Credit Control messages, and only one DA Credit
+   Request data item SHOULD be present in a message.
+</t>
+<t>
+   Logical queues are identified using a Queue Index as defined above in
+   <xref target="sec-di-qp"/>.  Multiple Queue Indexes MAY be present to
+   allow for the case where the credit request applies to multiple
+   queues.  The special Queue Index value of 255 is used to indicate
+   that a credit request is being made across all queues.
+</t>
+
+<t>
+  The format of the DA Credit Request Data Item is:
+</t>
+<t>
+<figure>
+<artwork>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data Item Type                | Length                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  Queue Index  |               ...                             :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                                ...            |  Queue Index  |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</artwork>
+</figure>
+</t>
+<t>
+[LB note: a list of Queue Indexes is now supported as is special value
+255.]
+</t>
+<t>
+  <list style="hanging">
+    <t hangText="Data Item Type:">TBA7</t>
+    <t hangText="Length:">Variable
+      <vspace blankLines="1"/>
+      Per <xref target="I-D.ietf-manet-dlep"/> Length
+      is the number of octets in the data item, excluding the Type and
+      Length fields. It will equal the number of Queue Index
+      fields carried in the data item and MUST be at least 1.
+    </t>
+    <t hangText="Queue Index:">
+      <vspace blankLines="1"/>
+      One or more 8-bit fields used to indicate a queue index defined by
+      a Queue Parameters Data Item.  The special value of 255 indicates
+      that the request applies to all queue indexes.
+    </t>
+  </list>
+</t>
+<t>
+  A modem receiving this data item MUST provide a Credit Increment for
+  the indicated MAC address and queue indexes via a DA Credit Grant
+  carried in a new Credit Control Message. Multiple values and queue
+  indexes SHOULD be combined into a single Credit Control message when
+  possible.
+</t>
+</section>
+
+</section>
+
+<section anchor="sec-compat" title="Compatibility">
+<t>
+  Sessions established with both peers identified as supporting the
+  DiffServ Aware Credit Windowing Extension Type, see <xref
+  target="sec-ext-type"/>, SHOULD NOT use the <xref
+  target="I-D.ietf-manet-credit-window"/> defined Credit data items.
+  If a node supporting the extension defined in this document, receives a
+  <xref  target="I-D.ietf-manet-credit-window"/> defined data item, 
+  the recipient MUST treat the received credit information as
+  applying to Queue Index zero (0).
+</t>
+</section>
+
+<section anchor="sec-sec" title="Security Considerations">
+<t>
+   The extension introduces a DiffServ awareness to the mechanisms
+   defined in <xref target="I-D.ietf-manet-credit-window"/>.  The
+   extension does not inherently introduce any additional threats above
+   those documented in <xref target="I-D.ietf-manet-dlep"/>.  The
+   approach taken to Security in that document and <xref
+   target="I-D.ietf-manet-credit-window"/> apply equally when running
+   the extension defined in this document.
+</t>
+</section>
+<section anchor="sec-iana" title="IANA Considerations">
+<t>
+  This document requests the assignment of 5 values by IANA.  All
+  assignments are to registries defined by <xref
+  target="I-D.ietf-manet-dlep"/>.
+</t>
+<section anchor="sec-iana-ext" title="Extension Type Value">
+<t>
+  This document requests 1 new assignment to the DLEP Extensions
+  Registry named "Extension Tyoe Values" in the range with the
+  "Specification Required" policy. The requested value is as follows:
+</t>
+<texttable anchor="table_et" title="Requested Extension Type Value">
+  <preamble></preamble>
+  <ttcol>Code</ttcol> <ttcol>Description</ttcol>
+    <c>TBA1</c> <c>DiffServ Aware Credit Windowing</c> 
+    <postamble></postamble>
+    </texttable>
+</section>
+<section anchor="sec-iana-msg" title="Message Values">
+<t>
+  This document requests 2 new assignments to the DLEP Message Registry
+  named "Message Values" in the range with the "Specification Required"
+  policy. The requested values are as follows:
+</t>
+<texttable anchor="table_msg" title="Requested Message Values">
+  <preamble></preamble>
+  <ttcol>Type Code</ttcol> <ttcol>Description</ttcol>
+    <c>TBA2</c> <c>Credit Control</c> 
+    <c>TBA3</c> <c>Credit Control Response</c> 
+    <postamble></postamble>
+    </texttable>
+</section>
+<section anchor="sec-iana-di" title="Data Item Values">
+<t>
+  This document requests 4 new assignments to the DLEP Data Item
+  Registry named "Data Item Values" in the range with the "Specification
+  Required" policy. The requested values are as follows:
+</t>
+<texttable anchor="table_di" title="Requested Data Item Values">
+  <preamble></preamble>
+  <ttcol>Type Code</ttcol> <ttcol>Description</ttcol>
+    <c>TBA4</c> <c>Queue Parameters</c> 
+    <c>TBA5</c> <c>DA Credit Grant</c> 
+    <c>TBA6</c> <c>DA Credit Window Status</c> 
+    <c>TBA7</c> <c>DA Credit Request</c> 
+    <postamble></postamble>
+    </texttable>
+</section>
+</section>
+</middle>
+
+<?rfc needLines="20"?>
+<back>
+<references title="Normative References">
+
+<?rfc include="reference.I-D.draft-ietf-manet-dlep-24.xml"?>
+<?rfc include="reference.RFC.2119"?>
+
+</references>
+
+<references title="Informative References">
+
+<?rfc include="reference.I-D.draft-ietf-manet-credit-window-04.xml"?>
+<?rfc include="reference.RFC.2474"?>
+<?rfc include="reference.RFC.2475"?>
+
+</references>
+<?rfc needLines="100"?>
+<!--
+<section title="Acknowledgments">
+   <t>
+   </t>
+   <vspace blankLines="100"/></t>
+</section> 
+-->
+</back>
+</rfc>
+
+<!-- Local Variables: -->
+<!-- fill-column:72 -->
+<!-- End: -->
