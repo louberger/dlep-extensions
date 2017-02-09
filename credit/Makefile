@@ -3,7 +3,7 @@
 #The author makes no claim/restriction on use.  It is provided "AS IS".
 #This file is considered a hack and not production grade by the author
 
-DRAFT  = draft-cheng-manet-dlep-da-credit-extension
+DRAFT  = draft-ietf-manet-dlep-da-credit-extension
 
 WITHXML2RFC := $(shell which xml2rfc > /dev/null 2>&1 ; echo $$? )
 

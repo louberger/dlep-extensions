@@ -7,7 +7,7 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc category="std" ipr="trust200902" docName="draft-cheng-manet-dlep-latency-extension-00" >
+<rfc category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-latency-extension-00" >
 
 <front>
 <title abbrev="DLEP Latency Range Extension">DLEP Lantency Range
