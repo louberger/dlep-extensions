@@ -7,7 +7,7 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-pause-extension-00" >
+<rfc category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-pause-extension-01" >
 
 <front>
 <title abbrev="DLEP Pause Extension">DLEP Control Plane Based Pause
@@ -422,13 +422,13 @@ Extension</title>
 <references title="Normative References">
 
 <?rfc include="reference.RFC.2119"?>
-<?rfc include="reference.I-D.draft-ietf-manet-dlep-24.xml"?>
+<?rfc include="reference.I-D.ietf-manet-dlep.xml"?>
 
 </references>
 
 <references title="Informative References">
 
-<?rfc include="reference.I-D.draft-ietf-manet-credit-window-04.xml"?>
+<?rfc include="reference.I-D.ietf-manet-credit-window.xml"?>
 <?rfc include="reference.RFC.2474"?>
 <?rfc include="reference.RFC.2475"?>
 
