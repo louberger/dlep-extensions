@@ -11,8 +11,8 @@
      docName="draft-ietf-manet-dlep-da-credit-extension-01">
 
 <front>
-<title abbrev="DLEP DA Credit Extension">DLEP DiffServ Aware Credit Windowing 
-Extension</title> 
+<title abbrev="DLEP DA Credit Extension">DLEP DiffServ Aware Credit Windowing
+Extension</title>
    <author initials='B.' surname="Cheng" fullname='Bow-Nan Cheng'>
     <organization>Lincoln Laboratory</organization>
     <address>
@@ -61,7 +61,7 @@ Extension</title>
 <t>
   The Dynamic Link Event Protocol (DLEP) is defined in <xref
   target="I-D.ietf-manet-dlep"/>. It provides the exchange of link
-  related control information between DLEP peers.  DLEP peers are 
+  related control information between DLEP peers.  DLEP peers are
   comprised of a modem and a router. DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
   document defines one such extension.
@@ -106,7 +106,9 @@ Extension</title>
     be used to support DiffServ and non-DiffServ based flow control.
     Both types of DLEP endpoints, i.e., a router and a modem, negotiate
     the use of extension during session initialization, see Section 5.2
-    <xref target="I-D.ietf-manet-dlep"/>.
+    <xref target="I-D.ietf-manet-dlep"/>. When using this extension,
+    data is allowed to be sent by the router to the modem only when
+    there are credits available.
   </t>
   <t>
     When the extension is to be used, a modem passes to a router its
@@ -160,6 +162,14 @@ Extension</title>
   The DiffServ Aware Credit Windowing Extension Type Value is TBA1, see
   <xref target="sec-iana"/>.
 </t>
+</section>
+<section anchor="data-plane" title="Data Plane Considerations">
+  <t>
+  When the use of the extension defined in this document is agreed upon
+  per standard DLEP processing, see <xref target="sec-ext-type"/>,
+  a router MUST NOT send data to a modem for forwarding when there are
+  no credits available in the associated Credit Window.
+  </t>
 </section>
 
 <section anchor="sec-msgs" title="Extension Messages">
@@ -243,9 +253,9 @@ Extension</title>
    The DA Credit Grant is used by a modem to provide credits
    to a router.
    The DA Credit Request is used by a router to request additional
-   credits. 
+   credits.
    The DA Credit Window Status is used to advertise the sender's view of
-   number of available credits for synchronization purposes.  
+   number of available credits for synchronization purposes.
 </t>
 <t>
   The defined data items and operations are similar to those found in
@@ -365,7 +375,7 @@ Extension</title>
       The data item contains a sequence of 8 bit DS Fields.  The
       position in the sequence identifies the associated queue
       index. The number of DS Fields present should equal the sum of all
-      Num DSCPs field values.  
+      Num DSCPs field values.
       <vspace blankLines="1"/>
       The DS Field structure is the same as <xref target="RFC2474"/>.
       <figure>
@@ -460,7 +470,7 @@ Extension</title>
   it is carried.  When this data item is received in a Destination type
   message, the Credit Window of the indicated destination MAC address
   and indicated queue indexes MUST be set to the value contained in the
-  Credit Value field.  
+  Credit Value field.
 </t>
 <t>
   When this data item is received in a Credit Control message, the
@@ -538,13 +548,13 @@ Extension</title>
       Length fields. It will equal 8 plus the number of Queue Index
       fields carried in the data item and MUST be at least 9.
     </t>
-    <t hangText="Credit Window:"> 
+    <t hangText="Credit Window:">
       <vspace blankLines="1"/>
       A 64-bit unsigned integer, indicating
       the current number of credits, in octets, available for the
       router to send to the modem.  This is referred to as the
       Modem Receive Window in <xref
-      target="I-D.ietf-manet-credit-window"/>. 
+      target="I-D.ietf-manet-credit-window"/>.
     </t>
     <t hangText="Queue Index:">
       <vspace blankLines="1"/>
@@ -643,7 +653,7 @@ Extension</title>
   target="sec-ext-type"/>, SHOULD NOT use the <xref
   target="I-D.ietf-manet-credit-window"/> defined Credit data items.
   If a node supporting the extension defined in this document, receives a
-  <xref  target="I-D.ietf-manet-credit-window"/> defined data item, 
+  <xref  target="I-D.ietf-manet-credit-window"/> defined data item,
   the recipient MUST treat the received credit information as
   applying to Queue Index zero (0).
 </t>
@@ -675,7 +685,7 @@ Extension</title>
 <texttable anchor="table_et" title="Requested Extension Type Value">
   <preamble></preamble>
   <ttcol>Code</ttcol> <ttcol>Description</ttcol>
-    <c>TBA1</c> <c>DiffServ Aware Credit Windowing</c> 
+    <c>TBA1</c> <c>DiffServ Aware Credit Windowing</c>
     <postamble></postamble>
     </texttable>
 </section>
@@ -688,8 +698,8 @@ Extension</title>
 <texttable anchor="table_msg" title="Requested Message Values">
   <preamble></preamble>
   <ttcol>Type Code</ttcol> <ttcol>Description</ttcol>
-    <c>TBA2</c> <c>Credit Control</c> 
-    <c>TBA3</c> <c>Credit Control Response</c> 
+    <c>TBA2</c> <c>Credit Control</c>
+    <c>TBA3</c> <c>Credit Control Response</c>
     <postamble></postamble>
     </texttable>
 </section>
@@ -702,10 +712,10 @@ Extension</title>
 <texttable anchor="table_di" title="Requested Data Item Values">
   <preamble></preamble>
   <ttcol>Type Code</ttcol> <ttcol>Description</ttcol>
-    <c>TBA4</c> <c>Queue Parameters</c> 
-    <c>TBA5</c> <c>DA Credit Grant</c> 
-    <c>TBA6</c> <c>DA Credit Window Status</c> 
-    <c>TBA7</c> <c>DA Credit Request</c> 
+    <c>TBA4</c> <c>Queue Parameters</c>
+    <c>TBA5</c> <c>DA Credit Grant</c>
+    <c>TBA6</c> <c>DA Credit Window Status</c>
+    <c>TBA7</c> <c>DA Credit Request</c>
     <postamble></postamble>
     </texttable>
 </section>
@@ -734,8 +744,125 @@ Extension</title>
    <t>
    </t>
    <vspace blankLines="100"/></t>
-</section> 
+</section>
 -->
+
+<section anchor="issues" title="Open and Resolved Issues">
+  <!--
+   Todo:
+   - explicitly state no data until have credit - DONE
+   - queues per neighbor (modem) vs per mac
+   - negotiating number of destination supported
+   - rejecting Queues how to say no
+   To consider/discussed
+   - add increment vs grant DI
+   - handling resync: absolute counts, set vs increment etc
+   - possibility / implications of eliminating increment
+   - bidirection flow control
+     - terminology: local vs remote credit window (local = receiver, remote = sender)
+   -->
+  <t>
+    This section captures issues that are open or have been addressed
+    since the document has become a WG draft.  This section will be
+    removed before submission for publication.
+  </t>
+  <section anchor="issue-merge" title="Merge with [I-D.ietf-manet-credit-window]">
+    <t>
+       There has been discussion within the WG that this document should
+       be merged with <xref target="I-D.ietf-manet-credit-window"/>.
+       The timing of this is TBD.  The authors would like to reach
+       closure on some of the remaining open issues before embarking on
+       this merge, but are open to discussion with the WG and other authors.
+    </t>
+  </section>
+  <section anchor="issue-shared-queues" title="Credit Windows Shared Across Destinations ">
+    <t>
+      The DA Credit Extension supports credit windows per mac
+      destination.  Some media technologies share queues across all, or
+      even some set of, destinations and supporting an associated set of
+      credit windows isn't currently supported.
+    </t>
+    <t>
+      Supporting credit windows per modem, i.e., for a single transmit
+      channel, is clearly required and needs to be supported.
+    </t>
+    <t>
+      Credit windows for sets of mac addresses should also be
+      considered and discussed within the working group, both from a
+      requirements and support perspective.
+    </t>
+    <t>
+      This issue was reported by Stan Ratliff &lt;ratliffstan@gmail.com&gt;.
+    </t>
+  </section>
+  <section anchor="issue-num-queues" title="Supporting Router Limits">
+    <t>
+      Routers may have limits on the number of queues that they can
+      support and, perhaps, if per destination queues can even be
+      supported at all.  There is no current way for a router to
+      communicate these limits to a modem or for a router to indicate
+      that the identified queue information cannot be supported.
+      Support for these cases clearly needs to be addressed.
+    </t>
+    <t>
+      This issue was reported by Stan Ratliff &lt;ratliffstan@gmail.com&gt;.
+    </t>
+  </section>
+  <section anchor="issue-abs" title="Absolute vs Increment">
+    <t>
+      Stan Ratliff &lt;ratliffstan@gmail.com&gt; suggested an approach to
+      simplify credit synchronization and re-synchronization by always
+      passing the credit window size rather than credit window
+      increments.  This is an interesting idea that needs to be explored
+      and perhaps experimented with.
+    </t>
+  </section>
+  <section anchor="issue-alt" title="Alternate Format Encoding">
+    <t>
+      The format of the Queue Parameters Data Item is a bit cumbersome
+      and there has been some discussion of a possible better way of
+      encoding lists and optional information elements within Data
+      Items.  There has been some discussion of developing a generic
+      mechanisms for use by DLEP and future DLEP Data Items.  Such a
+      definition is beyond the scope of this document, but if such
+      becomes available there is every reason for this document to
+      leverage this improved encoding.  This issue will remain open
+      until such a time as there is a such a definition within the WG or
+      this document is otherwise ready for publication.
+    </t>
+    <t>
+      This issue was independently raised by both David Wiggins
+      (co-author) and Rick Taylor &lt;rick@tropicalstormsoftware.com&gt;.
+    </t>
+  </section>
+  <section anchor="issue-bidirectional-fc" title="Bidirectional Flow
+                                                  Control (closed)">
+    <t>
+      One of the key differences between this draft and <xref
+      target="I-D.ietf-manet-credit-window"/> is that this document only
+      supports flow control in one direction, i.e., for traffic sent
+      from a router to a modem, while the other credit-window draft
+      supports it in both directions.  
+    </t>
+    <t>
+      This was a conscious choice, made out of the desire to keep the
+      extension as simple as possible and to provide what is really
+      expected to be used.
+      Clearly the reason for being able to control traffic that is sent from
+      the router to the modem/radio is pretty easily understood.  Also, while
+      bidirectional flow control existed in pre-dlep solutions, it wasn't
+      really used.  There is also no reason why router to modem flow
+      control can't be defined at a later time - once there is an actual
+      need. 
+    </t>
+    <t>
+      Based on a brief discussion on the WG list, and the absence of any
+      advocates for bidirectional flow control, there is no current plan
+      to add bidirectional flow control to this document.
+    </t>
+  </section>
+</section>
+
 </back>
 </rfc>
 
