@@ -11,7 +11,7 @@
 
 <front>
 <title abbrev="DLEP Pause Extension">DLEP Control Plane Based Pause
-Extension</title> 
+Extension</title>
    <author initials='B.' surname="Cheng" fullname='Bow-Nan Cheng'>
     <organization>Lincoln Laboratory</organization>
     <address>
@@ -59,7 +59,7 @@ Extension</title>
 <t>
   The Dynamic Link Event Protocol (DLEP) is defined in <xref
   target="I-D.ietf-manet-dlep"/>. It provides the exchange of link
-  related control information between DLEP peers.  DLEP peers are 
+  related control information between DLEP peers.  DLEP peers are
   comprised of a modem and a router. DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
   document defines one such extension.
@@ -125,11 +125,18 @@ Extension</title>
 </t>
 <t>
   The Queue Parameters Data Item identifies DSCPs based on groups of
-  logical queues. The number of logical queues is variable as is the
+  logical queues, each of which is referred to via a "Queue Index". The
+  number of logical queues, or queue indexes, is variable as is the
   number of DSCPs associated with each queue. A queue size (in bytes)
-  is provided for informational purposes.  An implementation that does
-  not support DSCPs would indicate 1 queue with 0 DSCPs, and the number
-  of bytes that may be in its associated link transmit queue.
+  is provided for informational purposes.  Queue Indexes are numbered
+  sequentially from zero, where queue index zero is a special case
+  covering DSCPs which are not otherwise associated with Queue Index.
+</t>
+<t>
+  An implementation that does not support DSCPs would indicate 1 queue
+  with 0 DSCPs, and the number of bytes that may be in its associated
+  link transmit queue.  Additional logical queues are represented in a
+  variable series of Queue Parameter sub-data items.
 </t>
 <t>
   The format of the Queue Parameters Data Item is:
@@ -144,19 +151,13 @@ Extension</title>
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |   Num Queues  | Scale |              Reserved                 |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |Num DSCPs Q0(0)|             Queue Size Q0                     |
+    |  Reserved     |             Queue Size Q0                     |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Num DSCPs Q1  |             Queue Size Q1                     |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Num DSCPs Q2  |             Queue Size Q2                     |
+    |               Queue Parameter Sub Data Item 1                 |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     :                                ...                            :
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Num DSCPs Qn  |             Queue Size Qn                     |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |  DS Field Q1  |  DS Field Q1  |  DS Field Q1  |  DS Field Q2  |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    :                                ...            |  DS Field Qn  |
+    |               Queue Parameter Sub Data Item n                 |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </artwork>
 </figure>
@@ -174,11 +175,10 @@ Extension</title>
       <vspace blankLines="1"/>
       An 8-bit unsigned integer indicating the number of queues
       represented in the data item.  This field MUST contain a value of
-      at least one (1). Note that this number is one
-      larger than the largest queue index value included in the data
-      item.
+      at least one (1), and is equal to one greater than the number of
+      included Queue Parameter Sub Data Item.
     </t>
-    <t hangText="Scale:">
+   <t hangText="Scale:">
       <vspace blankLines="1"/>
       An 4-bit unsigned integer indicating the scale used in the Queue
       Size fields. The valid values are:
@@ -198,21 +198,75 @@ Extension</title>
       MUST be set to zero by the sender (a modem) and ignored by the
       receiver (a router).
     </t>
+    <t hangText="Queue Size Q0:">
+      <vspace blankLines="1"/>
+      A 24-bit unsigned integer representing the size, in the octet
+      scale indicated by the Scale field, of queue index zero.
+    </t>
+  </list>
+</t>
+
+  <section anchor="sec-di-qp-sub" title="Queue Parameter Sub Data Item">
+
+    <t>
+      Queue Parameter Sub Data Items are an ordered list composed of the
+      identical format sub data item.  The first sub data item is
+      assigned a Queue Index value of 1, and subsequent data item are
+      numbered incrementally.  The format of the Queue Parameter Sub
+      Data Item is patterned after the standard DLEP data item format,
+      see <xref target="I-D.ietf-manet-dlep"/> Section 11.3.  Any errors
+      or inconsistencies encountered in parsing Sub Data Items are
+      handled in the same fashion as any other Data Item parsing error
+      encountered in DLEP.
+    </t>
+    <t>
+      The format of the Queue Parameter Sub Data Item is:
+    </t>
+<t>
+<figure>
+<artwork>
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Must be one (1)               | Length                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           Value...                            :
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</artwork>
+</figure>
+</t>
+<t>
+  and Value has the format:
+</t>
+<t>
+<figure>
+<artwork>
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Num DSCPs Qn  |             Queue Size Qn                     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  DS Field Qn  |  DS Field Qn  |              ...              :
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    :                          ...                  |  DS Field Qn  |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</artwork>
+</figure>
+</t>
+
+<t>
+  <list style="hanging">
+    <t hangText="Length:">Variable
+      <vspace blankLines="1"/>
+      Per <xref target="I-D.ietf-manet-dlep"/> Length
+      is the number of octets in the data item, excluding the Type and
+      Length fields.
+    </t>
     <t hangText="Num DSCPs Qn:">
       <vspace blankLines="1"/>
       An 8-bit unsigned integer indicating the number of DSCPs
-      associated with the indexed queue.  Other than the special case
-      covered in the next paragraph, this field MUST contain a value of
-      at least one (1).  Queue indexes start at zero (0) and the maximum
-      queue index "Qn" is one less than the value carried in the Num
-      Queues field. Queue indexes are implicit in the position in the
-      data item.
-
-      <vspace blankLines="1"/>
-      Queue index zero "Q0" is a special case. It is used for any
-      traffic that does not carry a DSCP value represented in the data
-      item.  Therefore the value of the Queue index zero field, "Num
-      DSCPs Q0", field MUST be zero (0).
+      associated with the queue index associated with the sub data item.
+      This field MUST contain a value of at least one (1).
     </t>
     <t hangText="Queue Size Qn:">
       <vspace blankLines="1"/>
@@ -225,7 +279,7 @@ Extension</title>
       The data item contains a sequence of 8 bit DS Fields.  The
       position in the sequence identifies the associated queue
       index. The number of DS Fields present should equal the sum of all
-      Num DSCPs field values.  
+      Num DSCPs field values.
       <vspace blankLines="1"/>
       The DS Field structure is the same as <xref target="RFC2474"/>.
       <figure>
@@ -242,6 +296,7 @@ Extension</title>
     </t>
   </list>
 </t>
+</section>
 </section>
 <section anchor="sec-di-pause" title="Pause">
 <t>
@@ -296,10 +351,6 @@ Extension</title>
 </figure>
 </t>
 <t>
-[LB note: a list of Queue Indexes is now supported as is special value
-255.]
-</t>
-<t>
   <list style="hanging">
     <t hangText="Data Item Type:">TBA3</t>
     <t hangText="Length:">Variable
@@ -335,7 +386,7 @@ Extension</title>
   send the Restart Data Item in a Session Update Message.  It also
   includes that to indicate that transmission can resume to a particular
   destination a modem MAY send the Pause Restart Item in a Destination
-  Update Message.  Finally, the same rules apply to queue indexes. 
+  Update Message.  Finally, the same rules apply to queue indexes.
 </t>
 <t>
   A router which receives the Restart Data Item SHOULD resume
@@ -372,7 +423,7 @@ Extension</title>
 <section anchor="sec-sec" title="Security Considerations">
 <t>
    The extension introduces a new mechanism for flow control between a
-   router and modem using the DLEP protocol.  The 
+   router and modem using the DLEP protocol.  The
    extension does not inherently introduce any additional threats
    above those documented in <xref target="I-D.ietf-manet-dlep"/>.
    The approach taken to Security in that document applies equally
@@ -387,15 +438,15 @@ Extension</title>
 </t>
 <section anchor="sec-iana-ext" title="Extension Type Value">
 <t>
-  This document requests 1 new assignment to the DLEP Extensions 
+  This document requests 1 new assignment to the DLEP Extensions
   Registry named "Extension Tyoe Values" in the range with the
   "Specification   Required" policy. The requested value is as
-  follows: 
+  follows:
 </t>
 <texttable anchor="table_et" title="Requested Extension Type Value">
   <preamble></preamble>
   <ttcol>Code</ttcol> <ttcol>Description</ttcol>
-    <c>TBA1</c> <c>Control Plane Pause</c> 
+    <c>TBA1</c> <c>Control Plane Pause</c>
     <postamble></postamble>
     </texttable>
 </section>
@@ -408,9 +459,9 @@ Extension</title>
 <texttable anchor="table_di" title="Requested Data Item Values">
   <preamble></preamble>
   <ttcol>Type Code</ttcol> <ttcol>Description</ttcol>
-    <c>TBA2</c> <c>Queue Parameters</c> 
-    <c>TBA3</c> <c>Pause</c> 
-    <c>TBA4</c> <c>Restart</c> 
+    <c>TBA2</c> <c>Queue Parameters</c>
+    <c>TBA3</c> <c>Pause</c>
+    <c>TBA4</c> <c>Restart</c>
     <postamble></postamble>
     </texttable>
 </section>
@@ -434,13 +485,13 @@ Extension</title>
 
 </references>
 <?rfc needLines="100"?>
-<!--
 <section title="Acknowledgments">
    <t>
+     The sub data item format was inspired by Rick Taylor's "Data Item
+     Containers".
    </t>
-   <vspace blankLines="100"/></t>
-</section> 
--->
+</section>
+
 </back>
 </rfc>
 
