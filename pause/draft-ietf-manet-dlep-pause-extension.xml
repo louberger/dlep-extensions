@@ -48,8 +48,9 @@ Extension</title>
   <date/>
   <abstract>
 <t>
-  This document defines an extension to the DLEP protocol that enables
-  a simple control plane based flow control mechanism.
+  This document defines an extension to the DLEP protocol that enables a
+  modem to use DLEP messages to pause and resume data traffic coming
+  from its peer router.
 </t>
 </abstract>
 </front>
@@ -65,15 +66,18 @@ Extension</title>
   document defines one such extension.
 </t>
 <t>
-  The base DLEP specification does not include any flow control
+  The base DLEP specification does not include any data plane flow control
   capability.  There are various flow control possible, e.g., see <xref
   target="I-D.ietf-manet-credit-window"/>.  The extension defined in
-  this document supports flow control based on explicit messages sent
+  this document supports flow control of data traffic based on explicit messages sent
   via DLEP by a modem to indicate when a router should hold off sending
-  traffic, and when it should resume.  The extension also optionally
+  traffic, and when it should resume. The extension also optionally
   supports DSCP (differentiated services codepoint) aware, see <xref
   target="RFC2475"/>, flow control.  The extension defined in this
-  document is referred to as "Control Plane Pause".
+  document is referred to as "Control Plane Based Pause".  Note that
+  this mechanism only controls traffic that is to be transmitted on the
+  modem's attached data channel and not to DLEP control messages
+  themselves.
 </t>
 <t>
   This document defines a new DLEP Extension Type Value in <xref
@@ -92,15 +96,15 @@ Extension</title>
 </section>
 <section anchor="sec-ext-type" title="Extension Usage and Identification">
 <t>
-   The use of the Control Plane Pause Extension SHOULD be configurable.
-   To indicate that the Control Plane Pause Extension is to be used, an
-   implementation MUST include the Control Plane Pause Extension Type
+   The use of the Control Plane Based Pause Extension SHOULD be configurable.
+   To indicate that the Control Plane Based Pause Extension is to be used, an
+   implementation MUST include the Control Plane Based Pause Extension Type
    Value in the Extensions Supported Data Item. The Extensions Supported
    Data Item is sent and processed according to <xref
    target="I-D.ietf-manet-dlep"/>.
 </t>
 <t>
-  The Control Plane Pause Extension Type Value is TBA1, see <xref
+  The Control Plane Based Pause Extension Type Value is TBA1, see <xref
   target="sec-iana"/>.
 </t>
 </section>
@@ -118,7 +122,7 @@ Extension</title>
   The Queue Parameters Data Item is used by a modem to indicate DSCP
   values that may be independently paused.  This data item MUST be
   included in a Session Initialization Response Message that also
-  contains the Control Plane Pause Extension Type Value in the
+  contains the Control Plane Based Pause Extension Type Value in the
   Extensions Supported Data Item.  Updates to these parameters MAY be
   sent by a modem by including the data item in Session Update
   Messages.
@@ -446,7 +450,7 @@ Extension</title>
 <texttable anchor="table_et" title="Requested Extension Type Value">
   <preamble></preamble>
   <ttcol>Code</ttcol> <ttcol>Description</ttcol>
-    <c>TBA1</c> <c>Control Plane Pause</c>
+    <c>TBA1</c> <c>Control Plane Based Pause</c>
     <postamble></postamble>
     </texttable>
 </section>
