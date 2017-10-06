@@ -1,3 +1,7 @@
+## Current xml2rfc and idnits results: ![alt text](https://api.travis-ci.org/louberger/dlep-extensions.svg?branch=master)
+* For details see: https://travis-ci.org/louberger/dlep-extensions
+* For results on past commits see: https://travis-ci.org/louberger/dlep-extensions/builds
+
 This repo contains proposed extentions to the DLEP protocol.
 DLEP is being standardized in the IETF MANET WG.
 See https://datatracker.ietf.org/wg/manet/
