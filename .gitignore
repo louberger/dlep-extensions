@@ -1,5 +1,6 @@
 [a-z]*/*.html
 [a-z]*/*.txt
+*.raw
 *~
 *.prev
 *.ed
