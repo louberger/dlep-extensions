@@ -45,7 +45,7 @@ Extension</title>
 <section anchor="sec-1" title="Introduction">
 <t>
   The Dynamic Link Event Protocol (DLEP) is defined in <xref
-  target="I-D.ietf-manet-dlep"/>. It provides the exchange of link
+  target="RFC8175"/>. It provides the exchange of link
   related control information between DLEP peers.  DLEP peers are 
   comprised of a modem and a router. DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
@@ -67,8 +67,9 @@ Extension</title>
 <t>
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in BCP
-   14, RFC 2119 <xref target="RFC2119"/>.
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and
+   only when, they appear in all capitals, as shown here.
 </t>
 </section>
 </section>
@@ -79,7 +80,7 @@ Extension</title>
    implementation MUST include the Latency Range Extension Type Value in
    the Extensions Supported Data Item. The Extensions Supported Data
    Item is sent and processed according to <xref
-   target="I-D.ietf-manet-dlep"/>.
+   target="RFC8175"/>.
 </t>
 <t>
   The Latency Range Extension Type Value is TBA1, see <xref
@@ -89,12 +90,12 @@ Extension</title>
 <section anchor="sec-data-items" title="Latency Range Data Items">
 <t>
   The Latency Range Data Item serves much the same purpose as the
-  Latency Data Item defined in <xref target="I-D.ietf-manet-dlep"/> with
+  Latency Data Item defined in <xref target="RFC8175"/> with
   the addition of being able to communicate the latency range that may
   be experienced by traffic on a link.  The Latency Range Item MAY be
   carried in the same messages and MUST be processed according to the
   same rules as the Latency Range Data Item defined in <xref
-  target="I-D.ietf-manet-dlep"/>.
+  target="RFC8175"/>.
 </t>
 
 <t>
@@ -146,7 +147,7 @@ Extension</title>
    The extension introduces a new mechanism for flow control between a
    router and modem using the DLEP protocol.  The 
    extension does not inherently introduce any additional threats
-   above those documented in <xref target="I-D.ietf-manet-dlep"/>.
+   above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
    when running the extension defined in this document.
 </t>
@@ -155,7 +156,7 @@ Extension</title>
 <t>
   This document requests the assignment of 2 values by IANA.  All
   assignments are to registries defined by <xref
-  target="I-D.ietf-manet-dlep"/>.
+  target="RFC8175"/>.
 </t>
 <section anchor="sec-iana-ext" title="Extension Type Value">
 <t>
@@ -191,7 +192,8 @@ Extension</title>
 <references title="Normative References">
 
 <?rfc include="reference.RFC.2119"?>
-<?rfc include="reference.I-D.ietf-manet-dlep.xml"?>
+<?rfc include="reference.RFC.8174"?>
+<?rfc include="reference.RFC.8175"?>
 
 <?rfc needLines="100"?>
 </references>

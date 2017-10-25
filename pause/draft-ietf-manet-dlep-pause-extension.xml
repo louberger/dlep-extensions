@@ -59,7 +59,7 @@ Extension</title>
 <section anchor="sec-1" title="Introduction">
 <t>
   The Dynamic Link Event Protocol (DLEP) is defined in <xref
-  target="I-D.ietf-manet-dlep"/>. It provides the exchange of link
+  target="RFC8175"/>. It provides the exchange of link
   related control information between DLEP peers.  DLEP peers are
   comprised of a modem and a router. DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
@@ -89,8 +89,9 @@ Extension</title>
 <t>
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in BCP
-   14, RFC 2119 <xref target="RFC2119"/>.
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and
+   only when, they appear in all capitals, as shown here.
 </t>
 </section>
 </section>
@@ -101,7 +102,7 @@ Extension</title>
    implementation MUST include the Control Plane Based Pause Extension Type
    Value in the Extensions Supported Data Item. The Extensions Supported
    Data Item is sent and processed according to <xref
-   target="I-D.ietf-manet-dlep"/>.
+   target="RFC8175"/>.
 </t>
 <t>
   The Control Plane Based Pause Extension Type Value is TBA1, see <xref
@@ -171,7 +172,7 @@ Extension</title>
     <t hangText="Data Item Type:">TBA2</t>
     <t hangText="Length:">Variable
       <vspace blankLines="1"/>
-      Per <xref target="I-D.ietf-manet-dlep"/> Length
+      Per <xref target="RFC8175"/> Length
       is the number of octets in the data item, excluding the Type and
       Length fields.
     </t>
@@ -218,7 +219,7 @@ Extension</title>
       assigned a Queue Index value of 1, and subsequent data item are
       numbered incrementally.  The format of the Queue Parameter Sub
       Data Item is patterned after the standard DLEP data item format,
-      see <xref target="I-D.ietf-manet-dlep"/> Section 11.3.  Any errors
+      see <xref target="RFC8175"/> Section 11.3.  Any errors
       or inconsistencies encountered in parsing Sub Data Items are
       handled in the same fashion as any other Data Item parsing error
       encountered in DLEP.
@@ -262,7 +263,7 @@ Extension</title>
   <list style="hanging">
     <t hangText="Length:">Variable
       <vspace blankLines="1"/>
-      Per <xref target="I-D.ietf-manet-dlep"/> Length
+      Per <xref target="RFC8175"/> Length
       is the number of octets in the data item, excluding the Type and
       Length fields.
     </t>
@@ -359,7 +360,7 @@ Extension</title>
     <t hangText="Data Item Type:">TBA3</t>
     <t hangText="Length:">Variable
       <vspace blankLines="1"/>
-      Per <xref target="I-D.ietf-manet-dlep"/> Length
+      Per <xref target="RFC8175"/> Length
       is the number of octets in the data item, excluding the Type and
       Length fields. It will equal the number of Queue Index fields
       carried in the data item.
@@ -429,7 +430,7 @@ Extension</title>
    The extension introduces a new mechanism for flow control between a
    router and modem using the DLEP protocol.  The
    extension does not inherently introduce any additional threats
-   above those documented in <xref target="I-D.ietf-manet-dlep"/>.
+   above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
    when running the extension defined in this document.
 </t>
@@ -438,7 +439,7 @@ Extension</title>
 <t>
   This document requests the assignment of 4 values by IANA.  All
   assignments are to registries defined by <xref
-  target="I-D.ietf-manet-dlep"/>.
+  target="RFC8175"/>.
 </t>
 <section anchor="sec-iana-ext" title="Extension Type Value">
 <t>
@@ -477,7 +478,8 @@ Extension</title>
 <references title="Normative References">
 
 <?rfc include="reference.RFC.2119"?>
-<?rfc include="reference.I-D.ietf-manet-dlep.xml"?>
+<?rfc include="reference.RFC.8174"?>
+<?rfc include="reference.RFC.8175"?>
 
 </references>
 

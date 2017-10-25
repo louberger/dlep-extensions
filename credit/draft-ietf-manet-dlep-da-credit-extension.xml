@@ -60,7 +60,7 @@ Extension</title>
 <section anchor="sec-1" title="Introduction">
 <t>
   The Dynamic Link Event Protocol (DLEP) is defined in <xref
-  target="I-D.ietf-manet-dlep"/>. It provides the exchange of link
+  target="RFC8175"/>. It provides the exchange of link
   related control information between DLEP peers.  DLEP peers are
   comprised of a modem and a router. DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
@@ -94,8 +94,9 @@ Extension</title>
 <t>
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in BCP
-   14, RFC 2119 <xref target="RFC2119"/>.
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and
+   only when, they appear in all capitals, as shown here.
 </t>
 </section>
 </section>
@@ -106,7 +107,7 @@ Extension</title>
     be used to support DiffServ and non-DiffServ based flow control.
     Both types of DLEP endpoints, i.e., a router and a modem, negotiate
     the use of extension during session initialization, see Section 5.2
-    <xref target="I-D.ietf-manet-dlep"/>. When using this extension,
+    <xref target="RFC8175"/>. When using this extension,
     data is allowed to be sent by the router to the modem only when
     there are credits available.
   </t>
@@ -156,7 +157,7 @@ Extension</title>
    Extension is to be used, an implementation MUST include the DiffServ
    Aware Credit Windowing Type Value in the Extensions Supported Data
    Item. The Extensions Supported Data Item is sent and processed
-   according to <xref target="I-D.ietf-manet-dlep"/>.
+   according to <xref target="RFC8175"/>.
 </t>
 <t>
   The DiffServ Aware Credit Windowing Extension Type Value is TBA1, see
@@ -316,7 +317,7 @@ Extension</title>
     <t hangText="Data Item Type:">TBA4</t>
     <t hangText="Length:">Variable
       <vspace blankLines="1"/>
-      Per <xref target="I-D.ietf-manet-dlep"/> Length
+      Per <xref target="RFC8175"/> Length
       is the number of octets in the data item, excluding the Type and
       Length fields.
     </t>
@@ -446,7 +447,7 @@ Extension</title>
     <t hangText="Data Item Type:">TBA5</t>
     <t hangText="Length:">Variable
       <vspace blankLines="1"/>
-      Per <xref target="I-D.ietf-manet-dlep"/>, Length
+      Per <xref target="RFC8175"/>, Length
       is the number of octets in the data item, excluding the Type and
       Length fields. It will equal 8 plus the number of Queue Index
       fields carried in the data item and MUST be at least 9.
@@ -543,7 +544,7 @@ Extension</title>
     <t hangText="Data Item Type:">TBA6</t>
     <t hangText="Length:">Variable
       <vspace blankLines="1"/>
-      Per <xref target="I-D.ietf-manet-dlep"/> Length
+      Per <xref target="RFC8175"/> Length
       is the number of octets in the data item, excluding the Type and
       Length fields. It will equal 8 plus the number of Queue Index
       fields carried in the data item and MUST be at least 9.
@@ -622,7 +623,7 @@ Extension</title>
     <t hangText="Data Item Type:">TBA7</t>
     <t hangText="Length:">Variable
       <vspace blankLines="1"/>
-      Per <xref target="I-D.ietf-manet-dlep"/> Length
+      Per <xref target="RFC8175"/> Length
       is the number of octets in the data item, excluding the Type and
       Length fields. It will equal the number of Queue Index
       fields carried in the data item and MUST be at least 1.
@@ -664,7 +665,7 @@ Extension</title>
    The extension introduces a DiffServ awareness to the mechanisms
    defined in <xref target="I-D.ietf-manet-credit-window"/>.  The
    extension does not inherently introduce any additional threats above
-   those documented in <xref target="I-D.ietf-manet-dlep"/>.  The
+   those documented in <xref target="RFC8175"/>.  The
    approach taken to Security in that document and <xref
    target="I-D.ietf-manet-credit-window"/> apply equally when running
    the extension defined in this document.
@@ -674,7 +675,7 @@ Extension</title>
 <t>
   This document requests the assignment of 5 values by IANA.  All
   assignments are to registries defined by <xref
-  target="I-D.ietf-manet-dlep"/>.
+  target="RFC8175"/>.
 </t>
 <section anchor="sec-iana-ext" title="Extension Type Value">
 <t>
@@ -726,8 +727,9 @@ Extension</title>
 <back>
 <references title="Normative References">
 
-<?rfc include="reference.I-D.ietf-manet-dlep.xml"?>
 <?rfc include="reference.RFC.2119"?>
+<?rfc include="reference.RFC.8174"?>
+<?rfc include="reference.RFC.8175"?>
 
 </references>
 

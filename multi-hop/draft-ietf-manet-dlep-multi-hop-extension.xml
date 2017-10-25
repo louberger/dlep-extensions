@@ -45,7 +45,7 @@
 <section anchor="sec-1" title="Introduction">
 <t>
   The Dynamic Link Event Protocol (DLEP) is defined in <xref
-  target="I-D.ietf-manet-dlep"/>. It provides the exchange of link
+  target="RFC8175"/>. It provides the exchange of link
   related control information between DLEP peers.  DLEP peers are 
   comprised of a modem and a router. DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
@@ -54,7 +54,7 @@
 <t>
   Some modem technologies support connectivity to destinations via
   multi-hop forwarding. DLEP Destination messages can be used to report
-  such connectivity, see <xref target="I-D.ietf-manet-dlep"/>, but do
+  such connectivity, see <xref target="RFC8175"/>, but do
   not provide any information related to the number or capacity of the
   hops.  The extension defined in this document enables modems to inform
   routers when multi-hop forwarding is being used, and routers to
@@ -72,8 +72,9 @@
 <t>
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in BCP
-   14, RFC 2119 <xref target="RFC2119"/>.
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and
+   only when, they appear in all capitals, as shown here.
 </t>
 </section>
 </section>
@@ -84,7 +85,7 @@
    To indicate that the extension is to be used, an implementation MUST
    include the Multi-Hop Forwarding Extension Type Value in the
    Extensions Supported Data Item. The Extensions Supported Data Item is
-   sent and processed according to <xref target="I-D.ietf-manet-dlep"/>.
+   sent and processed according to <xref target="RFC8175"/>.
 </t>
 <t>
   The Multi-Hop Forwarding Extension Type Value is TBA1, see <xref
@@ -309,7 +310,7 @@
    The extension introduces a new mechanism for flow control between a
    router and modem using the DLEP protocol.  The 
    extension does not inherently introduce any additional threats
-   above those documented in <xref target="I-D.ietf-manet-dlep"/>.
+   above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
    when running the extension defined in this document.
 </t>
@@ -318,7 +319,7 @@
 <t>
   This document requests the assignment of 3 values by IANA.  All
   assignments are to registries defined by <xref
-  target="I-D.ietf-manet-dlep"/>.
+  target="RFC8175"/>.
   It also requests creation of one new registry.
 </t>
 <section anchor="sec-iana-ext" title="Extension Type Value">
@@ -378,7 +379,8 @@
 <references title="Normative References">
 
 <?rfc include="reference.RFC.2119"?>
-<?rfc include="reference.I-D.ietf-manet-dlep.xml"?>
+<?rfc include="reference.RFC.8174"?>
+<?rfc include="reference.RFC.8175"?>
 
 </references>
 
