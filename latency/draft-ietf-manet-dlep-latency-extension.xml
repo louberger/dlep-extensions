@@ -144,8 +144,8 @@ Extension</title>
 
 <section anchor="sec-sec" title="Security Considerations">
 <t>
-   The extension introduces a new mechanism for flow control between a
-   router and modem using the DLEP protocol.  The 
+   The extension introduces a new Data Item
+   for the DLEP protocol.  The
    extension does not inherently introduce any additional threats
    above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
@@ -161,7 +161,7 @@ Extension</title>
 <section anchor="sec-iana-ext" title="Extension Type Value">
 <t>
   This document requests one new assignment to the DLEP Extensions
-  Registry named "Extension Tyoe Values" in the range with the
+  Registry named "Extension Type Values" in the range with the
   "Specification Required" policy. The requested value is as follows:
 </t>
 <texttable anchor="table_et" title="Requested Extension Type Value">
