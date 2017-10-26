@@ -34,7 +34,7 @@
   <date/>
   <abstract>
 <t>
-  This document defines an extension to the DLEP protocol that enables a
+  This document defines an extension to the DLEP protocol that enables
   the reporting and control of Multi-Hop Forwarding by DLEP capable
   modems.
 </t>
@@ -307,8 +307,9 @@
 </section>
 <section anchor="sec-sec" title="Security Considerations">
 <t>
-   The extension introduces a new mechanism for flow control between a
-   router and modem using the DLEP protocol.  The 
+   The extension enables
+   the reporting and control of forwarding information by DLEP capable
+   modems.  The 
    extension does not inherently introduce any additional threats
    above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
@@ -325,7 +326,7 @@
 <section anchor="sec-iana-ext" title="Extension Type Value">
 <t>
   This document requests 1 new assignment to the DLEP Extensions
-  Registry named "Extension Tyoe Values" in the range with the
+  Registry named "Extension Type Values" in the range with the
   "Specification Required" policy. The requested value is as follows:
 </t>
 <texttable anchor="table_et" title="Requested Extension Type Value">
