@@ -67,7 +67,7 @@ Extension</title>
 </t>
 <t>
   The base DLEP specification does not include any data plane flow control
-  capability.  There are various flow control possible, e.g., see <xref
+  capability.  Various flow control methods are possible, e.g., see <xref
   target="I-D.ietf-manet-credit-window"/>.  The extension defined in
   this document supports flow control of data traffic based on explicit messages sent
   via DLEP by a modem to indicate when a router should hold off sending
@@ -181,7 +181,7 @@ Extension</title>
       An 8-bit unsigned integer indicating the number of queues
       represented in the data item.  This field MUST contain a value of
       at least one (1), and is equal to one greater than the number of
-      included Queue Parameter Sub Data Item.
+      included Queue Parameter Sub Data Items.
     </t>
    <t hangText="Scale:">
       <vspace blankLines="1"/>
@@ -216,7 +216,7 @@ Extension</title>
     <t>
       Queue Parameter Sub Data Items are an ordered list composed of the
       identical format sub data item.  The first sub data item is
-      assigned a Queue Index value of 1, and subsequent data item are
+      assigned a Queue Index value of 1, and subsequent data items are
       numbered incrementally.  The format of the Queue Parameter Sub
       Data Item is patterned after the standard DLEP data item format,
       see <xref target="RFC8175"/> Section 11.3.  Any errors
@@ -444,7 +444,7 @@ Extension</title>
 <section anchor="sec-iana-ext" title="Extension Type Value">
 <t>
   This document requests 1 new assignment to the DLEP Extensions
-  Registry named "Extension Tyoe Values" in the range with the
+  Registry named "Extension Type Values" in the range with the
   "Specification   Required" policy. The requested value is as
   follows:
 </t>
