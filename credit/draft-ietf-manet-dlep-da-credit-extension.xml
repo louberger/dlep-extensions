@@ -21,7 +21,7 @@ Extension</title>
         <street>244 Wood Street</street>
         <city>Lexington</city>
         <region>MA</region>
-        <code>02420-9108</code>
+        <code>02421-6426</code>
       </postal>
        <email>bcheng@ll.mit.edu</email>
     </address>
@@ -34,7 +34,7 @@ Extension</title>
         <street>244 Wood Street</street>
         <city>Lexington</city>
         <region>MA</region>
-        <code>02420-9108</code>
+        <code>02421-6426</code>
       </postal>
        <email>David.Wiggins@ll.mit.edu</email>
     </address>
@@ -980,7 +980,7 @@ Extension</title>
 <section anchor="sec-iana-ext" title="Extension Type Value">
 <t>
   This document requests 1 new assignment to the DLEP Extensions
-  Registry named "Extension Tyoe Values" in the range with the
+  Registry named "Extension Type Values" in the range with the
   "Specification Required" policy.  The requested value is as follows:
 </t>
 <texttable anchor="table_et" title="Requested Extension Type Value">
