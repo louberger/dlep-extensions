@@ -326,6 +326,10 @@ Extension</title>
   Queue Index defined by <xref target="sec-di-qp"/>, which in turn
   indicates a set of traffic identified by DSCPs.  The special value of
   255 is used to indicate that all traffic is to be suppressed.
+  If a Pause Data Item contains a Queue Index is a value other than 0, 255,
+  or a queue index established by a Session Initialization or Session Update
+  Message, the session is terminated with a Status Data Item of
+  Invalid Data.
 </t>
 <t>
   While there is no restriction on the number of Messages containing
