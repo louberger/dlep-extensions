@@ -214,8 +214,8 @@ Extension</title>
   <section anchor="sec-di-qp-sub" title="Queue Parameter Sub Data Item">
 
     <t>
-      Queue Parameter Sub Data Items are an ordered list composed of the
-      identical format sub data item.  The first sub data item is
+      Queue Parameter Sub Data Items are an ordered list composed of
+      sub data items with a common format.  The first sub data item is
       assigned a Queue Index value of 1, and subsequent data items are
       numbered incrementally.  The format of the Queue Parameter Sub
       Data Item is patterned after the standard DLEP data item format,
@@ -263,8 +263,8 @@ Extension</title>
   <list style="hanging">
     <t hangText="Length:">Variable
       <vspace blankLines="1"/>
-      Per <xref target="RFC8175"/> Length
-      is the number of octets in the data item, excluding the Type and
+      Copying <xref target="RFC8175"/>, Length
+      is the number of octets in the sub data item, excluding the Type and
       Length fields.
     </t>
     <t hangText="Num DSCPs Qn:">
@@ -326,10 +326,6 @@ Extension</title>
   Queue Index defined by <xref target="sec-di-qp"/>, which in turn
   indicates a set of traffic identified by DSCPs.  The special value of
   255 is used to indicate that all traffic is to be suppressed.
-  If a Pause Data Item contains a Queue Index is a value other than 0, 255,
-  or a queue index established by a Session Initialization or Session Update
-  Message, the session is terminated with a Status Data Item of
-  Invalid Data.
 </t>
 <t>
   While there is no restriction on the number of Messages containing
@@ -340,6 +336,10 @@ Extension</title>
   A router which receives the Pause Data Item MUST cease sending
   the identified traffic to the modem. This may of course translate into
   the router's queues exceeding their own thresholds.
+  If a received Pause Data Item contains a Queue Index value other than
+  0, 255, or a queue index established by a Session Initialization or
+  Session Update Message, the router MUST terminate the session with a
+  Status Data Item indicating Invalid Data.
 </t>
 <t>
   The format of the Pause Data Item is:
