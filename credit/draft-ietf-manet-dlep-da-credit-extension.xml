@@ -467,7 +467,7 @@ Extension</title>
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Data Item Type                | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |Traffic Class. Identifier (TID)|   Num CIDs    |   Reserved    |
+    |Traffic Class. Identifier (TID)|   Num SDIs    |   Reserved    |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |           Traffic Classification Sub Data Item 1              |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -493,7 +493,7 @@ Extension</title>
         set.  There is no restriction on values used by a modem, and there
         is no requirement for sequential or ordered values.
       </t>
-      <t hangText="Num CIDs:">
+      <t hangText="Num SDIs:">
         <vspace blankLines="1"/>
         An 8-bit unsigned integer indicating the number of Traffic
         Classification Sub Data Items included in the data item.  A value
@@ -509,7 +509,7 @@ Extension</title>
         <vspace blankLines="1"/>
         Zero or more Traffic Classification Sub Data Items of the format
         defined below MAY be included.  The number MUST match the value
-        carried in the Num CIDs field.
+        carried in the Num SDIs field.
       </t>
     </list>
   </t>
