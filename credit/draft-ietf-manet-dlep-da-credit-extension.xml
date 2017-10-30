@@ -170,7 +170,7 @@ Extension</title>
     map it into the credit semantics defined in this document.  In
     particular, the credit window is defined below to include per frame
     (packet) MAC headers and this may not match the actual overhead of
-    the modem attached transmission technology.  In the case wither a
+    the modem attached transmission technology.  In that case a
     direct mapping or an approximation will need to be made by the modem
     to provide appropriate credit values.
   </t>
@@ -199,7 +199,7 @@ Extension</title>
   credits available in the associated Credit Window.
   This document defines credit windows in octets.  A credit window value
   MUST be larger than the number of octets contained in a packet,
-  including and MAC headers used between the router and the modem, in
+  including any MAC headers used between the router and the modem, in
   order for the router to send the packet to a modem for forwarding.
   The credit window is decremented by the number of sent octets.
   </t>
