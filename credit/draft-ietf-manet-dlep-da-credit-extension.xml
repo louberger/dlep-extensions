@@ -75,25 +75,30 @@ Extension</title>
   target="I-D.ietf-manet-credit-window"/>.
 </t>
 <t>
-  This document defines a DLEP extension which provides flow control
-  for DiffServ <xref target="RFC2475"/> traffic sent from a router
-  to a modem.  Flow control is provided for multiple DSCPs
-  (differentiated services codepoints), which are grouped into sets
-  of logical "Credit Windows" and their associated queues.  The
-  extension defined in this document is referred to as "DiffServ
-  Aware Credit Windowing" or, more simply, the "DA Credit"
-  extension.  The extension is structured to allow for reuse of the
-  defined credit window based flow control with traffic classification
-  techniques other than DiffServ, e.g., IEEE 802.1 Q priority code
-  points or even 5-tuple IP flows.  For general background on traffic
-  classification see <xref target="RFC2475"/> Section 2.3.
+  This document defines a DLEP extension which provides an alternate
+  flow control mechanism for traffic sent from a router to a modem. Flow
+  control is provide using one or more logical "Credit Windows", each of
+  which will typically be supported by an associated virtual or physical
+  queue.  Traffic sent by a router will use traffic classification
+  information provided by the modem to identify which traffic is
+  associated with each credit window.  (For general background on
+  traffic classification see <xref target="RFC2475"/> Section 2.3.) This
+  document supports traffic classification based on DLEP destination and
+  DiffServ <xref target="RFC2475"/> DSCPs (differentiated services
+  codepoints).  Credit windows may be shared or dedicated on a per
+  {destination, DSCP} tuple basis.  Said another way, the defined
+  mechanism allows for credit windows to be shared across traffic sent
+  to multiple DLEP destinations and DSCPs, or used exclusively for
+  traffic sent to a particular destination and/or DSCP.  The extension
+  also supports the "wildcard" matching of any DSCP.
 </t>
 <t>
-  The flow control defined in this document is provided based on credit
-  windows that are associated with one or more DSCPs.  Said another way,
-  the defined mechanism allows for Credit Windows to be shared across
-  traffic sent to multiple DLEP destinations or used exclusively for
-  traffic sent to a particular destination.
+  The extension defined in this document is referred to as "DiffServ
+  Aware Credit Windowing" or, more simply, the "DA Credit" extension.
+  The extension is structured to allow for reuse of the defined credit
+  window based flow control with traffic classification techniques other
+  than DiffServ, e.g., IEEE 802.1 Q priority code points or even 5-tuple
+  IP flows.
 </t>
 <t>
   This document defines a new DLEP Extension Type Value in <xref
@@ -134,9 +139,11 @@ Extension</title>
     informative and, potential, future uses.
   </t>
   <t>
-    Routers need the combination of DLEP identified destination or
-    destinations together with DSCPs, if any, associated with a CID in
-    order to match, i.e., classify, traffic it sends to specific credit
+    As mentioned above, traffic classification supported by this
+    document is performed on a per {destination, DSCP} tuple basis.
+    This means that, routers need the combination of the DLEP identified
+    destination and DSCP associated with a CID in
+    order to match traffic it sends to specific credit
     windows.  Modems provide the mapping of DSCPs to CIDs in sets, each
     of which is identified via a "Traffic Classification Identifier" or
     "TID".  When a destination becomes reachable, a modem "Associates"
