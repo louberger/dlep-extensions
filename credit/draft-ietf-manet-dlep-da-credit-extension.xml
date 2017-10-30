@@ -157,6 +157,16 @@ Extension</title>
     Response and the new "Credit Control Response" Messages.  Routers
     can also request credits using the new "Credit Control" Message.
   </t>
+  <t>
+    When modems provide credits to a router, they will need to take into
+    account any overhead of their attached transmission technology and
+    map it into the credit semantics defined in this document.  In
+    particular, the credit window is defined below to include per frame
+    (packet) MAC headers and this may not match the actual overhead of
+    the modem attached transmission technology.  In the case wither a
+    direct mapping or an approximation will need to be made by the modem
+    to provide appropriate credit values.
+  </t>
 <t>
 </t>
 </section>
@@ -177,22 +187,22 @@ Extension</title>
 <section anchor="data-plane" title="Data Plane Considerations">
   <t>
   When the use of the extension defined in this document is agreed upon
-  per standard DLEP processing, see <xref target="sec-ext-type"/>,
-  a router MUST NOT send data to a modem for forwarding when there are
-  no credits available in the associated Credit Window.  Note, as
-  mentioned below, credit windows are maintained in octets.  A credit
-  window value MUST be larger than the number of octets contained in a
-  packet, including and MAC headers used between the router and the
-  modem, in order for the router to send the packet to a modem for
-  forwarding.  The credit window is decremented by the number of sent
-  octets.
+  per standard DLEP processing, see <xref target="sec-ext-type"/>, a
+  router MUST NOT send data to a modem for forwarding when there are no
+  credits available in the associated Credit Window.
+  This document defines credit windows in octets.  A credit window value
+  MUST be larger than the number of octets contained in a packet,
+  including and MAC headers used between the router and the modem, in
+  order for the router to send the packet to a modem for forwarding.
+  The credit window is decremented by the number of sent octets.
   </t>
   <t>
     A router MUST identify the credit window associated with traffic
     sent to a modem based on the traffic classification information
-    provided in the data items defined in this document.  The definitions
-    support identification based on DLEP destination, which the router
-    views as its next hop, and, at the modem's discretion, DSCPs.
+    provided in the data items defined in this document.  The
+    definitions support identification based on DLEP destination and, at
+    the modem's discretion, DSCPs. Note that routers will typically view
+    a DLEP destination as the next hop.
   </t>
 </section>
 
@@ -649,7 +659,7 @@ Extension</title>
 <section anchor="sec-di-cwa" title="Credit Window Associate">
   <t>
     The Credit Window Associate Data Item is used by a modem to
-    associate a traffic classification information with a destination.
+    associate traffic classification information with a destination.
     The traffic classification information is identified using a TID
     value that has been previously been sent by the modem or is listed
     in a Credit Window Traffic Classification Data Item carried in the
