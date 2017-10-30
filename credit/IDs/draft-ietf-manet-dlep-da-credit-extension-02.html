@@ -1,0 +1,1121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>DLEP DiffServ Aware Credit Windowing Extension</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.1.1" rel="Chapter" title="1.1 Key Words"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Extension Overview"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Extension Usage and Identification"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Data Plane Considerations"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Extension Messages"/>
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Credit Control Message"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Credit Control Response Message"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Extension Data Items"/>
+<link href="#rfc.section.6.1" rel="Chapter" title="6.1 Credit Window Initialization"/>
+<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Credit Window Traffic Classification"/>
+<link href="#rfc.section.6.2.1" rel="Chapter" title="6.2.1 Traffic Classification Sub Data Item"/>
+<link href="#rfc.section.6.2.2" rel="Chapter" title="6.2.2 DiffServ Traffic Classification Sub Data Item"/>
+<link href="#rfc.section.6.3" rel="Chapter" title="6.3 Credit Window Associate"/>
+<link href="#rfc.section.6.4" rel="Chapter" title="6.4 Credit Window Credit Grant"/>
+<link href="#rfc.section.6.5" rel="Chapter" title="6.5 Credit Window Status"/>
+<link href="#rfc.section.6.6" rel="Chapter" title="6.6 Credit Window Request"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 Compatibility"/>
+<link href="#rfc.section.8" rel="Chapter" title="8 Security Considerations"/>
+<link href="#rfc.section.9" rel="Chapter" title="9 IANA Considerations"/>
+<link href="#rfc.section.9.1" rel="Chapter" title="9.1 Extension Type Value"/>
+<link href="#rfc.section.9.2" rel="Chapter" title="9.2 Message Values"/>
+<link href="#rfc.section.9.3" rel="Chapter" title="9.3 Data Item Values"/>
+<link href="#rfc.section.9.4" rel="Chapter" title="9.4 DLEP Sub Data Item Registry"/>
+<link href="#rfc.references" rel="Chapter" title="10 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="10.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="10.2 Informative References"/>
+<link href="#rfc.appendix.A" rel="Chapter" title="A Acknowledgments"/>
+<link href="#rfc.appendix.B" rel="Chapter" title="B Open and Resolved Issues"/>
+<link href="#rfc.appendix.B.1" rel="Chapter" title="B.1 Merge with [I-D.ietf-manet-credit-window]"/>
+<link href="#rfc.appendix.B.2" rel="Chapter" title="B.2 Supporting Router Limits"/>
+<link href="#rfc.appendix.B.3" rel="Chapter" title="B.3 Absolute vs Increment"/>
+<link href="#rfc.appendix.B.4" rel="Chapter" title="B.4 Bidirectional Flow                                                   Control (closed)"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.5.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Cheng, B., Wiggins, D., and L. Berger" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-manet-dlep-da-credit-extension-02" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-10-30" />
+  <meta name="dct.abstract" content="This document defines an extension to the DLEP protocol that enables a DiffServ aware credit-windowing scheme for destination-specific and shared flow control.  " />
+  <meta name="description" content="This document defines an extension to the DLEP protocol that enables a DiffServ aware credit-windowing scheme for destination-specific and shared flow control.  " />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">Network Working Group</td>
+  <td class="right">B. Cheng</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">D. Wiggins</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Standards Track</td>
+  <td class="right">Lincoln Laboratory</td>
+</tr>
+<tr>
+  <td class="left">Expires: May 3, 2018</td>
+  <td class="right">L. Berger</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">LabN Consulting, L.L.C.</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">October 30, 2017</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">DLEP DiffServ Aware Credit Windowing Extension<br />
+  <span class="filename">draft-ietf-manet-dlep-da-credit-extension-02</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>This document defines an extension to the DLEP protocol that enables a DiffServ aware credit-windowing scheme for destination-specific and shared flow control.  </p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on May 3, 2018.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<ul><li>1.1.   <a href="#rfc.section.1.1">Key Words</a></li>
+</ul><li>2.   <a href="#rfc.section.2">Extension Overview</a></li>
+<li>3.   <a href="#rfc.section.3">Extension Usage and Identification</a></li>
+<li>4.   <a href="#rfc.section.4">Data Plane Considerations</a></li>
+<li>5.   <a href="#rfc.section.5">Extension Messages</a></li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Credit Control Message</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">Credit Control Response Message</a></li>
+</ul><li>6.   <a href="#rfc.section.6">Extension Data Items</a></li>
+<ul><li>6.1.   <a href="#rfc.section.6.1">Credit Window Initialization</a></li>
+<li>6.2.   <a href="#rfc.section.6.2">Credit Window Traffic Classification</a></li>
+<ul><li>6.2.1.   <a href="#rfc.section.6.2.1">Traffic Classification Sub Data Item</a></li>
+<li>6.2.2.   <a href="#rfc.section.6.2.2">DiffServ Traffic Classification Sub Data Item</a></li>
+</ul><li>6.3.   <a href="#rfc.section.6.3">Credit Window Associate</a></li>
+<li>6.4.   <a href="#rfc.section.6.4">Credit Window Credit Grant</a></li>
+<li>6.5.   <a href="#rfc.section.6.5">Credit Window Status</a></li>
+<li>6.6.   <a href="#rfc.section.6.6">Credit Window Request</a></li>
+</ul><li>7.   <a href="#rfc.section.7">Compatibility</a></li>
+<li>8.   <a href="#rfc.section.8">Security Considerations</a></li>
+<li>9.   <a href="#rfc.section.9">IANA Considerations</a></li>
+<ul><li>9.1.   <a href="#rfc.section.9.1">Extension Type Value</a></li>
+<li>9.2.   <a href="#rfc.section.9.2">Message Values</a></li>
+<li>9.3.   <a href="#rfc.section.9.3">Data Item Values</a></li>
+<li>9.4.   <a href="#rfc.section.9.4">DLEP Sub Data Item Registry</a></li>
+</ul><li>10.   <a href="#rfc.references">References</a></li>
+<ul><li>10.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>10.2.   <a href="#rfc.references.2">Informative References</a></li>
+</ul><li>Appendix A.   <a href="#rfc.appendix.A">Acknowledgments</a></li>
+<li>Appendix B.   <a href="#rfc.appendix.B">Open and Resolved Issues</a></li>
+<ul><li>B.1.   <a href="#rfc.appendix.B.1">Merge with [I-D.ietf-manet-credit-window]</a></li>
+<li>B.2.   <a href="#rfc.appendix.B.2">Supporting Router Limits</a></li>
+<li>B.3.   <a href="#rfc.appendix.B.3">Absolute vs Increment</a></li>
+<li>B.4.   <a href="#rfc.appendix.B.4">Bidirectional Flow                                                   Control (closed)</a></li>
+</ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#sec-1" id="sec-1">Introduction</a></h1>
+<p id="rfc.section.1.p.1">The Dynamic Link Event Protocol (DLEP) is defined in <a href="#RFC8175">[RFC8175]</a>.  It provides the exchange of link related control information between DLEP peers.  DLEP peers are comprised of a modem and a router.  DLEP defines a base set of mechanisms as well as support for possible extensions.  This document defines one such extension.  </p>
+<p id="rfc.section.1.p.2">The base DLEP specification does not include any flow control capability.  There are various flow control theoretically possible with DLEP.  For example, a credit-windowing scheme for destination-specific flow control which provides aggregate flow control for both modem and routers has been proposed in <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a>.  </p>
+<p id="rfc.section.1.p.3">This document defines a DLEP extension which provides an alternate flow control mechanism for traffic sent from a router to a modem. Flow control is provide using one or more logical "Credit Windows", each of which will typically be supported by an associated virtual or physical queue.  Traffic sent by a router will use traffic classification information provided by the modem to identify which traffic is associated with each credit window.  (For general background on traffic classification see <a href="#RFC2475">[RFC2475]</a> Section 2.3.) This document supports traffic classification based on DLEP destination and DiffServ <a href="#RFC2475">[RFC2475]</a> DSCPs (differentiated services codepoints).  Credit windows may be shared or dedicated on a per {destination, DSCP} tuple basis.  Said another way, the defined mechanism allows for credit windows to be shared across traffic sent to multiple DLEP destinations and DSCPs, or used exclusively for traffic sent to a particular destination and/or DSCP.  The extension also supports the "wildcard" matching of any DSCP.  </p>
+<p id="rfc.section.1.p.4">The extension defined in this document is referred to as "DiffServ Aware Credit Windowing" or, more simply, the "DA Credit" extension.  The extension is structured to allow for reuse of the defined credit window based flow control with traffic classification techniques other than DiffServ, e.g., IEEE 802.1 Q priority code points or even 5-tuple IP flows.  </p>
+<p id="rfc.section.1.p.5">This document defines a new DLEP Extension Type Value in <a href="#sec-ext-type">Section 3</a> which is used to indicate the use of the extension.  Two new messages are defined in <a href="#sec-msgs">Section 5</a>, and six new DLEP Data Items in <a href="#sec-data-items">Section 6</a>.  </p>
+<h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#sec-1.1" id="sec-1.1">Key Words</a></h1>
+<p id="rfc.section.1.1.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <a href="#RFC2119">[RFC2119]</a> <a href="#RFC8174">[RFC8174]</a> when, and only when, they appear in all capitals, as shown here.  </p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#sec-theory" id="sec-theory">Extension Overview</a></h1>
+<p id="rfc.section.2.p.1">The DA Credit extension can be used to support credit based flow control of traffic sent from a router to a modem.  The extension can be used to support DiffServ and non-DiffServ based flow control.  Both types of DLEP endpoints, i.e., a router and a modem, negotiate the use of extension during session initialization, see Section 5.2 <a href="#RFC8175">[RFC8175]</a>.  When using this extension, data is allowed to be sent by the router to the modem only when there are credits available.  </p>
+<p id="rfc.section.2.p.2">Credits are managed on a per logical "Credit Windows" basis.  Each credit window can be thought of as corresponding to a queue within a modem.  Modems pass to the router information on its credit windows and identify each via a "Credit Window Identifier", or "CID".  In addition to the CID, credit window information includes an initial credit window size, as well as the maximum size of the logical queue associated with each CID.  The maximum size is included for informative and, potential, future uses.  </p>
+<p id="rfc.section.2.p.3">As mentioned above, traffic classification supported by this document is performed on a per {destination, DSCP} tuple basis.  This means that, routers need the combination of the DLEP identified destination and DSCP associated with a CID in order to match traffic it sends to specific credit windows.  Modems provide the mapping of DSCPs to CIDs in sets, each of which is identified via a "Traffic Classification Identifier" or "TID".  When a destination becomes reachable, a modem "Associates" (identifies) the TID to be used for traffic sent by the router to that destination.  This use of CIDs, TIDs and association of a TID to a DLEP destination enables modem to share or dedicate resources as needed to match the specifics of its implementation and its attached transmission technology.  </p>
+<p id="rfc.section.2.p.4">Modems provide an initial credit window size at the time of "Credit Window Initialization".  Such initialization can take place during session initiation or any point thereafter.  It can also take place when rate information changes.  Additional "Credit Grants", i.e., increments to Credit Window size, are provided using a Destination Up or the new "Credit Control" Message.  A router provides its view of the Credit Window, which is known as "Status", in Destination Up Response and the new "Credit Control Response" Messages.  Routers can also request credits using the new "Credit Control" Message.  </p>
+<p id="rfc.section.2.p.5">When modems provide credits to a router, they will need to take into account any overhead of their attached transmission technology and map it into the credit semantics defined in this document.  In particular, the credit window is defined below to include per frame (packet) MAC headers and this may not match the actual overhead of the modem attached transmission technology.  In that case a direct mapping or an approximation will need to be made by the modem to provide appropriate credit values.  </p>
+<p/>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#sec-ext-type" id="sec-ext-type">Extension Usage and Identification</a></h1>
+<p id="rfc.section.3.p.1">The use of the extension defined in this document SHOULD be configurable.  To indicate that the DiffServ Aware Credit Windowing Extension is to be used, an implementation MUST include the DiffServ Aware Credit Windowing Type Value in the Extensions Supported Data Item.  The Extensions Supported Data Item is sent and processed according to <a href="#RFC8175">[RFC8175]</a>.  </p>
+<p id="rfc.section.3.p.2">The DiffServ Aware Credit Windowing Extension Type Value is TBA1, see <a href="#sec-iana">Section 9</a>.  </p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#data-plane" id="data-plane">Data Plane Considerations</a></h1>
+<p id="rfc.section.4.p.1">When the use of the extension defined in this document is agreed upon per standard DLEP processing, see <a href="#sec-ext-type">Section 3</a>, a router MUST NOT send data to a modem for forwarding when there are no credits available in the associated Credit Window.  This document defines credit windows in octets.  A credit window value MUST be larger than the number of octets contained in a packet, including any MAC headers used between the router and the modem, in order for the router to send the packet to a modem for forwarding.  The credit window is decremented by the number of sent octets.  </p>
+<p id="rfc.section.4.p.2">A router MUST identify the credit window associated with traffic sent to a modem based on the traffic classification information provided in the data items defined in this document.  The definitions support identification based on DLEP destination and, at the modem's discretion, DSCPs. Note that routers will typically view a DLEP destination as the next hop.  </p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#sec-msgs" id="sec-msgs">Extension Messages</a></h1>
+<p id="rfc.section.5.p.1">Two new messages are defined by this extension: the Credit Control and the Credit Control Response Message.  Sending and receiving both message types MUST be supported by any implementation that advertises use of this extension per <a href="#sec-ext-type">Section 3</a>.  </p>
+<h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#sec-cc-msg" id="sec-cc-msg">Credit Control Message</a></h1>
+<p id="rfc.section.5.1.p.1">Credit Control Messages are sent by modems to provide credit window increases.  For messages sent by modems, only one message can be outstanding at one time.  That is, a modem MUST NOT send a second (or any subsequent) Credit Control Message until a Credit Control Response Message is received from its peer router.  </p>
+<p id="rfc.section.5.1.p.2">Credit Control Messages MAY be sent by routers, e.g., to request credits or provide window status.  No specific response message is required from a modem from a message transaction perspective.  There is no restriction on when a router can send a Credit Control Message.  </p>
+<p id="rfc.section.5.1.p.3">[TBD: Should anything be said about sending, or limiting, multiple credit requests?] </p>
+<p id="rfc.section.5.1.p.4">The Message Type value in the DLEP Message Header is set to TBA2.  </p>
+<p id="rfc.section.5.1.p.5">A message sent by a modem, MUST contain one or more Credit Window Grant Data Items as defined below in <a href="#sec-di-grant">Section 6.4</a>.  A router receiving this message MUST respond with a Credit Control Response Message.  </p>
+<p id="rfc.section.5.1.p.6">A message sent by a router, MUST contain the Credit Window Request Data Item defined below in <a href="#sec-di-request">Section 6.6</a>.  A modem receiving this message MUST process the received message and data item as defined below, which will result in credit window increments being provided via Credit Window Grant Data Items carried in one more more new Credit Control Message.  </p>
+<p id="rfc.section.5.1.p.7">Specific processing associated with each Credit Data Item is provided below.  </p>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#sec-ccr-msg" id="sec-ccr-msg">Credit Control Response Message</a></h1>
+<p id="rfc.section.5.2.p.1">Credit Control Response Messages are sent by routers to report the current Credit Window for a destination.  </p>
+<p id="rfc.section.5.2.p.2">The Message Type value in the DLEP Message Header is set to TBA3.  </p>
+<p id="rfc.section.5.2.p.3">A message sent by a router, MUST contain one or more Credit Window Status data items as defined below in <a href="#sec-di-status">Section 6.5</a>.  </p>
+<p id="rfc.section.5.2.p.4">Specific processing associated with the Credit Window Window Status Data Item is provided below.  </p>
+<p/>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#sec-data-items" id="sec-data-items">Extension Data Items</a></h1>
+<p id="rfc.section.6.p.1">Six data items are defined by this extension.  The Credit Window Initialization Data Item is used by a modem to identify a credit window and set its size.  The Credit Window Traffic Classification Data Item is used by a modem to identify a set which identifies which DSCPs are mapped to a credit window.  The Credit Window Association Data Item is used by a modem to identify which traffic classification set should be used when sending traffic to a particular DLEP identified destination.  The Credit Window Grant is used by a modem to provide additional credits to a router.  The Credit Request is used by a router to request additional credits.  The Credit Window Status is used to advertise the sender's view of number of available credits for state synchronization purposes.  </p>
+<p id="rfc.section.6.p.2">Any errors or inconsistencies encountered in parsing data items are handled in the same fashion as any other Data Item parsing error encountered in DLEP, see <a href="#RFC8175">[RFC8175]</a>. In particular, the node parsing the data item MUST terminate the session with a Status Data Item indicating Invalid Data.  </p>
+<p id="rfc.section.6.p.3">The defined data items and operations have similar objectives as those found in <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a>.  One notable difference from this extension is that in this document credits are never provided by the router to the modem.  </p>
+<h1 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> <a href="#sec-di-cwi" id="sec-di-cwi">Credit Window Initialization</a></h1>
+<p id="rfc.section.6.1.p.1">The Credit Window Initialization Data Item is used by a modem to identify a credit window and set its size.  This data item SHOULD be included in any Session Initialization Response Message that also contains the DiffServ Aware Credit Windowing Extension Type Value in the Extensions Supported Data Item.  Updates to previously identified credit windows or new credit windows MAY be sent by a modem by including the data item in Session Update Messages.  More than one data item MAY be included in a message to provide information on multiple credit windows.  </p>
+<p id="rfc.section.6.1.p.2">The Credit Window Initialization Data Item identifies a credit window using a Credit Window Identifier, or CID.  It also provides the size of the identified credit window.  Finally, a queue size (in bytes) is provided for informational purposes.  Note that to be used, a CID must be listed in a Credit Window Traffic Classification Data Item.  </p>
+<p id="rfc.section.6.1.p.3">The format of the Credit Window Initialization Data Item is: </p>
+<pre>
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Data Item Type                | Length (16)                   |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Credit Window Identifier (CID)|            Reserved           |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                         Credit Value                          :
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    :                         Credit Value                          |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |    Scale      |         Credit Window Size                    |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+<p/>
+<pre>
+      Value  Scale
+      ------------
+          0   B - Bytes     (Octets)
+          1  KB - Kilobytes (B/1024)
+          2  MB - Megabytes (KB/1024)
+          3  GB - Gigabytes (MB/1024)
+        </pre>
+<p/>
+
+<dl>
+  <dt>Data Item Type:</dt>
+  <dd style="margin-left: 8">TBA4</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">16 <br/><br/> Per <a href="#RFC8175">[RFC8175]</a> Length is the number of octets in the data item, excluding the Type and Length fields.  </dd>
+  <dt>Credit Window Identifier (CID):</dt>
+  <dd style="margin-left: 8"><br/><br/> A 16-bit unsigned integer identifying a credit window.  The value of 0xFFFFFFFF is reserved and MUST not be used in this Data Item.  There is no other restriction on values used by a modem, and there is no requirement for sequential or ordered values.  </dd>
+  <dt>Reserved:</dt>
+  <dd style="margin-left: 8"><br/><br/> MUST be set to zero by the sender (a modem) and ignored by the receiver (a router).  </dd>
+  <dt>Credit Value:</dt>
+  <dd style="margin-left: 8"><br/><br/> A 64-bit unsigned integer representing the credits, in octets, to be applied to the Credit Window.  This value includes MAC headers as seen on the link between the modem and router.  </dd>
+  <dt>Scale:</dt>
+  <dd style="margin-left: 8"><br/><br/> An 8-bit unsigned integer indicating the scale used in the Credit Window Size fields.  The valid values are: </dd>
+  <dt>Credit Window Size:</dt>
+  <dd style="margin-left: 8"><br/><br/> A 24-bit unsigned integer representing the maximum size, in the octet scale indicated by the Scale field, of the associated credit window.  </dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.6.1.p.6">A router that receives a Credit Window Initialization Data Item MUST locate the credit window that is associated with the CID indicated in each received Data Item.  If no associated credit window is found, the router MUST initialize a new credit window using the values carried in the Data Item.  When an associated credit window is found, the router MUST update the credit window using the values carried in the Data Item. It is worth noting, that such updates can result in a credit window size being reduced, for example, due to a transmission rate change on the modem.  </p>
+<h1 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2.</a> <a href="#sec-di-tc" id="sec-di-tc">Credit Window Traffic Classification</a></h1>
+<p id="rfc.section.6.2.p.1">The Credit Window Traffic Classification Data Item is used by a modem to provide information to enable router to identify the credit window associated with traffic the router sends.  Each data item includes a set of credit windows and provides traffic classification for each window.  The data item is defined to support classification based on DSCPs, but is designed to be extensible for future traffic classification types.  The data item is not required to provide full traffic classification information.  In the context of the definition included in this document, the DLEP destination address needed to complete the traffic classification information is provided by a modem when it identifies the traffic classification set in a Destination Up message using the Credit Window Associate Data Item defined below.  </p>
+<p id="rfc.section.6.2.p.2">The Credit Window Traffic Classification Data Item SHOULD be included by a modem in any Session Initialization Response Message that also contains the DiffServ Aware Credit Windowing Extension Type Value in the Extensions Supported Data Item.  Updates to previously provided traffic classifications or new traffic classifications MAY be sent by a modem by including the data item in Session Update Messages.  More than one data item MAY be included in a message to provide information on multiple traffic classifiers.  </p>
+<p id="rfc.section.6.2.p.3">The set of traffic classification information provided in the data item is identified using a Traffic Classification Identifier, or TID.  Addition information, e.g., the list DSCPs associated with a credit window, is provided in a variable series of Queue Parameter sub-data items.  Note that to be used, a TID must be listed in a Credit Window Associate Data Item.  </p>
+<p id="rfc.section.6.2.p.4">The format of the Credit Window Traffic Classification Data Item is: </p>
+<pre>
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Data Item Type                | Length                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |Traffic Class. Identifier (TID)|   Num SDIs    |   Reserved    |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |           Traffic Classification Sub Data Item 1              |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    :                                ...                            :
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |           Traffic Classification Sub Data Item n              |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      </pre>
+<p/>
+<p/>
+
+<dl>
+  <dt>Data Item Type:</dt>
+  <dd style="margin-left: 8">TBA5</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">Variable <br/><br/> Per <a href="#RFC8175">[RFC8175]</a> Length is the number of octets in the data item, excluding the Type and Length fields.  </dd>
+  <dt> Traffic Classification Identifier (TID):</dt>
+  <dd style="margin-left: 8"><br/><br/> A 16-bit unsigned integer identifying a traffic classification set.  There is no restriction on values used by a modem, and there is no requirement for sequential or ordered values.  </dd>
+  <dt>Num SDIs:</dt>
+  <dd style="margin-left: 8"><br/><br/> An 8-bit unsigned integer indicating the number of Traffic Classification Sub Data Items included in the data item.  A value of zero (0) is allowed and indicates that no traffic should be matched against this TID.  </dd>
+  <dt>Reserved:</dt>
+  <dd style="margin-left: 8"><br/><br/> MUST be set to zero by the sender (a modem) and ignored by the receiver (a router).  </dd>
+  <dt>Traffic Classification Sub Data Item:</dt>
+  <dd style="margin-left: 8"><br/><br/> Zero or more Traffic Classification Sub Data Items of the format defined below MAY be included.  The number MUST match the value carried in the Num SDIs field.  </dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.6.2.p.7">A router receiving the Traffic Classification Data Item MUST locate the traffic classification information that is associated with the TID indicated in each received Data Item.  If no associated traffic classification information is found, the router MUST initialize a new information set using the values carried in the Data Item.  When associated traffic classification information is found, the router MUST update the information using the values carried in the Data Item.  In both cases, a router MUST also ensure that any data plane state, see <a href="#data-plane">Section 4</a>, that is associated with the TID is updated as needed.  </p>
+<h1 id="rfc.section.6.2.1"><a href="#rfc.section.6.2.1">6.2.1.</a> <a href="#sec-di-tc-sub" id="sec-di-tc-sub">Traffic Classification Sub Data Item</a></h1>
+<p id="rfc.section.6.2.1.p.1">All Traffic Classification Sub Data Items share a common format that is patterned after the standard DLEP data item format, see <a href="#RFC8175">[RFC8175]</a> Section 11.3.  There is no requirement on, or meaning to Sub Data Item ordering.  Any errors or inconsistencies encountered in parsing Sub Data Items are handled in the same fashion as any other Data Item parsing error encountered in DLEP.  </p>
+<p id="rfc.section.6.2.1.p.2">The format of the Traffic Classification Sub Data Item is: </p>
+<pre>
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Sub Data Item Type            | Length                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           Value...                            :
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        </pre>
+<p/>
+<p/>
+
+<dl>
+  <dt>Sub Data Item Type:</dt>
+  <dd style="margin-left: 8"><br/><br/> A 16-bit unsigned integer that indicates the type and corresponding format of the data item's Value field.  Sub Data Item Types are managed according to the IANA registry described in <a href="#sec-iana-sdi">Section 9.4</a>.  </dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">Variable <br/><br/> Copying <a href="#RFC8175">[RFC8175]</a>, Length a 16-bit unsigned integer that is the number of octets in the sub data item, excluding the Type and Length fields.  </dd>
+</dl>
+
+<p> </p>
+<h1 id="rfc.section.6.2.2"><a href="#rfc.section.6.2.2">6.2.2.</a> <a href="#sec-di-tc-ds-sub" id="sec-di-tc-ds-sub">DiffServ Traffic Classification Sub Data Item</a></h1>
+<p id="rfc.section.6.2.2.p.1">The DiffServ Traffic Classification Sub Data Item is used to identify the DSCPs associated with a specific credit window.  Credit windows are identified using CID values that have been previously been sent by the modem or are listed in a Credit Window Initialization Data Item carried in the same messages as the sub data item.  DSCPs are identified in a list of DiffServ fields.  An implementation that does not support DSCPs, and wants to use credit window flow control for all traffic to a destination or destinations, would indicate with 0 DSCPs.  </p>
+<p id="rfc.section.6.2.2.p.2">The format of the DiffServ Traffic Classification Sub Data Item is: </p>
+<pre>
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Must be two (2)               | Length                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Credit Window Identifier (CID)|   Num DSCPs   |   DS Field 1  |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |   DS Field 2  |      ...      |   DS Field n  |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        </pre>
+<p/>
+<pre>
+            0   1   2   3   4   5   6   7
+          +---+---+---+---+---+---+---+---+
+          |         DSCP          |  CU   |
+          +---+---+---+---+---+---+---+---+
+
+            DSCP: differentiated services codepoint
+            CU:   currently unused, MUST be zero
+            </pre>
+<p/>
+
+<dl>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">Variable <br/><br/> Length is the number of octets in the sub data item.  It is equal to seven (7) plus the value of the Num DSCPs field.  </dd>
+  <dt>Credit Window Identifier (CID):</dt>
+  <dd style="margin-left: 8"><br/><br/> A 16-bit unsigned integer identifying a credit window that has been identified in a Credit Window Initialization Data Item, see <a href="#sec-di-cwi">Section 6.1</a>.  Unknown CID values SHOULD be reported and result in associated traffic being dropped.  </dd>
+  <dt>Num DSCPs:</dt>
+  <dd style="margin-left: 8"><br/><br/> An 8-bit unsigned integer indicating the number of DSCPs carried in the sub data item.  A zero (0) indicates a (wildcard) match against any DSCP value.  </dd>
+  <dt>DS Field:</dt>
+  <dd style="margin-left: 8"><br/><br/> Each DS Field is an 8-bit whose definition is the same as <a href="#RFC2474">[RFC2474]</a>.  </dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.6.2.2.p.5">A router receiving the DiffServ Traffic Classification Sub Data Item MUST validate the information on receipt prior to the information and data plan update described earlier in this section.  The credit window associated with the CID indicated in each Data Item must be located.  It is important to note that the CID value may be present in a Credit Window Initialization Data Item carried in the same message as the Sub Data Item. If the CID is not located, the it MUST be treated as an error as described above.  </p>
+<p id="rfc.section.6.2.2.p.6">In the case there are no unknown CIDs, the receiver MUST ensure that each DS Field value is listed only once across the whole Credit Window Traffic Classification Data Item.  Note, this check is across the Data Item and not the individual Sub Data Item.  If the same DS Field value is listed more than once within the same Credit Window Traffic Classification Data Item, the Data Item MUST be treated as an error as described above.  </p>
+<h1 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> <a href="#sec-di-cwa" id="sec-di-cwa">Credit Window Associate</a></h1>
+<p id="rfc.section.6.3.p.1">The Credit Window Associate Data Item is used by a modem to associate traffic classification information with a destination.  The traffic classification information is identified using a TID value that has been previously been sent by the modem or is listed in a Credit Window Traffic Classification Data Item carried in the same message as the data item.  </p>
+<p id="rfc.section.6.3.p.2">A single Credit Window Associate Data Item MUST be included in all Destination Up and Destination Update Messages sent by a modem when the use of the extension defined in this document is agreed upon, see <a href="#sec-ext-type">Section 3</a>.  </p>
+<p id="rfc.section.6.3.p.3">The format of the Credit Window Traffic Classification Data Item is: </p>
+<pre>
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Data Item Type                | Length (2)                    |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |Traffic Class. Identifier (TID)|
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      </pre>
+<p/>
+<p/>
+
+<dl>
+  <dt>Data Item Type:</dt>
+  <dd style="margin-left: 8">TBA6</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">2 <br/><br/> Per <a href="#RFC8175">[RFC8175]</a> Length is the number of octets in the data item, excluding the Type and Length fields.  </dd>
+  <dt> Traffic Classification Identifier (TID):</dt>
+  <dd style="margin-left: 8"><br/><br/> A 16-bit unsigned integer identifying a traffic classification set that has been identified in a Credit Window Traffic Classification Data Item, see <a href="#sec-di-tc">Section 6.2</a>.  Unknown TID values SHOULD be reported and result in associated traffic being dropped.  </dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.6.3.p.6">A router that receives the Credit Window Associate Data Item MUST locate the traffic classification information indicated by the received TID.  If no corresponding information can be located, the Data Item MUST be treated as an error as described above. Once the traffic classification information is located, it MUST be associated with the destination and the router MUST ensure that any data plane state, see <a href="#data-plane">Section 4</a>, that is associated with the TID is updated as needed.  </p>
+<h1 id="rfc.section.6.4"><a href="#rfc.section.6.4">6.4.</a> <a href="#sec-di-grant" id="sec-di-grant">Credit Window Credit Grant</a></h1>
+<p id="rfc.section.6.4.p.1">The Credit Window Credit Grant data item is used by a modem to provide credits to a router.  One or more Credit Window Grant Data Items MAY be carried in the DLEP Destination Up, Destination Announce Response, Destination Update, and Credit Control Messages.  Multiple Credit Window Grant Data Items in a single message are used to indicate different credit values for different credit windows.  In all message types, this data item provides an additional number of octets to be added to the indicated credit window.  Credit window are identified via using using CID values that have been previously been sent by the modem or are listed in a Credit Window Initialization Data Item carried in the same messages as the Data Item.  </p>
+<p id="rfc.section.6.4.p.2">The format of the Credit Window Grant Data Item is: </p>
+<pre>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data Item Type                | Length (12)                   |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Credit Window Identifier (CID)|            Reserved           |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                     Additional Credits                        :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                     Additional Credits                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+<p/>
+<p/>
+
+<dl>
+  <dt>Data Item Type:</dt>
+  <dd style="margin-left: 8">TBA7</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">12 <br/><br/> Per <a href="#RFC8175">[RFC8175]</a>, Length is the number of octets in the data item, excluding the Type and Length fields.  It will equal 8 plus the number of CID fields carried in the data item and MUST be at least 9.  </dd>
+  <dt>Credit Window Identifier (CID):</dt>
+  <dd style="margin-left: 8"><br/><br/> A 16-bit unsigned integer identifying a credit window that has been identified in a Credit Window Initialization Data Item, see <a href="#sec-di-cwi">Section 6.1</a>.  Unknown CID values SHOULD be reported and ignored.  </dd>
+  <dt>Additional Credit:</dt>
+  <dd style="margin-left: 8"><br/><br/> A 64-bit unsigned integer representing the credits, in octets, to be added to the Credit Window.  This value includes MAC headers as seen on the link between the modem and router.</dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.6.4.p.5">When receiving this data item, a router MUST identify the credit window indicated by the CID.  If the CID is not known to the router, it SHOULD report or log this information and discard the Data Item.  It is important to note that while this data item can be received in a destination specific message, credit windows are managed independently from the destination identified in the message carrying this Data Item, and the indicated CID MAY even be disjoint from the identified destination.  </p>
+<p id="rfc.section.6.4.p.6">Once the credit window is identified, the credit window size MUST be increased by the value contained in the Additional Credits field.  If the increase results in a window overflow, i.e., the size of the credit window after the increase is smaller than the original credit window size, the Credit Window must be set to its maximum (0xFFFFFFFFFFFFFFFF).  </p>
+<p id="rfc.section.6.4.p.7">Independent of the received message, the receiving router MUST send a Credit Window Window Status data item or items reflecting the resulting Credit Window value of the updated credit window.  When the Credit Grant data item is received in a Destination Up Message, the Credit Window Window Status data item(s) MUST be sent in the corresponding Destination Up Response Message.  In all other cases, a Credit Control Message MUST be sent.  </p>
+<h1 id="rfc.section.6.5"><a href="#rfc.section.6.5">6.5.</a> <a href="#sec-di-status" id="sec-di-status">Credit Window Status</a></h1>
+<p id="rfc.section.6.5.p.1">The Credit Window Status data item is used by a router to report the current credit window size to its peer modem.  One or more Credit Window Status data items MAY be carried in a Destination Up Response Message or a Credit Control Response Message.  As discussed above, the Destination Up Response Message is used when the data item is sent in response to a Destination Up Message, and the Credit Control Response Message is sent in response to a Credit Control Message.  Multiple Credit Window Window Status data items in a single message are used to indicated different sizes of different credit windows.  Similar to the Credit Window Grant, credit windows are identified using CID values that have been previously been sent by the modem.  </p>
+<p id="rfc.section.6.5.p.2">The format of the Credit Window Window Status Data Item is: </p>
+<pre>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data Item Type                | Length (12)                   |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Credit Window Identifier (CID)|            Reserved           |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                       Credit Window Size                      :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :                       Credit Window Size                      |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+<p/>
+<p/>
+
+<dl>
+  <dt>Data Item Type:</dt>
+  <dd style="margin-left: 8">TBA8</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">12 <br/><br/> Per <a href="#RFC8175">[RFC8175]</a> Length is the number of octets in the data item, excluding the Type and Length fields.  It will equal 8 plus the number of CID fields carried in the data item and MUST be at least 9.  </dd>
+  <dt>Credit Window Identifier (CID):</dt>
+  <dd style="margin-left: 8"><br/><br/> A 16-bit unsigned integer identifying a credit window that has been identified in a Credit Window Initialization Data Item, see <a href="#sec-di-cwi">Section 6.1</a>.  </dd>
+  <dt>Credit Window Size:</dt>
+  <dd style="margin-left: 8"><br/><br/> A 64-bit unsigned integer, indicating the current number of credits, in octets, available for the router to send to the modem.  This is referred to as the Modem Receive Window in <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a>.  </dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.6.5.p.5">When receiving this data item, a modem MUST identify the credit window indicated by the CID.  If the CID is not known to the modem, it SHOULD report or log this information and discard the Data Item.  As with the Credit Window Grant Data Item, the CID MAY be unrelated to the Destination indicated in the message carrying the Data Item.  </p>
+<p id="rfc.section.6.5.p.6">Once the credit window is identified, the modem SHOULD check the received Credit Window Size field value against the outstanding credit window's available credits at the time the most Credit Window Initialization or Grant data item associated with the indicated CID was sent.  If the values significantly differ, i.e., greater than can be accounted for based on observed data frames, then the modem SHOULD send a Credit Window Initialization Data Item to reset the associated credit window size to the modem's current view of the available credits.  As defined above, Credit Window Initialization Data Items are sent in Session Update Messages.  When multiple data items need to be sent, they SHOULD be combined into a single message when possible.  Alternatively, and also in cases where there are small differences, the modem MAY adjust the values sent in Credit Window Grant data items to account for the reported Credit Window.  </p>
+<h1 id="rfc.section.6.6"><a href="#rfc.section.6.6">6.6.</a> <a href="#sec-di-request" id="sec-di-request">Credit Window Request</a></h1>
+<p id="rfc.section.6.6.p.1">The Credit Window Request Data Item data item is used by a router to request additional credits for particular credit windows.  Credit Window Request Data Items are carried in Credit Control Messages, and only one Credit Window Request data item SHOULD be present in a message.  </p>
+<p id="rfc.section.6.6.p.2">Credit windows identified using a CID as defined above in <a href="#sec-di-cwi">Section 6.1</a>.  Multiple CIDs MAY be present to allow for the case where the router identifies that credits are needed in multiple credit windows.  The special CID value of 0xFFFFFFFF is used to indicate that a credit request is being made across all queues.  </p>
+<p id="rfc.section.6.6.p.3">The format of the Credit Window Request Data Item is: </p>
+<pre>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Data Item Type                | Length                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Credit Window Identifier (CID)|               ...             :
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   :               ...             | Credit Window Identifier (CID)|
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+<p/>
+<p id="rfc.section.6.6.p.5">[LB note: a list of CIDs is now supported as is special value 255.] </p>
+<p/>
+
+<dl>
+  <dt>Data Item Type:</dt>
+  <dd style="margin-left: 8">TBA9</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">Variable <br/><br/> Per <a href="#RFC8175">[RFC8175]</a> Length is the number of octets in the data item, excluding the Type and Length fields.  It will equal the number of CID fields carried in the data item and MUST be at least 1.  </dd>
+  <dt>Credit Window Identifier (CID):</dt>
+  <dd style="margin-left: 8"><br/><br/> One or more 16-bit fields used to indicate a credit window that has been identified in a Credit Window Initialization Data Item, see <a href="#sec-di-cwi">Section 6.1</a>.  The special value of 0xFFFFFFFF indicates that the request applies to all CIDs.  </dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.6.6.p.7">A modem receiving this data item MUST provide a Credit Increment for the indicated credit windows via Credit Window Grant Data Items carried in a new Credit Control Message.  Multiple values and queue indexes SHOULD be combined into a single Credit Control Message when possible.  Unknown CID values SHOULD be reported or logged and then ignored by the modem.  </p>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#sec-compat" id="sec-compat">Compatibility</a></h1>
+<p id="rfc.section.7.p.1">Sessions established with both peers identified as supporting the DiffServ Aware Credit Windowing Extension Type, see <a href="#sec-ext-type">Section 3</a>, MUST NOT use the <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a> defined Credit data items.  If a node supporting the extension defined in this document, receives a <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a> defined data item, the recipient MUST ignore the received information.  </p>
+<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#sec-sec" id="sec-sec">Security Considerations</a></h1>
+<p id="rfc.section.8.p.1">The extension introduces a DiffServ awareness to the mechanisms defined in <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a>.  The extension does not inherently introduce any additional threats above those documented in <a href="#RFC8175">[RFC8175]</a>.  The approach taken to Security in that document and <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a> apply equally when running the extension defined in this document.  </p>
+<h1 id="rfc.section.9"><a href="#rfc.section.9">9.</a> <a href="#sec-iana" id="sec-iana">IANA Considerations</a></h1>
+<p id="rfc.section.9.p.1">This document requests the assignment of 5 values by IANA.  All assignments are to registries defined by <a href="#RFC8175">[RFC8175]</a>.  </p>
+<h1 id="rfc.section.9.1"><a href="#rfc.section.9.1">9.1.</a> <a href="#sec-iana-ext" id="sec-iana-ext">Extension Type Value</a></h1>
+<p id="rfc.section.9.1.p.1">This document requests 1 new assignment to the DLEP Extensions Registry named "Extension Type Values" in the range with the "Specification Required" policy.  The requested value is as follows: </p>
+<div id="rfc.table.1"/>
+<div id="table_et"/>
+<p/>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <caption>Requested Extension Type Value</caption>
+  <thead>
+    <tr>
+      <th class="left">Code</th>
+      <th class="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="left">TBA1</td>
+      <td class="left">DiffServ Aware Credit Windowing</td>
+    </tr>
+  </tbody>
+</table>
+<p/>
+<h1 id="rfc.section.9.2"><a href="#rfc.section.9.2">9.2.</a> <a href="#sec-iana-msg" id="sec-iana-msg">Message Values</a></h1>
+<p id="rfc.section.9.2.p.1">This document requests 2 new assignments to the DLEP Message Registry named "Message Values" in the range with the "Specification Required" policy.  The requested values are as follows: </p>
+<div id="rfc.table.2"/>
+<div id="table_msg"/>
+<p/>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <caption>Requested Message Values</caption>
+  <thead>
+    <tr>
+      <th class="left">Type Code</th>
+      <th class="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="left">TBA2</td>
+      <td class="left">Credit Control</td>
+    </tr>
+    <tr>
+      <td class="left">TBA3</td>
+      <td class="left">Credit Control Response</td>
+    </tr>
+  </tbody>
+</table>
+<p/>
+<h1 id="rfc.section.9.3"><a href="#rfc.section.9.3">9.3.</a> <a href="#sec-iana-di" id="sec-iana-di">Data Item Values</a></h1>
+<p id="rfc.section.9.3.p.1">This document requests the following new assignments to the DLEP Data Item Registry named "Data Item Values" in the range with the "Specification Required" policy.  The requested values are as follows: </p>
+<div id="rfc.table.3"/>
+<div id="table_di"/>
+<p/>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <caption>Requested Data Item Values</caption>
+  <thead>
+    <tr>
+      <th class="left">Type Code</th>
+      <th class="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="left">TBA4</td>
+      <td class="left">Credit Window Initialization</td>
+    </tr>
+    <tr>
+      <td class="left">TBA5</td>
+      <td class="left">Credit Window Traffic Classification</td>
+    </tr>
+    <tr>
+      <td class="left">TBA6</td>
+      <td class="left">Credit Window Association</td>
+    </tr>
+    <tr>
+      <td class="left">TBA7</td>
+      <td class="left">Credit Window Grant</td>
+    </tr>
+    <tr>
+      <td class="left">TBA8</td>
+      <td class="left">Credit Window Status</td>
+    </tr>
+    <tr>
+      <td class="left">TBA9</td>
+      <td class="left">Credit Window Request</td>
+    </tr>
+  </tbody>
+</table>
+<p/>
+<h1 id="rfc.section.9.4"><a href="#rfc.section.9.4">9.4.</a> <a href="#sec-iana-sdi" id="sec-iana-sdi">DLEP Sub Data Item Registry</a></h1>
+<p id="rfc.section.9.4.p.1">Upon approval of this document, IANA is requested to create a new DLEP registry, named "Sub Data Item Type Values".  The registry shall identify the type code value, the Data Item which may use the value, and a description of the value.  While the same value may be reused in different data items, this is not recommended at this time.  </p>
+<p id="rfc.section.9.4.p.2">The following table provides initial registry values and the <a href="#RFC8126">[RFC8126]</a> defined policies that should apply to the registry: </p>
+<div id="rfc.table.4"/>
+<div id="table_tc_sdi"/>
+<p/>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <caption>Initial Registry Values</caption>
+  <thead>
+    <tr>
+      <th class="left">Type Code</th>
+      <th class="left">Valid Data Items</th>
+      <th class="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="left">0</td>
+      <td class="left">N/A</td>
+      <td class="left">Reserved</td>
+    </tr>
+    <tr>
+      <td class="left">1</td>
+      <td class="left">N/A</td>
+      <td class="left">Reserved (for pause sub-DI)</td>
+    </tr>
+    <tr>
+      <td class="left">2</td>
+      <td class="left">(TBD4) Credit Window Traffic Classification</td>
+      <td class="left">DiffServ Traffic Classification</td>
+    </tr>
+    <tr>
+      <td class="left">2-65407</td>
+      <td class="left"/>
+      <td class="left">Specification Required</td>
+    </tr>
+    <tr>
+      <td class="left">65408-65534</td>
+      <td class="left"/>
+      <td class="left">Private Use</td>
+    </tr>
+    <tr>
+      <td class="left">65535</td>
+      <td class="left"/>
+      <td class="left">Reserved</td>
+    </tr>
+  </tbody>
+</table>
+<p/>
+<h1 id="rfc.references"><a href="#rfc.references">10.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">10.1.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="RFC2119">[RFC2119]</b>
+      </td>
+      <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC8174">[RFC8174]</b>
+      </td>
+      <td class="top"><a>Leiba, B.</a>, "<a href="http://tools.ietf.org/html/rfc8174">Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</a>", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC8175">[RFC8175]</b>
+      </td>
+      <td class="top"><a>Ratliff, S.</a>, <a>Jury, S.</a>, <a>Satterwhite, D.</a>, <a>Taylor, R.</a> and <a>B. Berry</a>, "<a href="http://tools.ietf.org/html/rfc8175">Dynamic Link Exchange Protocol (DLEP)</a>", RFC 8175, DOI 10.17487/RFC8175, June 2017.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">10.2.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</b>
+      </td>
+      <td class="top"><a>Ratliff, S.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-manet-credit-window-07">Credit Windowing extension for DLEP</a>", Internet-Draft draft-ietf-manet-credit-window-07, November 2016.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2474">[RFC2474]</b>
+      </td>
+      <td class="top"><a>Nichols, K.</a>, <a>Blake, S.</a>, <a>Baker, F.</a> and <a>D. Black</a>, "<a href="http://tools.ietf.org/html/rfc2474">Definition of the Differentiated Services Field (DS Field) in the IPv4 and IPv6 Headers</a>", RFC 2474, DOI 10.17487/RFC2474, December 1998.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2475">[RFC2475]</b>
+      </td>
+      <td class="top"><a>Blake, S.</a>, <a>Black, D.</a>, <a>Carlson, M.</a>, <a>Davies, E.</a>, <a>Wang, Z.</a> and <a>W. Weiss</a>, "<a href="http://tools.ietf.org/html/rfc2475">An Architecture for Differentiated Services</a>", RFC 2475, DOI 10.17487/RFC2475, December 1998.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC8126">[RFC8126]</b>
+      </td>
+      <td class="top"><a>Cotton, M.</a>, <a>Leiba, B.</a> and <a>T. Narten</a>, "<a href="http://tools.ietf.org/html/rfc8126">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 8126, DOI 10.17487/RFC8126, June 2017.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> Acknowledgments</h1>
+<p id="rfc.section.A.p.1">The sub data item format was inspired by Rick Taylor's "Data Item Containers".  He also proposed the separation of credit windows from traffic classification at IETF98.  </p>
+<h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#issues" id="issues">Open and Resolved Issues</a></h1>
+<p id="rfc.section.B.p.1">This section captures issues that are open or have been addressed since the document has become a WG draft.  This section will be removed before submission for publication.  </p>
+<h1 id="rfc.appendix.B.1"><a href="#rfc.appendix.B.1">B.1.</a> <a href="#issue-merge" id="issue-merge">Merge with [I-D.ietf-manet-credit-window]</a></h1>
+<p id="rfc.section.B.1.p.1">There has been discussion within the WG that this document should be merged with <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a>.  The timing of this is TBD.  The authors would like to reach closure on some of the remaining open issues before embarking on this merge, but are open to discussion with the WG and other authors.  </p>
+<h1 id="rfc.appendix.B.2"><a href="#rfc.appendix.B.2">B.2.</a> <a href="#issue-num-queues" id="issue-num-queues">Supporting Router Limits</a></h1>
+<p id="rfc.section.B.2.p.1">Routers may have limits on the number of queues that they can support and, perhaps, if per destination queues can even be supported at all.  There is no current way for a router to communicate these limits to a modem or for a router to indicate that the identified queue information cannot be supported.  Support for these cases clearly needs to be addressed.  </p>
+<p id="rfc.section.B.2.p.2">This issue was reported by Stan Ratliff &lt;ratliffstan@gmail.com&gt;.  </p>
+<h1 id="rfc.appendix.B.3"><a href="#rfc.appendix.B.3">B.3.</a> <a href="#issue-abs" id="issue-abs">Absolute vs Increment</a></h1>
+<p id="rfc.section.B.3.p.1">Stan Ratliff &lt;ratliffstan@gmail.com&gt; suggested an approach to simplify credit synchronization and re-synchronization by always passing the credit window size rather than credit window increments.  This is an interesting idea that needs to be explored and perhaps experimented with.  </p>
+<h1 id="rfc.appendix.B.4"><a href="#rfc.appendix.B.4">B.4.</a> <a href="#issue-bidirectional-fc" id="issue-bidirectional-fc">Bidirectional Flow                                                   Control (closed)</a></h1>
+<p id="rfc.section.B.4.p.1">One of the key differences between this draft and <a href="#I-D.ietf-manet-credit-window">[I-D.ietf-manet-credit-window]</a> is that this document only supports flow control in one direction, i.e., for traffic sent from a router to a modem, while the other credit-window draft supports it in both directions.  </p>
+<p id="rfc.section.B.4.p.2">This was a conscious choice, made out of the desire to keep the extension as simple as possible and to provide what is really expected to be used.  Clearly the reason for being able to control traffic that is sent from the router to the modem/radio is pretty easily understood.  Also, while bidirectional flow control existed in pre-dlep solutions, it wasn't really used.  There is also no reason why router to modem flow control can't be defined at a later time - once there is an actual need.  </p>
+<p id="rfc.section.B.4.p.3">Based on a brief discussion on the WG list, and the absence of any advocates for bidirectional flow control, there is no current plan to add bidirectional flow control to this document.  </p>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Authors' Addresses</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Bow-Nan Cheng</span> 
+	  <span class="n hidden">
+		<span class="family-name">Cheng</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Lincoln Laboratory</span>
+	<span class="adr">
+	  <span class="vcardline">Massachusetts Institute of Technology</span>
+<span class="vcardline">244 Wood Street</span>
+
+	  <span class="vcardline">
+		<span class="locality">Lexington</span>,  
+		<span class="region">MA</span> 
+		<span class="code">02421-6426</span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:bcheng@ll.mit.edu">bcheng@ll.mit.edu</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">David Wiggins</span> 
+	  <span class="n hidden">
+		<span class="family-name">Wiggins</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Lincoln Laboratory</span>
+	<span class="adr">
+	  <span class="vcardline">Massachusetts Institute of Technology</span>
+<span class="vcardline">244 Wood Street</span>
+
+	  <span class="vcardline">
+		<span class="locality">Lexington</span>,  
+		<span class="region">MA</span> 
+		<span class="code">02421-6426</span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:David.Wiggins@ll.mit.edu">David.Wiggins@ll.mit.edu</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Lou Berger</span> 
+	  <span class="n hidden">
+		<span class="family-name">Berger</span>
+	  </span>
+	</span>
+	<span class="org vcardline">LabN Consulting, L.L.C.</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:lberger@labn.net">lberger@labn.net</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
