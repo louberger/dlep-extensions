@@ -356,7 +356,7 @@
     DLEP registry, named "Hop Control Actions Values".
 
    The following table provides initial registry values and the <xref
-   target="RFC5226"/>. defined policies that should apply to the
+   target="RFC8126"/>. defined policies that should apply to the
    registry:
 </t>
 <texttable anchor="table_iana_hca" title="Hop Control Actions Values">
@@ -387,7 +387,7 @@
 
 <references title="Informative References">
 
-<?rfc include="reference.RFC.5226"?>
+<?rfc include="reference.RFC.8126"?>
 
 </references>
 <?rfc needLines="100"?>
