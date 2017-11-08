@@ -10,7 +10,7 @@
 <rfc category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-latency-extension-02" >
 
 <front>
-<title abbrev="DLEP Latency Range Extension">DLEP Lantency Range
+<title abbrev="DLEP Latency Range Extension">DLEP Latency Range
 Extension</title>
    <author initials='B.' surname="Cheng" fullname='Bow-Nan Cheng'>
     <organization>Lincoln Laboratory</organization>
@@ -210,7 +210,6 @@ Extension</title>
 <section title="Acknowledgments">
    <t>
    </t>
-   <vspace blankLines="100"/></t>
 </section> 
 -->
 </back>
