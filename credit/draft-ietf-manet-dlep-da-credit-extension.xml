@@ -692,7 +692,7 @@ Extension</title>
     see <xref target="sec-ext-type"/>.
   </t>
   <t>
-    The format of the Credit Window Traffic Classification Data Item is:
+    The format of the Credit Window Associate Data Item is:
   </t>
   <t>
     <figure>
@@ -820,10 +820,10 @@ Extension</title>
   No response is sent by the router to a modem after processing a Credit
   Window Grant Data Item received in a Credit Control Response Message.
   In other cases, the receiving router MUST send a
-  Credit Window Window Status data item or items reflecting the
+  Credit Window Status data item or items reflecting the
   resulting Credit Window value of the updated credit window.  When the
   Credit Grant data item is received in a Destination Up Message, the
-  Credit Window Window Status data item(s) MUST be sent in the
+  Credit Window Status data item(s) MUST be sent in the
   corresponding Destination Up Response Message.  Otherwise, a
   Credit Control Message MUST be sent.
 </t>
@@ -838,14 +838,14 @@ Extension</title>
    As discussed above, the Destination Up Response Message is used when
    the data item is sent in response to a Destination Up Message, and
    the Credit Control Response Message is sent in response to a Credit
-   Control Message.  Multiple Credit Window Window Status data items in a
+   Control Message.  Multiple Credit Window Status data items in a
    single message are used to indicated different sizes of different
    credit windows.  Similar to the Credit Window Grant, credit windows
    are identified using CID values that have been previously been sent
    by the modem.
 </t>
 <t>
-  The format of the Credit Window Window Status Data Item is:
+  The format of the Credit Window Status Data Item is:
 </t>
 <t>
 <figure>
@@ -919,7 +919,7 @@ Extension</title>
    The Credit Window Request Data Item is used by a router to
    request additional credits for particular credit windows.  Credit
    Window Request Data Items are carried in Credit Control Messages, and
-   one or more Credit Window Request data items MAY be present in a
+   one or more Credit Window Request Data Items MAY be present in a
    message.
 </t>
 <t>
