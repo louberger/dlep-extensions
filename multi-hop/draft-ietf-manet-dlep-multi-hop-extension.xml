@@ -191,8 +191,10 @@
   that the modem terminate connectivity to a particular destination.
 </t>
 <t>
-  The Hop Control Data Item MAY be carried in the Session Update Message
-  or Destination Announce Message. 
+  The Hop Control Data Item MAY be carried in a Session Update Message
+  when the control applies to the whole device, or a Link
+  Characteristics Request Message when the control applies to a
+  particular destination.
 </t>
 <t>
   A router that receives the Hop Control in a Session Update Message
@@ -200,15 +202,37 @@
   whole device.  Results of any changes made are reflected in
   Destination Down and Destination Update Messages.  The modem MUST
   notify the router of each destination that is no longer reachable via
+  a Destination Down Message.  The modem MUST notify the router of any
+  changes in Hop Counts via Destination Update Messages.
+</t>
+<t>
+  A modem that receives the Hop Control Data Item in a Link
+  Characteristics Request Message SHOULD attempt to make the change
+  indicated by the data item for the associated destination MAC
+  address. Once the change is made, or fails or is rejected, the modem
+  MUST respond with a Link Characteristics Request Message containing an
+  updated Hop Count Data Item.  Note that other destinations can be
+  impacted as a result of the change and such changes are reported in
+  Destination Down and Destination Update Messages.  The modem MUST
+  notify the router of each destination that is no longer reachable via
   a Destination Down Message. The modem MUST notify the router of any
   changes in Hop Counts via Destination Update Messages.
 </t>
 <t>
-  A router that receives the Hop Control in a Destination Announce
-  Message SHOULD attempt to make the change indicated by the data item
-  for the associated destination MAC address. Once the change is made,
-  or fails or is rejected, the modem MUST respond with a Destination
-  Announce Response Message containing an updated Hop Count Data Item.
+  A modem that receives the Hop Control Data Item in
+  a Session Update Message
+  SHOULD attempt to make the change indicated by the data item
+  for the associated destination MAC address, when carried in a Link
+  Characteristics Request Message, or all destinations, when carried in
+  a Session Update Message. Once the change is made,
+  or fails or is rejected, the modem MUST respond with a Link Characteristics
+  Request Message containing an updated Hop Count Data Item.  Note that
+  other destinations can be impacted as a result of the change and such
+  changes are reported in 
+  Destination Down and Destination Update Messages.  The modem MUST
+  notify the router of each destination that is no longer reachable via
+  a Destination Down Message. The modem MUST notify the router of any
+  changes in Hop Counts via Destination Update Messages.
 </t>
 <t>
   The format of the Hop Control Data Item is:
@@ -252,7 +276,7 @@
     When received in a Session Update Message message, a modem SHOULD
     clear all control actions that have previously been processed on a
     device wide basis, and revert to its configured behavior.  When
-    received in a Destination Announce Message, a modem SHOULD clear all
+    received in a Link Characteristics Request Message, a modem SHOULD clear all
     control actions that have previously been processed for the
     destination indicated in the message.
   </t>
@@ -298,7 +322,7 @@
 </t>
 <t>
   A modem which receives the Suppress Forwarding Data Item in a
-  Destination Announce Message MUST suppress multi-hop forwarding for
+  Link Characteristics Request Message MUST suppress multi-hop forwarding for
   only the destination indicated in the message. Results are provided as
   described above.
 </t>
@@ -391,13 +415,13 @@
 
 </references>
 <?rfc needLines="100"?>
-<!--
+
 <section title="Acknowledgments">
-   <t>
-   </t>
-   <vspace blankLines="100"/></t>
+  <t>
+    Henning Rogge provided valuable input to this work.
+  </t>
 </section> 
--->
+
 </back>
 </rfc>
 
