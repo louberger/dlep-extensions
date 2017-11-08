@@ -87,14 +87,14 @@ Extension</title>
   target="sec-iana"/>.
 </t>
 </section>
-<section anchor="sec-data-items" title="Latency Range Data Items">
+<section anchor="sec-data-items" title="Latency Range Data Item">
 <t>
   The Latency Range Data Item serves much the same purpose as the
   Latency Data Item defined in <xref target="RFC8175"/> with
   the addition of being able to communicate the latency range that may
   be experienced by traffic on a link.  The Latency Range Item MAY be
   carried in the same messages and MUST be processed according to the
-  same rules as the Latency Range Data Item defined in <xref
+  same rules as the Latency Data Item defined in <xref
   target="RFC8175"/>.
 </t>
 
