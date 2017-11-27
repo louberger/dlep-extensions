@@ -141,8 +141,8 @@
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Data Item Type                | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |   Hop Count   |P|               Reserved                      |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |P|  Reserved   |   Hop Count   |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </artwork>
 </figure>
 </t>
@@ -150,6 +150,18 @@
   <list style="hanging">
     <t hangText="Data Item Type:">TBA2</t>
     <t hangText="Length:">4</t>
+    <t hangText="P:">
+      <vspace blankLines="1"/>
+      The P-bit indicates that a destination is potentially directly
+      reachable. When the P-bit is set, the router MAY request a direct
+      link to the associated destination using the Hop Control Data Item
+      described below.
+    </t>
+    <t hangText="Reserved:">
+      <vspace blankLines="1"/>
+      MUST be set to zero by the sender (a modem) and ignored by the
+      receiver (a router).
+    </t>
     <t hangText="Hop Count:">
       <vspace blankLines="1"/>
       An unsigned 8-bit integer indicating the number of network hops
@@ -165,18 +177,6 @@
       in a destination no longer being reachable.  A zero value MUST NOT
       be used in any message other then a Destination Announce Response
       Message. 
-    </t>
-    <t hangText="P:">
-      <vspace blankLines="1"/>
-      The P-bit indicates that a destination is potentially directly
-      reachable. When the P-bit is set, the router MAY request a direct
-      link to the associated destination using the Hop Control Data Item
-      described below.
-    </t>
-    <t hangText="Reserved:">
-      <vspace blankLines="1"/>
-      MUST be set to zero by the sender (a modem) and ignored by the
-      receiver (a router).
     </t>
   </list>
 </t>
@@ -245,8 +245,8 @@
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Data Item Type                | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |       Hop Control Actions     | Reserved                      |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |       Hop Control Actions     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </artwork>
 </figure>
 </t>
