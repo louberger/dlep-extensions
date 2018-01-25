@@ -44,7 +44,7 @@ Extension</title>
 <middle>
 <section anchor="sec-1" title="Introduction">
 <t>
-  The Dynamic Link Event Protocol (DLEP) is defined in <xref
+  The Dynamic Link Exchange Protocol (DLEP) is defined in <xref
   target="RFC8175"/>. It provides the exchange of link
   related control information between DLEP peers.  DLEP peers are 
   comprised of a modem and a router. DLEP defines a base set of
@@ -53,14 +53,15 @@ Extension</title>
 </t>
 <t>
   The base DLEP specification includes the Latency metric which provides
-  an average latency on a link.  This document adds the ability to relay
+  a single latency value on a link, which is implementation dependent.
+  This document adds the ability to relay 
   the minimum and maximum latency range seen on a link.  The extension
   defined in this document is referred to as "Latency Range".
 </t>
 <t>
   This document defines a new DLEP Extension Type Value in <xref
   target="sec-ext-type"/> which is used to indicate the use of the
-  extension, and one new DLEP Data Items in <xref
+  extension, and one new DLEP Data Item in <xref
   target="sec-data-items"/>.
 </t>
 <section anchor="sec-1.1" title="Key Words">
@@ -92,7 +93,7 @@ Extension</title>
   The Latency Range Data Item serves much the same purpose as the
   Latency Data Item defined in <xref target="RFC8175"/> with
   the addition of being able to communicate the latency range that may
-  be experienced by traffic on a link.  The Latency Range Item MAY be
+  be experienced by traffic on a link.  The Latency Range Data Item MAY be
   carried in the same messages and MUST be processed according to the
   same rules as the Latency Data Item defined in <xref
   target="RFC8175"/>.
@@ -126,13 +127,13 @@ Extension</title>
     <t hangText="Length:">16</t>
     <t hangText="Maximum Latency:">
       <vspace blankLines="1"/>
-      A 64-bit unsigned integer, representing the transmission longest
+      A 64-bit unsigned integer, representing the longest transmission
       delay, in microseconds, that a packet encounters as it is
       transmitted over the link.
     </t>
     <t hangText="Minimum Latency:">
       <vspace blankLines="1"/>
-      A 64-bit unsigned integer, representing the transmission shortest
+      A 64-bit unsigned integer, representing the shortest transmission
       delay, in microseconds, that a packet encounters as it is
       transmitted over the link.
     </t>
@@ -174,7 +175,7 @@ Extension</title>
 <section anchor="sec-iana-di" title="Data Item Value">
 <t>
   This document requests one new assignment to the DLEP Data Item
-  Registry named "Data Item Values" in the range with the "Specification
+  Registry named "Data Item Type Values" in the range with the "Specification
   Required" policy. The requested values are as follows:
 </t>
 <texttable anchor="table_di" title="Requested Data Item Values">
@@ -206,12 +207,13 @@ Extension</title>
 </references>
 <?rfc needLines="100"?>
 -->
-<!--
 <section title="Acknowledgments">
-   <t>
-   </t>
+  <t>
+    Helpful comments were received from members of the MANET working
+    grouping, including Ronald in 't Velt, Henning Rogge, and Victoria
+    Pritchard.
+  </t>
 </section> 
--->
 </back>
 </rfc>
 
