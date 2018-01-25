@@ -44,7 +44,7 @@
 <middle>
 <section anchor="sec-1" title="Introduction">
 <t>
-  The Dynamic Link Event Protocol (DLEP) is defined in <xref
+  The Dynamic Link Exchange Protocol (DLEP) is defined in <xref
   target="RFC8175"/>. It provides the exchange of link
   related control information between DLEP peers.  DLEP peers are 
   comprised of a modem and a router. DLEP defines a base set of
@@ -363,7 +363,7 @@
 <section anchor="sec-iana-di" title="Data Item Values">
 <t>
   This document requests 2 new assignments to the DLEP Data Item
-  Registry named "Data Item Values" in the range with the "Specification
+  Registry named "Data Item Type Values" in the range with the "Specification
   Required" policy. The requested values are as follows:
 </t>
 <texttable anchor="table_di" title="Requested Data Item Values">
@@ -415,10 +415,10 @@
 
 </references>
 <?rfc needLines="100"?>
-
 <section title="Acknowledgments">
   <t>
-    Henning Rogge provided valuable input to this work.
+    Helpful comments were received from members of the MANET working
+    grouping, including Henning Rogge and Victoria Pritchard.
   </t>
 </section> 
 
