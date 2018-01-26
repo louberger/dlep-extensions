@@ -110,7 +110,8 @@
   words, each hop represents a transmission and the number of hops is
   equal to the number of transmissions required to go from a router
   connected modem to the destination's connected modem.  The minimum
-  number of hops is 1, which represents the router's locally connected
+  number of hops is 1, which represents the transmission by the router's
+  locally connected
   modem. 
 </t>
 <t>
@@ -209,14 +210,16 @@
   A modem that receives the Hop Control Data Item in a Link
   Characteristics Request Message SHOULD attempt to make the change
   indicated by the data item for the associated destination MAC
-  address. Once the change is made, or fails or is rejected, the modem
-  MUST respond with a Link Characteristics Request Message containing an
+  address. Once the change is made, fails or is rejected, the modem
+  MUST respond with a Link Characteristics Response Message containing an
   updated Hop Count Data Item.  Note that other destinations can be
   impacted as a result of the change and such changes are reported in
   Destination Down and Destination Update Messages.  The modem MUST
   notify the router of each destination that is no longer reachable via
   a Destination Down Message. The modem MUST notify the router of any
-  changes in Hop Counts via Destination Update Messages.
+  changes in Hop Counts via Destination Update Messages.  Note that
+  normal DLEP processing is not otherwise modified by this document, this
+  includes the generation of Destination Down messages.
 </t>
 <t>
   A modem that receives the Hop Control Data Item in
@@ -285,11 +288,11 @@
   <t>
     The Terminate Action is only valid on a per destination basis and
     MUST NOT be sent in a Session Update Message message. It indicates
-    that the modem SHOULD attempt to terminate communication
+    that a direct connection is no longer needed 
     with the destination identified in the message. This request has no
     impact for multi-hop destinations and may fail even in a single
     hop case, i.e. MAY result in the Hop Count to the destination not
-    being impacted by the processing of the request
+    being impacted by the processing of the request.
   </t>
 </section>
 <section anchor="sec-di-hc-dc" title="Direct Connection">
@@ -418,7 +421,8 @@
 <section title="Acknowledgments">
   <t>
     Helpful comments were received from members of the MANET working
-    grouping, including Henning Rogge and Victoria Pritchard.
+    grouping, including Henning Rogge, Victoria Pritchard and David
+    Wiggins.
   </t>
 </section> 
 
