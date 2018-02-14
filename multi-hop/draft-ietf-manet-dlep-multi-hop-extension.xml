@@ -305,21 +305,29 @@
 <section anchor="sec-di-hc-sf" title="Suppress Forwarding">
 <t>
   The Suppress Forwarding Action is used by a router to indicate to
-  its peer that multi-hop forwarding is to be suppressed.  A router may
-  request that multi-hop forwarding may be suppressed on a device wide
-  or destination specific basis.  
+  its peer that multi-hop forwarding performed by the modem is to be
+  suppressed.  A router may request that multi-hop forwarding may be
+  suppressed on a device wide or destination specific basis.
 </t>
 <t>
   A modem which receives the Suppress Forwarding Data Item in a Session
   Update Message MUST suppress multi-hop forwarding on a device wide
-  basis. Impact to destination hop counts are provided to the router by
-  the modem as described above.
+  basis. This means that data traffic originating from the modem's peer
+  router SHALL only be sent by the modem to destinations that are one
+  modem hop away, and that any data traffic received by the modem from
+  another modem that is not destined to the peer router SHALL be
+  dropped. Impact to destination hop counts are provided to the
+  router by the modem as described above.
 </t>
 <t>
-  A modem which receives the Suppress Forwarding Data Item in a
-  Link Characteristics Request Message MUST suppress multi-hop forwarding for
-  only the destination indicated in the message. Results are provided as
-  described above.
+  A modem which receives the Suppress Forwarding Data Item in a Link
+  Characteristics Request Message MUST suppress multi-hop forwarding for
+  only the destination indicated in the message.  This means that data
+  traffic originating from the modem's peer router SHALL be sent by the
+  modem to the destination indicated in the Link Characteristics Request
+  Message only when it is one modem hop away.  Notably, data traffic
+  received by the modem from another modem MAY be forwarded by the modem
+  per its normal processing.  Results are provided as described above.
 </t>
 </section>
 </section>
