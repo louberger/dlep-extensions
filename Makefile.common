@@ -17,7 +17,7 @@ WITHXML2RFC := $(shell which xml2rfc > /dev/null 2>&1 ; echo $$? )
 
 ID_DIR	     = IDs
 REVS	    := $(shell grep docName $(DRAFT).xml | tr '"\->' '   ' | \
-		 awk '{printf "%02d %02d",$$NF-1,$$NF}')
+		 strings | awk '{printf "%02d %02d",$$NF-1,$$NF}')
 PREV_REV    := $(word 1, $(REVS))
 REV	    := $(word 2, $(REVS))
 OLD          = $(ID_DIR)/$(DRAFT)-$(PREV_REV)
