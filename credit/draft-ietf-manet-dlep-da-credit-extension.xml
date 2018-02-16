@@ -59,7 +59,7 @@ Extension</title>
 <middle>
 <section anchor="sec-1" title="Introduction">
 <t>
-  The Dynamic Link Event Protocol (DLEP) is defined in <xref
+  The Dynamic Link Exchange Protocol (DLEP) is defined in <xref
   target="RFC8175"/>.  It provides the exchange of link
   related control information between DLEP peers.  DLEP peers are
   comprised of a modem and a router.  DLEP defines a base set of
@@ -102,9 +102,9 @@ Extension</title>
 </t>
 <t>
   This document defines a new DLEP Extension Type Value in <xref
-  target="sec-ext-type"/> which is used to indicate the use of the
+  target="sec-ext-type"/> which is used to indicate support for the
   extension.  Two new messages are defined in <xref
-  target="sec-msgs"/>, and six new DLEP Data Items in <xref
+  target="sec-msgs"/>, and eight new DLEP Data Items in <xref
   target="sec-data-items"/>.
 </t>
 <section anchor="sec-1.1" title="Key Words">
@@ -1041,7 +1041,7 @@ Extension</title>
 <section anchor="sec-iana-di" title="Data Item Values">
 <t>
   This document requests the following new assignments to the DLEP Data Item
-  Registry named "Data Item Values" in the range with the "Specification
+  Registry named "Data Item Type Values" in the range with the "Specification
   Required" policy.  The requested values are as follows:
 </t>
 <texttable anchor="table_di" title="Requested Data Item Values">
