@@ -10,7 +10,7 @@
 <rfc category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-multi-hop-extension-05" >
 
 <front>
-<title abbrev="DLEP Multi-Hop Extension">DLEP Multi-Hop Forwarding Extension</title> 
+<title abbrev="DLEP Multi-Hop Extension">DLEP Multi-Hop Forwarding Extension</title>
    <author initials='B.' surname="Cheng" fullname='Bow-Nan Cheng'>
     <organization>Lincoln Laboratory</organization>
     <address>
@@ -46,7 +46,7 @@
 <t>
   The Dynamic Link Exchange Protocol (DLEP) is defined in <xref
   target="RFC8175"/>. It provides the exchange of link
-  related control information between DLEP peers.  DLEP peers are 
+  related control information between DLEP peers.  DLEP peers are
   comprised of a modem and a router. DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
   document defines one such extension.
@@ -113,12 +113,12 @@
   number of hops is 1, which represents transmission to destinations
   that are directly reachable via the router's
   locally connected
-  modem. 
+  modem.
 </t>
 <t>
   The data item also contains an indication of when a destination which
   currently has a hop count of greater than one (1) could be made
-  direcly reachable by a modem, e.g., by re-aiming an antenna.  
+  direcly reachable by a modem, e.g., by re-aiming an antenna.
 </t>
 <t>
   The Hop Count Data Item SHOULD be carried in the Destination Up,
@@ -178,7 +178,7 @@
       Control action, see <xref target="sec-di-hcontrol"/>, has resulted
       in a destination no longer being reachable.  A zero value MUST NOT
       be used in any message other then a Link Characteristics Response
-      Message. 
+      Message.
     </t>
   </list>
 </t>
@@ -203,17 +203,17 @@
   A modem that receives the Hop Control Data Item in a Link
   Characteristics Request Message SHOULD attempt to make the change
   indicated by the data item for the associated destination MAC
-  address. Once the change is made, fails or is rejected, the modem
-  MUST respond with a Link Characteristics Response Message containing an
+  address. Once the change is made, fails or is rejected, the modem MUST
+  respond with a Link Characteristics Response Message containing an
   updated Hop Count Data Item.  Note that other destinations can be
   impacted as a result of the change and such changes are reported in
   Destination Down and Destination Update Messages.  The modem MUST
-  notify the router of each destination that is no longer reachable via
-  a Destination Down Message. The modem MUST notify the router of any
-  changes in Hop Counts via Destination Update Messages.  Note that
-  neither Destination Down or Update Message SHOULD NOT be sent for the
-  destination MAC address contained in the Link Characteristics
-  Response Message.
+  notify the router of each destination that is not identified in the
+  Link Characteristics Response Message and is no longer reachable via a
+  Destination Down Message.  The modem MUST also notify the router of
+  each destination that is not identified in the Link Characteristics
+  Response Message and has a changed Hop Count impacted via a
+  Destination Update Message.
 </t>
 <t>
   A modem that receives the Hop Control Data Item in
@@ -280,7 +280,7 @@
   <t>
     The Terminate Action is only valid on a per destination basis and
     MUST NOT be sent in a Session Update Message message. It indicates
-    that a direct connection is no longer needed 
+    that a direct connection is no longer needed
     with the destination identified in the message. This request has no
     impact for multi-hop destinations and may fail even in a single
     hop case, i.e. MAY result in the Hop Count to the destination not
@@ -301,7 +301,7 @@
     Destination Update Message for each impacted destination.
   </t>
 </section>
-   
+
 <section anchor="sec-di-hc-sf" title="Suppress Forwarding">
 <t>
   The Suppress Forwarding Action is used by a router to indicate to
@@ -336,7 +336,7 @@
 <t>
    The extension enables
    the reporting and control of forwarding information by DLEP capable
-   modems.  The 
+   modems.  The
    extension does not inherently introduce any additional threats
    above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
@@ -359,7 +359,7 @@
 <texttable anchor="table_et" title="Requested Extension Type Value">
   <preamble></preamble>
   <ttcol>Code</ttcol> <ttcol>Description</ttcol>
-    <c>TBA1</c> <c>Multi-Hop Forwarding</c> 
+    <c>TBA1</c> <c>Multi-Hop Forwarding</c>
     <postamble></postamble>
     </texttable>
 </section>
@@ -372,8 +372,8 @@
 <texttable anchor="table_di" title="Requested Data Item Values">
   <preamble></preamble>
   <ttcol>Type Code</ttcol> <ttcol>Description</ttcol>
-    <c>TBA2</c> <c>Hop Count</c> 
-    <c>TBA3</c> <c>Hop Control</c> 
+    <c>TBA2</c> <c>Hop Count</c>
+    <c>TBA3</c> <c>Hop Control</c>
     <postamble></postamble>
     </texttable>
 </section>
@@ -424,7 +424,7 @@
     grouping, including Henning Rogge, Victoria Pritchard and David
     Wiggins.
   </t>
-</section> 
+</section>
 
 </back>
 </rfc>
