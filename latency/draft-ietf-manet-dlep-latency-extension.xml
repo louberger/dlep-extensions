@@ -80,8 +80,12 @@ Extension</title>
    indicate that the Latency Range Extension is to be used, an
    implementation MUST include the Latency Range Extension Type Value in
    the Extensions Supported Data Item. The Extensions Supported Data
-   Item is sent and processed according to <xref
-   target="RFC8175"/>.
+   Item is sent and processed according to <xref target="RFC8175"/>.
+</t>
+<t>
+  Note: the usage of the extension defined in this document does not
+  impact processing associated with the Latency Data Item defined in
+  Section 13.6 of <xref target="RFC8175"/>.
 </t>
 <t>
   The Latency Range Extension Type Value is TBA1, see <xref
