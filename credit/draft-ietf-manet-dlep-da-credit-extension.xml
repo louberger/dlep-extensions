@@ -211,6 +211,15 @@ Extension</title>
   <xref target="sec-iana"/>.
 </t>
 </section>
+<section anchor="sec-cw-control" title="Credit Window Control">
+  <t>
+    This section defines additions to DLEP for the control of
+    credit based flow control.  As mentioned above, the definition
+    is make in the context of credit windows which can be thought
+    of as representing different logical queues.  Two new messages
+    and five data items are defined to support credit window control.
+    Credit window control also impacts the data plane.
+  </t>
 <section anchor="data-plane" title="Data Plane Considerations">
   <t>
   When the use of the extension defined in this document is agreed upon
@@ -226,21 +235,12 @@ Extension</title>
   <t>
     A router MUST identify the credit window associated with traffic
     sent to a modem based on the traffic classification information
-    provided in the data items defined in this document.  The
-    definitions support identification based on DLEP destination and, at
-    the modem's discretion, DSCPs. Note that routers will typically view
-    a DLEP destination as the next hop.
+    provided in the data items defined in this document.  Note that
+    routers will typically view a DLEP destination as the next hop MAC
+    address.
   </t>
 </section>
 
-<section anchor="sec-cw-control" title="Credit Window Control">
-  <t>
-    This section defines additions to DLEP for the control of
-    credit based flow control.  As mentioned above, the definition
-    is make in the context of credit windows which can be thought
-    of as representing different logical queues.  Two new messages
-    and five data items are defined.
-  </t>
 <section anchor="sec-msgs" title="Extension Messages">
   <t>
     Two new messages are defined by this extension: the Credit Control
@@ -1011,6 +1011,11 @@ Extension</title>
       Traffic Classification Data Item, the data item MUST
       be treated as an error as described above.
     </t>
+    <t>
+      In all cases, the router MUST use validated DSCPs in data plane
+      credit window identification as described in <xref
+      target="data-plane"/>.
+    </t>
   </section>
 </section>
 
@@ -1165,15 +1170,168 @@ Extension</title>
 <?rfc include="reference.RFC.2474"?>
 <?rfc include="reference.RFC.2475"?>
 <?rfc include="reference.RFC.8126"?>
-
+<reference anchor="IEEE.802.1Q_2014" target="http://ieeexplore.ieee.org/servlet/opac?punumber=6991460">
+  <front>
+    <title>
+      IEEE Standard for Local and metropolitan area networks--Bridges and Bridged Networks
+    </title>
+    <author>
+      <organization>IEEE</organization>
+    </author>
+    <date day="18" month="December" year="2014"/>
+    <abstract>
+      <t>
+        This standard specifies how the Media Access Control (MAC) Service is supported by Bridged Networks, the principles of operation of those networks, and the operation of MAC Bridges and VLAN Bridges, including management, protocols, and algorithms
+      </t>
+    </abstract>
+  </front>
+  <seriesInfo name="IEEE" value="802.1Q-2014"/>
+  <seriesInfo name="DOI" value="10.1109/ieeestd.2014.6991462"/>
+</reference>
 </references>
 <?rfc needLines="100"?>
 <section title="Acknowledgments">
    <t>
      The sub data item format was inspired by Rick Taylor's "Data Item
      Containers".  He also proposed the separation of credit windows from
-     traffic classification at IETF98.
+     traffic classification at IETF98. Many useful comments were
+     received from contributors to the MANET working group.
    </t>
+</section>
+<section title="Notional Support for Ethernet Priority Code Points">
+   <t>
+     This document is intended to allow for use of the credit control
+     mechanisms defined in <xref target="sec-cw-control"/> with
+     different flow identification techniques.  This section explores
+     the viability of this through the notional definition of credit
+     control with Ethernet Priority Code Points.  Ethernet Priority Code
+     Point support is defined as part of the IEEE 802.1Q <xref
+     target="IEEE.802.1Q_2014"/> tag format and includes a 3 bit "PCP"
+     field.  The tag format also includes a 12 bit VLAN identifier (VID)
+     field.
+   </t>
+   <t>
+     In theory only one new Traffic Classification Sub Data Item is
+     required to enable support for the traffic classification of a new
+     flow type.  This section defines such a sub data item.  This
+     definition is not a full Extension definition, but may serve as the
+     foundation for such in the future; in a new document.
+   </t>
+   <section title="Notional Ethernet Credit Window Traffic Classification Sub Data Item">
+     <t>
+       The Ethernet Credit Window Traffic Classification Sub Data Item is
+       used to identify the VLAN and PCPs associated with a specific credit
+       window.  Credit windows are identified using CID values that have
+       been previously been sent by the modem or are listed in a Credit
+       Window Initialization Data Item carried in the same messages as
+       the sub data item.  PCPs are identified in a list of priority
+       fields.  An implementation that does not support PCPs, and wants
+       to use credit window flow control for all traffic to a destination
+       or destinations, would indicate with 0 PCPs.  Such an
+       implementation could identify a VLAN to use per destination.
+     </t>
+     <t>
+       The format of the Ethernet Credit Window Traffic Classification
+       Sub Data Item is:
+     </t>
+     <t>
+       <figure>
+         <artwork>
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | TBD                           | Length (12)                   |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Credit Window Identifier (CID)|NumPCPs| VLAN Identifier (VID) |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Pri. 1| Pri. 2| Pri. 3| Pri. 4| Pri. 5| Pri. 6| Pri. 7| Pri. 8|
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+         </artwork>
+       </figure>
+     </t>
+     <t>
+       <list style="hanging">
+         <t hangText="Length:">Variable
+         <vspace blankLines="1"/>
+         Length is the number of octets
+         in the sub data item.  It is equal to 12.
+         </t>
+         <t hangText="Credit Window Identifier (CID):">
+           <vspace blankLines="1"/>
+           A 16-bit unsigned integer identifying a credit window that has
+           been identified in a Credit Window Initialization Data Item,
+           see <xref target="sec-di-cwi"/>.  Unknown CID values SHOULD be
+           reported and result in associated traffic being dropped.
+         </t>
+         <t hangText="Num PCPs:">
+           <vspace blankLines="1"/>
+           A 4-bit unsigned integer indicating the number of PCPs
+           carried in the sub data item.  A zero (0) indicates a (wildcard)
+           match against any PCP value.
+         </t>
+         <t hangText="VLAN identifier (VID):">
+           <vspace blankLines="1"/>
+           A 12-bit unsigned integer field indicating the VLAN to be
+           used in traffic classification.  A value of all ones (0xFFF)
+           indicates a wild card and any VID is to be accepted during
+           traffic classification. Zero (0) and any other value are
+           valid values.
+         </t>
+         <t hangText="Priority:">
+           <vspace blankLines="1"/>
+           Each Priority Field is an 4-bit whose definition includes the
+           PCP field defined in <xref target="IEEE.802.1Q_2014"/>
+           <figure>
+             <artwork>
+        0   1   2   3
+        +---+---+---+---+
+        |    PCP    |DEI|
+        +---+---+---+---+
+
+        PCP: Priority code point
+        DEI: currently unused, MUST be zero
+             </artwork>
+           </figure>
+         </t>
+       </list>
+     </t>
+     <t>
+       A router receiving the Ethernet Traffic Classification Sub Data
+       Item MUST validate the information on receipt prior to the
+       information and data plane update described earlier in this
+       section.  The credit window associated with the CID indicated in
+       each data item must be located.  It is important to note that the
+       CID value may be present in a Credit Window Initialization Data
+       Item carried in the same message as the sub data item. If the CID
+       is not located, the it MUST be treated as an error as described
+       above.
+     </t>
+     <t>
+       In the case there are no unknown CIDs, the receiver MUST ensure
+       that each Priority Field value is listed only once across the
+       whole Traffic Classification Data Item.  Note, this check is
+       across the data item and not the individual sub data item.  If
+       the same Priority Field value is listed more than once within the
+       same Traffic Classification Data Item, the data item MUST be
+       treated as an error as described above.
+     </t>
+     <t>
+       In all cases, the router MUST use validated PCPs in data plane
+       credit window identification as described in <xref
+       target="data-plane"/>.
+     </t>
+   </section>
+   <section title="Other Considerations">
+     <t>
+       A full definition for the support of an Ethernet Credit Window
+       Extensions would need to assign a new Extension Type Value as
+       well as the Ethernet Credit Window Traffic Classification Sub
+       Data Item Value.  It would also need to fully document the
+       implications of multiple VLAN support, including configuration
+       implications, e.g., limiting value to 0 to indicate PCP-only
+       usage.
+     </t>
+   </section>
 </section>
 
 </back>
