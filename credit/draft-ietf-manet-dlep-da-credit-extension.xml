@@ -70,7 +70,7 @@ Extension</title>
 </t>
 <t>
   The base DLEP specification does not include any flow control
-  capability.  There are various flow control theoretically possible
+  capability.  There are various flow control techniques theoretically possible
   with DLEP.  For example, a credit-window scheme for
   destination-specific flow control which provides aggregate flow
   control for both modem and routers has been proposed in <xref
@@ -79,7 +79,7 @@ Extension</title>
 <t>
   This document defines a DLEP extension which provides a
   flow control mechanism for traffic sent from a router to a modem. Flow
-  control is provide using one or more logical "Credit Windows", each of
+  control is provided using one or more logical "Credit Windows", each of
   which will typically be supported by an associated virtual or physical
   queue.  Traffic sent by a router will use traffic flow classification
   information provided by the modem to identify which traffic is
@@ -99,7 +99,7 @@ Extension</title>
   to multiple DLEP destinations and DSCPs, or used exclusively for
   traffic sent to a particular destination and/or DSCP.  The extension
   also supports the "wildcard" matching of any DSCP.  Traffic
-  classification information is provided in manner such that it can be
+  classification information is provided such that it can be
   readily extended to support non-DSCP related traffic classification
   techniques, or be used by non-credit window related extensions, such
   as <xref target="I-D.ietf-manet-dlep-pause-extension"/>.
@@ -146,12 +146,12 @@ Extension</title>
   <t>
     Credits are managed on a per logical "Credit Windows" basis.  Each
     credit window can be thought of as corresponding to a queue within a
-    modem.  Modems pass to the router information on its credit windows
+    modem.  Modems pass to the router information on their credit windows
     and identify each via a "Credit Window Identifier", or "CID".  In
     addition to the CID, credit window information includes an initial
     credit window size, as well as the maximum size of the logical queue
     associated with each CID.  The maximum size is included for
-    informative and, potential, future uses.
+    informative and potential future uses.
   </t>
   <t>
     Modems provide an initial credit window size at the time of "Credit
@@ -179,14 +179,14 @@ Extension</title>
     document is performed on a per {destination, DSCP} tuple basis.
     (Per destination traffic classification is also supported.)
     This means that, routers need the combination of the DLEP identified
-    destination and the one or more DSCPs associated with a CID in
-    order to match traffic it sends to specific credit
+    destination and one or more DSCPs associated with a CID in
+    order to match traffic they send to specific credit
     windows.  Modems provide the mapping of DSCPs to CIDs in sets, each
     of which is identified via a "Traffic Classification Identifier" or
     "TID".  When a destination becomes reachable, a modem "Associates"
     (identifies) the TID to be used for traffic sent by the router to
     that destination.  This use of CIDs, TIDs and association of a TID
-    to a DLEP destination enables modem to share or dedicate resources
+    to a DLEP destination enables a modem to share or dedicate resources
     as needed to match the specifics of its implementation and its
     attached transmission technology.
   </t>
@@ -205,6 +205,7 @@ Extension</title>
 </t>
 <t>
    All messages, data items and mechanisms defined in this document are
+   XXX something missing here...
 </t>
 <t>
   The DiffServ Aware Credit Window Extension Type Value is TBA1, see
@@ -215,7 +216,7 @@ Extension</title>
   <t>
     This section defines additions to DLEP for the control of
     credit based flow control.  As mentioned above, the definition
-    is make in the context of credit windows which can be thought
+    is made in the context of credit windows which can be thought
     of as representing different logical queues.  Two new messages
     and five data items are defined to support credit window control.
     Credit window control also impacts the data plane.
@@ -313,8 +314,8 @@ Extension</title>
       or more Credit Window Credit Grant Data Items. A data item
       for every Credit Window Request data item contained in the
       corresponding Credit Control Response Message received by the modem MUST be
-      included.  Each Grant Data Item MAY provide zero or more additional
-      credits based on a the modem;s transmission or local queue
+      included.  Each Credit Grant Data Item MAY provide zero or more additional
+      credits based on the modem's transmission or local queue
       availability.
       Specific receive processing associated with each Grant Data Item
       is provided below.
@@ -372,7 +373,7 @@ Extension</title>
   using a Credit Window Identifier, or CID.  It also provides the size of
   the identified credit window.  Finally, a queue size (in bytes) is
   provided for informational purposes.  Note that to be used, a CID must
-  be associated with in a Traffic Classification Identifier via A Credit
+  be associated with in a Traffic Classification Identifier via a Credit
   Window Association Data Item.
 </t>
 <t>
@@ -409,7 +410,7 @@ Extension</title>
     <t hangText="Credit Window Identifier (CID):">
       <vspace blankLines="1"/>
       A 16-bit unsigned integer identifying a credit window.  The value
-      of 0xFFFFFFFF is reserved and MUST not be used in this data item.
+      of 0xFFFF is reserved and MUST not be used in this data item.
       There is no other restriction on values used by a modem, and there
       is no requirement for sequential or ordered values.
     </t>
@@ -466,7 +467,7 @@ Extension</title>
     The Credit Window Associate Data Item is used by a modem to
     associate traffic classification information with a destination.
     The traffic classification information is identified using a TID
-    value that has been previously been sent by the modem or is listed
+    value that has previously been sent by the modem or is listed
     in a Traffic Classification Data Item carried in the
     same message as the data item.
   </t>
@@ -535,7 +536,7 @@ Extension</title>
    indicate different credit values for different credit windows.  In all
    message types, this data item provides an additional number of octets
    to be added to the indicated credit window.  Credit window are
-   identified via using using CID values that have been previously been
+   identified via using CID values that have been previously been
    sent by the modem or are listed in a Credit Window Initialization
    Data Item carried in the same messages as the data item.
 </t>
@@ -625,7 +626,7 @@ Extension</title>
    the data item is sent in response to a Destination Up Message, and
    the Credit Control Response Message is sent in response to a Credit
    Control Message.  Multiple Credit Window Status data items in a
-   single message are used to indicated different sizes of different
+   single message are used to indicate different sizes of different
    credit windows.  Similar to the Credit Window Grant, credit windows
    are identified using CID values that have been previously been sent
    by the modem.
@@ -657,8 +658,7 @@ Extension</title>
       <vspace blankLines="1"/>
       Per <xref target="RFC8175"/> Length
       is the number of octets in the data item, excluding the Type and
-      Length fields.  It will equal 8 plus the number of CID
-      fields carried in the data item and MUST be at least 9.
+      Length fields.
     </t>
     <t hangText="Credit Window Identifier (CID):">
       <vspace blankLines="1"/>
@@ -712,7 +712,7 @@ Extension</title>
    Credit windows identified using a CID as defined above in <xref
    target="sec-di-cwi"/>.  Multiple CIDs MAY be present to allow for the
    case where the router identifies that credits are needed in multiple
-   credit windows.  The special CID value of 0xFFFFFFFF is used to
+   credit windows.  The special CID value of 0xFFFF is used to
    indicate that a credit request is being made across all queues.
 </t>
 
@@ -742,7 +742,7 @@ Extension</title>
       Per <xref target="RFC8175"/> Length
       is the number of octets in the data item, excluding the Type and
       Length fields.  It will equal the number of CID
-      fields carried in the data item and MUST be at least 1.
+      fields carried in the data item times 2 and MUST be at least 2.
     </t>
     <t hangText="Credit Window Identifier (CID):">
       <vspace blankLines="1"/>
@@ -958,7 +958,7 @@ Extension</title>
           <vspace blankLines="1"/>
           Length is the number of octets
           in the sub data item.  It is equal to seven (7) plus the value
-          of the Num DSCPs field.
+          of the Num DSCPs field.   XXX should be 3?
         </t>
         <t hangText="Credit Window Identifier (CID):">
           <vspace blankLines="1"/>
@@ -999,11 +999,11 @@ Extension</title>
       each data item must be located.  It is important to note that the
       CID value may be present in a Credit Window Initialization Data
       Item carried in the same message as the sub data item. If the CID
-      is not located, the it MUST be treated as an error as described
+      is not located, then it MUST be treated as an error as described
       above.
     </t>
     <t>
-      In the case there are no unknown CIDs, the receiver MUST ensure
+      When there are no unknown CIDs, the receiver MUST ensure
       that each DS Field value is listed only once across the whole
       Traffic Classification Data Item.  Note, this check
       is across the data item and not the individual sub data item.  If
@@ -1053,7 +1053,7 @@ Extension</title>
     Routers may have limits on the number of queues that they can
     support and, perhaps, even limits in supported credit window
     combinations, e.g., if per destination queues can even be
-    supported at all.  When modem provide credit window information
+    supported at all.  When modem-provided credit window information
     exceeds the capabilities of a router, the router MAY use a subset of
     the provided credit windows.  Alternatively, a router MAY reset the
     session and indicate that the extension is not supported.  In either
@@ -1307,7 +1307,7 @@ Extension</title>
        above.
      </t>
      <t>
-       In the case there are no unknown CIDs, the receiver MUST ensure
+       When there are no unknown CIDs, the receiver MUST ensure
        that each Priority Field value is listed only once across the
        whole Traffic Classification Data Item.  Note, this check is
        across the data item and not the individual sub data item.  If
