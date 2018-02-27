@@ -307,11 +307,11 @@ Extension</title>
       Credit Window Status Data Items as defined below in <xref
       target="sec-di-status"/>.
       Specific receive processing associated with the Credit Window
-      Window Status Data Item is provided below.
+      Status Data Item is provided below.
     </t>
     <t>
       Credit Control Response Messages sent by modems MUST contain one
-      or more Credit Window Credit Grant Data Items. A data item
+      or more Credit Window Grant Data Items. A data item
       for every Credit Window Request data item contained in the
       corresponding Credit Control Response Message received by the modem MUST be
       included.  Each Credit Grant Data Item MAY provide zero or more additional
@@ -525,9 +525,9 @@ Extension</title>
   </t>
 </section>
 
-<section anchor="sec-di-grant" title="Credit Window Credit Grant">
+<section anchor="sec-di-grant" title="Credit Window Grant">
 <t>
-   The Credit Window Credit Grant data item is used by a modem to
+   The Credit Window Grant data item is used by a modem to
    provide credits to a router.  One or more Credit Window Grant Data
    Items MAY be carried in the DLEP Destination Up, Destination Announce
    Response, Destination Update, Credit Control Messages, and Credit
