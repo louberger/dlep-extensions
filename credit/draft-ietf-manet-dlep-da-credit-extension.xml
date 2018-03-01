@@ -196,16 +196,12 @@ Extension</title>
 <t>
    The extension defined in this document is composed of the
    mechanisms and processing defined in <xref target="sec-cw-control"/>
-   and <xref target="sec-di-tc"/>.
+   and <xref target="sec-tc"/>.
    To indicate that the DiffServ Aware Credit Window
    Extension is to be used, an implementation MUST include the DiffServ
    Aware Credit Window Type Value in the Extensions Supported Data
    Item.  The Extensions Supported Data Item is sent and processed
    according to <xref target="RFC8175"/>.
-</t>
-<t>
-   All messages, data items and mechanisms defined in this document are
-   XXX something missing here...
 </t>
 <t>
   The DiffServ Aware Credit Window Extension Type Value is TBA1, see
