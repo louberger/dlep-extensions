@@ -404,8 +404,8 @@ Extension</title>
     <t hangText="Length:"> 16
       <vspace blankLines="1"/>
       Per <xref target="RFC8175"/> Length
-      is the number of octets in the data item, excluding the Type and
-      Length fields.
+      is the number of octets in the data item.  It MUST be equal to
+      sixteen (16).
     </t>
     <t hangText="Credit Window Identifier (CID):">
       <vspace blankLines="1"/>
@@ -500,8 +500,8 @@ Extension</title>
       <t hangText="Length:"> 2
         <vspace blankLines="1"/>
         Per <xref target="RFC8175"/> Length
-        is the number of octets in the data item, excluding the Type and
-        Length fields.
+        is the number of octets in the data item. It MUST be equal to
+        two (2).
       </t>
       <t hangText=" Traffic Classification Identifier (TID):">
         <vspace blankLines="1"/>
@@ -566,9 +566,8 @@ Extension</title>
     <t hangText="Length:">12
       <vspace blankLines="1"/>
       Per <xref target="RFC8175"/>, Length
-      is the number of octets in the data item, excluding the Type and
-      Length fields.  It will equal 8 plus the number of CID
-      fields carried in the data item and MUST be at least 9.
+      is the number of octets in the data item.  It MUST be equal to
+      twelve (12).
     </t>
     <t hangText="Credit Window Identifier (CID):">
       <vspace blankLines="1"/>
@@ -657,8 +656,8 @@ Extension</title>
     <t hangText="Length:">12
       <vspace blankLines="1"/>
       Per <xref target="RFC8175"/> Length
-      is the number of octets in the data item, excluding the Type and
-      Length fields.
+      is the number of octets in the data item. It MUST be equal to
+      twelve (12).
     </t>
     <t hangText="Credit Window Identifier (CID):">
       <vspace blankLines="1"/>
@@ -957,8 +956,8 @@ Extension</title>
         <t hangText="Length:">Variable
           <vspace blankLines="1"/>
           Length is the number of octets
-          in the sub data item.  It is equal to seven (7) plus the value
-          of the Num DSCPs field.   XXX should be 3?
+          in the sub data item.  It is equal to three (3) plus the value
+          of the Num DSCPs field.
         </t>
         <t hangText="Credit Window Identifier (CID):">
           <vspace blankLines="1"/>
@@ -1240,7 +1239,7 @@ Extension</title>
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | TBD                           | Length (12)                   |
+    | TBD                           | Length (8)                    |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Credit Window Identifier (CID)|NumPCPs| VLAN Identifier (VID) |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -1254,7 +1253,7 @@ Extension</title>
          <t hangText="Length:">Variable
          <vspace blankLines="1"/>
          Length is the number of octets
-         in the sub data item.  It is equal to 12.
+         in the sub data item.  It is equal to eight (8).
          </t>
          <t hangText="Credit Window Identifier (CID):">
            <vspace blankLines="1"/>
