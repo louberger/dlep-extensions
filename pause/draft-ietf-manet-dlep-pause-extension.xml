@@ -44,6 +44,20 @@ Extension</title>
        <email>lberger@labn.net</email>
     </address>
     </author>
+  <author initials="R." surname="Taylor" fullname="Rick Taylor">
+		<organization>Airbus Defence &amp; Space</organization>
+		<address>
+			<postal>
+				<street>Quadrant House</street>
+				<street>Celtic Springs</street>
+				<street>Coedkernew</street>
+				<city>Newport</city>
+				<code>NP10 8FZ</code>
+				<country>UK</country>
+			</postal>
+			<email>rick.taylor@airbus.com</email>
+		</address>
+	</author>
 
   <date/>
   <abstract>
@@ -130,12 +144,14 @@ Extension</title>
 </t>
 <t>
   The Queue Parameters Data Item identifies DSCPs based on groups of
-  logical queues, each of which is referred to via a "Queue Index". The
-  number of logical queues, or queue indexes, is variable as is the
-  number of DSCPs associated with each queue. A queue size (in bytes)
-  is provided for informational purposes.  Queue Indexes are numbered
-  sequentially from zero, where queue index zero is a special case
-  covering DSCPs which are not otherwise associated with Queue Index.
+  logical queues, each of which is referred to via a "Queue Identifier". The
+  number of logical queues, and associated queue identifiers, is variable as
+  is the number of DSCPs associated with each queue. A queue size (in bytes)
+  is provided for informational purposes.  Queue Identifiers are numbered
+  sequentially from zero, where Queue Identifier zero is a special case
+  covering DSCPs which are not otherwise associated with a non-zero Queue
+  Identifier.  Queue Identifier 255 is reserved to be used for messages that
+  apply to all queues.
 </t>
 <t>
   An implementation that does not support DSCPs would indicate 1 queue
@@ -154,9 +170,9 @@ Extension</title>
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Data Item Type                | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |   Num Queues  | Scale |              Reserved                 |
+    |   Num Queues  |    Scale      |          Queue Id 0 Size      |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |  Reserved     |             Queue Size Q0                     |
+    |               |                 Reserved                      |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |               Queue Parameter Sub Data Item 1                 |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -164,6 +180,7 @@ Extension</title>
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |               Queue Parameter Sub Data Item n                 |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 </artwork>
 </figure>
 </t>
@@ -185,7 +202,7 @@ Extension</title>
     </t>
    <t hangText="Scale:">
       <vspace blankLines="1"/>
-      An 4-bit unsigned integer indicating the scale used in the Queue
+      An 8-bit unsigned integer indicating the scale used in the Queue
       Size fields. The valid values are:
       <figure>
         <artwork>
@@ -195,18 +212,20 @@ Extension</title>
           1  KB - Kilobytes (B/1024)
           2  MB - Megabytes (KB/1024)
           3  GB - Gigabytes (MB/1024)
+          4+ Reserved for future assignment
         </artwork>
       </figure>
+    </t>
+    <t hangText="Queue Id 0 Size:">
+      <vspace blankLines="1"/>
+      A 24-bit unsigned integer representing the size, in the octet
+      scale indicated by the Scale field, of the default queue with
+      Queue Identifier zero.
     </t>
     <t hangText="Reserved:">
       <vspace blankLines="1"/>
       MUST be set to zero by the sender (a modem) and ignored by the
       receiver (a router).
-    </t>
-    <t hangText="Queue Size Q0:">
-      <vspace blankLines="1"/>
-      A 24-bit unsigned integer representing the size, in the octet
-      scale indicated by the Scale field, of queue index zero.
     </t>
   </list>
 </t>
@@ -214,12 +233,10 @@ Extension</title>
   <section anchor="sec-di-qp-sub" title="Queue Parameter Sub Data Item">
 
     <t>
-      Queue Parameter Sub Data Items are an ordered list composed of
-      sub data items with a common format.  The first sub data item is
-      assigned a Queue Index value of 1, and subsequent data items are
-      numbered incrementally.  The format of the Queue Parameter Sub
-      Data Item is patterned after the standard DLEP data item format,
-      see <xref target="RFC8175"/> Section 11.3.  Any errors
+      Queue Parameter Sub Data Items are an unordered list composed of
+      sub data items with a common format.  The format of the Queue
+      Parameter Sub Data Item is patterned after the standard DLEP Data Item
+      format, see <xref target="RFC8175"/> Section 11.3.  Any errors
       or inconsistencies encountered in parsing Sub Data Items are
       handled in the same fashion as any other Data Item parsing error
       encountered in DLEP.
@@ -249,11 +266,11 @@ Extension</title>
      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Num DSCPs Qn  |             Queue Size Qn                     |
+    |  Queue Id     |             Queue Size                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |  DS Field Qn  |  DS Field Qn  |              ...              :
+    |  Num DSCPs    |   DS Field 1  |   DS Field 2  |  ...          :
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    :                          ...                  |  DS Field Qn  |
+    :                          ...                  |   DS Field N  |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </artwork>
 </figure>
@@ -267,24 +284,29 @@ Extension</title>
       is the number of octets in the sub data item, excluding the Type and
       Length fields.
     </t>
-    <t hangText="Num DSCPs Qn:">
+    <t hangText="Queue Id:">
+      <vspace blankLines="1"/>
+      An 8-bit unsigned integer indicating the Queue Identifier of the
+      queue associated with the sub data item.
+      This field MUST NOT contain the value zero (0), or the value 255.
+    </t>
+    <t hangText="Num DSCPs:">
       <vspace blankLines="1"/>
       An 8-bit unsigned integer indicating the number of DSCPs
-      associated with the queue index associated with the sub data item.
+      associated with the queue associated with the sub data item.
       This field MUST contain a value of at least one (1).
     </t>
-    <t hangText="Queue Size Qn:">
+    <t hangText="Queue Size:">
       <vspace blankLines="1"/>
       A 24-bit unsigned integer representing the size, in the octet
       scale indicated by the Scale field, of the queue supporting
-      traffic with the DSCPs associated with the queue index.
+      traffic with the DSCPs associated with the queue.
     </t>
-    <t hangText="DS Field Qn:">
+    <t hangText="DS Field 1..N:">
       <vspace blankLines="1"/>
       The data item contains a sequence of 8 bit DS Fields.  The
-      position in the sequence identifies the associated queue
-      index. The number of DS Fields present should equal the sum of all
-      Num DSCPs field values.
+      position in the sequence identifies the associated queue.
+      The number of DS Fields present MUST equal the Num DSCPs field value.
       <vspace blankLines="1"/>
       The DS Field structure is the same as <xref target="RFC2474"/>.
       <figure>
@@ -323,21 +345,21 @@ Extension</title>
 </t>
 <t>
   Each Pause Data Item identifies the traffic to be suppressed by the
-  Queue Index defined by <xref target="sec-di-qp"/>, which in turn
+  Queue Identifier defined by <xref target="sec-di-qp"/>, which in turn
   indicates a set of traffic identified by DSCPs.  The special value of
   255 is used to indicate that all traffic is to be suppressed.
 </t>
 <t>
   While there is no restriction on the number of Messages containing
   Pause Data Item that may be sent by a modem, a modem SHOULD include
-  multiple queue indexes in the same message when possible.
+  multiple Queue Identifiers in the same message when possible.
 </t>
 <t>
   A router which receives the Pause Data Item MUST cease sending
   the identified traffic to the modem. This may of course translate into
   the router's queues exceeding their own thresholds.
-  If a received Pause Data Item contains a Queue Index value other than
-  0, 255, or a queue index established by a Session Initialization or
+  If a received Pause Data Item contains a Queue Identifier` value other than
+  0, 255, or a Queue Identifier established by a Session Initialization or
   Session Update Message, the router MUST terminate the session with a
   Status Data Item indicating Invalid Data.
 </t>
@@ -352,9 +374,9 @@ Extension</title>
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Data Item Type                | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |  Queue Index  |               ...                             :
+    |   Queue Id    |               ...                             :
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    :                                ...            |  Queue Index  |
+    :                                ...            |   Queue Id    |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </artwork>
 </figure>
@@ -366,12 +388,12 @@ Extension</title>
       <vspace blankLines="1"/>
       Per <xref target="RFC8175"/> Length
       is the number of octets in the data item, excluding the Type and
-      Length fields. It will equal the number of Queue Index fields
+      Length fields. It will equal the number of Queue Identifier fields
       carried in the data item.
     </t>
-    <t hangText="Queue Index:">
+    <t hangText="Queue Id:">
       <vspace blankLines="1"/>
-      One or more 8-bit fields used to indicate a queue index defined by
+      One or more 8-bit fields used to indicate a Queue Identifier defined by
       a Queue Parameters Data Item.  The special value of 255 indicates
       all traffic is to be suppressed to the modem, when the data item
       is carried in a Session Update Message, or a destination, when the
@@ -395,7 +417,7 @@ Extension</title>
   send the Restart Data Item in a Session Update Message.  It also
   includes that to indicate that transmission can resume to a particular
   destination a modem MAY send the Pause Restart Item in a Destination
-  Update Message.  Finally, the same rules apply to queue indexes.
+  Update Message.  Finally, the same rules apply to Queue Identifiers.
 </t>
 <t>
   A router which receives the Restart Data Item SHOULD resume
@@ -412,9 +434,9 @@ Extension</title>
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Data Item Type                | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |  Queue Index  |               ...                             :
+    |   Queue Id    |               ...                             :
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    :                                ...            |  Queue Index  |
+    :                                ...            |   Queue ID    |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </artwork>
 </figure>
@@ -423,7 +445,7 @@ Extension</title>
   <list style="hanging">
     <t hangText="Data Item Type:">TBA4</t>
     <t hangText="Length:">See <xref target="sec-di-pause"/>.</t>
-    <t hangText="Queue Index:">See <xref target="sec-di-pause"/>.</t>
+    <t hangText="Queue Id:">See <xref target="sec-di-pause"/>.</t>
   </list>
 </t>
 </section>
