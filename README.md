@@ -15,3 +15,5 @@ Latency:    https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https://raw.g
 Multi-hop:  https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https://raw.githubusercontent.com/louberger/dlep-extensions/master/multi-hop/draft-ietf-manet-dlep-multi-hop-extension.xml&modeAsFormat=html%2Fascii
 
 Pause:     https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https://raw.githubusercontent.com/louberger/dlep-extensions/master/pause/draft-ietf-manet-dlep-pause-extension.xml&modeAsFormat=html%2Fascii
+
+Flow Control:   https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https://raw.githubusercontent.com/louberger/dlep-extensions/master/fc/draft-ietf-manet-dlep-credit-flow-control.xml&modeAsFormat=html%2Fascii
