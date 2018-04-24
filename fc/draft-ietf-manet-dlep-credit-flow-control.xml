@@ -145,7 +145,6 @@
     defined to support credit window control.  The use of credit window
     control impacts the data plane.
   </t>
-
   <t>
     The credit window control mechanisms defined in this document
     support credit based flow control of traffic sent from a router to a
@@ -195,17 +194,33 @@
     Data item defined below. This data item supports traffic
     classification on a per destination or more fine grain level.  This
     means that, routers need the combination of the DLEP identified
-    destination and flow information associated with a CID in order to
-    match traffic they send to specific credit windows.  Modems provide
-    the mapping of flows to CIDs in sets, each of which is identified
-    via a "Traffic Classification Identifier" or "TID".  (Flow
+    destination and flow information associated with a credit window in
+    order to match traffic they send to specific credit windows.  Modems
+    provide flow information via the Traffic Classification Data
+    Item defined below.  Each Traffic Classification Data Item provides
+    a set of flows that can be used at the same time.  This set is
+    identified via a "Traffic Classification Identifier" or "TID". Flow
     information is provided in sub Data Items with an associated a "Flow
-    Identifier" or "FID".)  When a destination becomes reachable, a modem
-    "Associates" (identifies) the TID to be used for traffic sent by the
-    router to that destination.  This use of CIDs, TIDs and association
-    of a TID to a DLEP destination enables a modem to share or dedicate
-    resources as needed to match the specifics of its implementation and
-    its attached transmission technology.
+    Identifier" or "FID".  Each sub Data Item provides the actual data
+    plane identifier or identifiers, i.e., header information, that is
+    used to associate data traffic with the specific FID.  Flow
+    information and FIDs are defined in a generic fashion, independent
+    of credit based flow control.  This said, in the context of credit
+    window control, flows are mapped directly to credit windows and CIDs
+    and FIDs use the same values.
+  </t>
+  <t>
+    [Editor's note: does it make sense to eliminated CIDs an just used
+     FIDs in the credit window data items?]
+  </t>
+  <t>
+    When a destination becomes reachable, a modem "Associates"
+    (identifies) the TID to be used for traffic sent by the router to
+    that destination.  In the current definition, CIDs and FIDs are
+    indistinguishable, so the use of CIDs, TIDs and association of a TID
+    to a DLEP destination enables a modem to share or dedicate resources
+    as needed to match the specifics of its implementation and its
+    attached transmission technology.
   </t>
 
   <section anchor="data-plane" title="Data Plane Considerations">
@@ -342,6 +357,7 @@
       difference from the this extension is that in this document credits are
       never provided by the router to the modem.
     </t>
+
     <section anchor="sec-di-cwi" title="Credit Window Initialization">
       <t>
         The Credit Window Initialization Data Item is used by a modem to
@@ -493,11 +509,11 @@
           </t>
           <t hangText=" Traffic Classification Identifier (TID):">
             <vspace blankLines="1"/>
-            A 16-bit unsigned integer identifying a traffic classification
-            set that has been identified in a Credit Window Traffic
+            A 16-bit unsigned integer identifying a traffic
+            classification set that has been identified in a Traffic
             Classification Data Item, see <xref target="sec-di-tc"/>.
-            Unknown TID values SHOULD be reported and result in associated
-            traffic being dropped.
+            Unknown TID values SHOULD be reported and result in
+            associated traffic being dropped.
           </t>
         </list>
       </t>
@@ -778,23 +794,34 @@
 
 <section anchor="sec-tc" title="Traffic Classification">
   <t>
-    Traffic classification is supported by the Traffic Classification
-    Data Item defined below.  The base Data Item and sub Data Item
-    structure is intended to be independent of any specific usage of the
-    flow identification provided within the Data Item. It is designed to
-    be extensible for future traffic classification types.  While the
-    structure of the Data Items is extensible, actual flow information
-    is expected to be used in an extension dependent manner.
+    The Traffic Classification Data Item is used to represent a list of
+    flows, which are represented in sub Data Items, that may be used for
+    traffic sent from a router to a modem.  The  Data Item and sub
+    Data Item structure is intended to be independent of any specific
+    usage of the flow identification provided within the Data Item. It
+    is designed to be extensible for future traffic classification
+    types.  While the structure of the Data Items is extensible, actual
+    flow information is expected to be used in an extension dependent
+    manner. Support for DSCP and PCP-based flows are defined via
+    individual sub Data Items below. Other types of flow identification,
+    e.g., based on IP protocol and ports, may be defined in the future
+    via new sub Data Items.
   </t>
+    
   <t>
-    In the context of the Credit Window Data Items, the
-    Traffic Classification Data Item is used by a modem to identify
-    groups of flows which are to be mapped to a credit window.  Support
-    for DSCP and PCP-based flows are defined below.    A DLEP
+    The list of flows contained in the Data Item can be used per sender
+    or shared across multiple senders, e.g., using the Data Item defined
+    in <xref target="sec-di-cwa"/>.  Each list of flows is identified
+    using a "Traffic Classification Identifier" or "TID".  Each flow is
+    identified via a "Flow Identifier" or "FID".  Each FID is defined in
+    a sub Data Item which carries the data plane identifier or
+    identifiers used to associate traffic with the flow.  A DLEP
     destination address is also needed to complete the traffic
-    classification information. This address is provided by a modem when
-    it identifies the traffic classification set in a Destination Up
-    Message using the Credit Window Associate Data Item defined above.
+    classification information.  This information is expected to be
+    provided in an extension specific manner.  For example, this address
+    can provided by a modem when it identifies the traffic
+    classification set in a Destination Up Message using the Credit
+    Window Associate Data Item defined above.
   </t>
   <section anchor="sec-di-tc" title="Traffic Classification Data Item">
     <t>
@@ -817,8 +844,8 @@
       The set of traffic classification information provided in the data
       item is identified using a Traffic Classification Identifier, or TID.
       Addition information, e.g., the list DSCPs associated with a credit
-      window, is provided in a variable series of Queue Parameter sub-data
-      items.
+      window, is provided in a variable list of Traffic Classification
+      Sub Data Items.
     </t>
     <t>
       The format of the Traffic Classification Data Item is:
@@ -878,16 +905,17 @@
       </list>
     </t>
     <t>
-      A router receiving the Traffic Classification Data Item MUST locate
-      the traffic classification information that is associated with the
-      TID indicated in each received Data Item.  If no associated traffic
-      classification information is found, the router MUST initialize a
-      new information set using the values carried in the Data Item.  When
+      A router receiving the Traffic Classification Data Item MUST
+      locate the traffic classification information that is associated
+      with the TID indicated in each received Data Item.  If no
       associated traffic classification information is found, the router
-      MUST update the information using the values carried in the Data
-      Item.  In both cases, a router MUST also ensure that any data plane
-      state, see <xref target="data-plane"/>, that is associated with the
-      TID is updated as needed.
+      MUST initialize a new information set using the values carried in
+      the Data Item.  When associated traffic classification information
+      is found, the router MUST update the information using the values
+      carried in the Data Item.  In both cases, a router MUST also
+      ensure that any data plane state, e.g., see <xref
+      target="data-plane"/>, that is associated with the TID is updated
+      as needed.
     </t>
 
     <section anchor="sec-di-tc-sub" title="Traffic Classification Sub Data Item">
@@ -936,20 +964,18 @@
     </section>
   </section>
 
-  <section anchor="sec-di-tc-ds-sub" title="DiffServ Credit Window Traffic Classification Sub Data Item">
+  <section anchor="sec-di-tc-ds-sub" title="DiffServ Traffic Classification Sub Data Item">
     <t>
-      The DiffServ Credit Window Traffic Classification Sub Data Item is
-      used to identify the DSCPs associated with a specific credit
-      window.  Credit windows are identified using CID values that have
-      been previously been sent by the modem or are listed in a Credit
-      Window Initialization Data Item carried in the same messages as
-      the sub Data Item.  DSCPs are identified in a list of DiffServ
-      fields.  An implementation that does not support DSCPs, and wants
-      to use credit window flow control for all traffic to a destination
-      or destinations, would indicate with 0 DSCPs.
+      The DiffServ Traffic Classification Sub Data Item is used to
+      identify the set of DSCPs that should be treated as a
+      single flow, i.e., receive the same traffic treatment.  DSCPs are
+      identified in a list of DiffServ fields.  An implementation that
+      does not support DSCPs and wants the same traffic treatment for
+      all traffic to a destination or destinations would indicate
+      0 DSCPs.
     </t>
     <t>
-      The format of the DiffServ Credit Window Traffic Classification
+      The format of the DiffServ Traffic Classification
       Sub Data Item is:
     </t>
     <t>
@@ -960,7 +986,7 @@
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Must be two (2)               | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Credit Window Identifier (CID)|   Num DSCPs   |   DS Field 1  |
+    | Flow Identifier (FID)         |   Num DSCPs   |   DS Field 1  |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |   DS Field 2  |      ...      |   DS Field n  |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -975,12 +1001,11 @@
         in the sub Data Item.  It is equal to three (3) plus the value
         of the Num DSCPs field.
         </t>
-        <t hangText="Credit Window Identifier (CID):">
+        <t hangText="Flow Identifier (FID):">
           <vspace blankLines="1"/>
-          A 16-bit unsigned integer identifying a credit window that has
-          been identified in a Credit Window Initialization Data Item,
-          see <xref target="sec-di-cwi"/>.  Unknown CID values SHOULD be
-          reported and result in associated traffic being dropped.
+          A 16-bit unsigned integer representing the data plane
+          information carried in the sub Data Item that is to be used in
+          identifying a flow.
         </t>
         <t hangText="Num DSCPs:">
           <vspace blankLines="1"/>
@@ -1006,52 +1031,24 @@
         </t>
       </list>
     </t>
-    <t>
-      A router receiving the DiffServ Traffic Classification Sub Data
-      Item MUST validate the information on receipt prior to the
-      information and data plane update described earlier in this
-      section.  The credit window associated with the CID indicated in
-      each Data Item must be located.  It is important to note that the
-      CID value may be present in a Credit Window Initialization Data
-      Item carried in the same message as the sub Data Item. If the CID
-      is not located, then it MUST be treated as an error as described
-      above.
-    </t>
-    <t>
-      When there are no unknown CIDs, the receiver MUST ensure
-      that each DS Field value is listed only once across the whole
-      Traffic Classification Data Item.  Note, this check
-      is across the Data Item and not the individual sub Data Item.  If
-      the same DS Field value is listed more than once within the same
-      Traffic Classification Data Item, the Data Item MUST
-      be treated as an error as described above.
-    </t>
-    <t>
-      In all cases, the router MUST use validated DSCPs in data plane
-      credit window identification as described in <xref
-      target="data-plane"/>.
-    </t>
   </section>
 
-  <section title="Ethernet Credit Window Traffic Classification Sub Data Item">
+  <section anchor="sec-di-tc-e-sub" title="Ethernet Traffic Classification Sub Data Item">
     <t>
-      The Ethernet Credit Window Traffic Classification Sub Data Item is
-      used to identify the VLAN and PCPs associated with a specific
-      credit window.  Ethernet Priority Code Point support is defined as
-      part of the IEEE 802.1Q <xref target="IEEE.802.1Q_2014"/> tag
-      format and includes a 3 bit "PCP" field.  The tag format also
-      includes a 12 bit VLAN identifier (VID) field.  Credit windows are
-      identified using CID values that have been previously been sent by
-      the modem or are listed in a Credit Window Initialization Data
-      Item carried in the same messages as the sub Data Item.  PCPs are
-      identified in a list of priority fields.  An implementation that
-      does not support PCPs, and wants to use credit window flow control
-      for all traffic to a destination or destinations, would indicate
-      with 0 PCPs.  Such an implementation could identify a VLAN to use
-      per destination.
+      The Ethernet Traffic Classification Sub Data Item is used to
+      identify the VLAN and PCPs that should be treated as a single
+      flow, i.e., receive the same traffic treatment.  Ethernet Priority
+      Code Point support is defined as part of the IEEE 802.1Q <xref
+      target="IEEE.802.1Q_2014"/> tag format and includes a 3 bit "PCP"
+      field.  The tag format also includes a 12 bit VLAN identifier
+      (VID) field. PCPs are identified in a list of priority fields.  An
+      implementation that does not support PCPs and wants the same
+      traffic treatment for all traffic to a destination or destinations
+      would indicate 0 PCPs.  Such an implementation could identify a
+      VLAN to use per destination.
     </t>
     <t>
-      The format of the Ethernet Credit Window Traffic Classification
+      The format of the Ethernet Traffic Classification
       Sub Data Item is:
     </t>
     <t>
@@ -1062,7 +1059,7 @@
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Must be two (3)               | Length (8)                    |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Credit Window Identifier (CID)|NumPCPs| VLAN Identifier (VID) |
+    | Flow Identifier (FID)         |NumPCPs| VLAN Identifier (VID) |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Pri. 1| Pri. 2| Pri. 3| Pri. 4| Pri. 5| Pri. 6| Pri. 7| Pri. 8|
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -1076,18 +1073,17 @@
         Length is the number of octets
         in the sub Data Item.  It is equal to eight (8).
         </t>
-        <t hangText="Credit Window Identifier (CID):">
+        <t hangText="Flow Identifier (FID):">
           <vspace blankLines="1"/>
-          A 16-bit unsigned integer identifying a credit window that has
-          been identified in a Credit Window Initialization Data Item,
-          see <xref target="sec-di-cwi"/>.  Unknown CID values SHOULD be
-          reported and result in associated traffic being dropped.
+          A 16-bit unsigned integer representing the data plane
+          information carried in the sub Data Item that is to be used in
+          identifying a flow.
         </t>
         <t hangText="Num PCPs:">
           <vspace blankLines="1"/>
-          A 4-bit unsigned integer indicating the number of PCPs
-          carried in the sub Data Item.  A zero (0) indicates a (wildcard)
-          match against any PCP value.
+          A 16-bit unsigned integer representing the data plane
+          information carried in the sub Data Item that is to be used in
+          identifying a flow.
         </t>
         <t hangText="VLAN identifier (VID):">
           <vspace blankLines="1"/>
@@ -1115,30 +1111,23 @@
         </t>
       </list>
     </t>
+  </section>
+  <section anchor="sec-di-tc-rrp" title="Router Receive Processing">
     <t>
-      A router receiving the Ethernet Traffic Classification Sub Data
+      A router receiving the any type of Traffic Classification Sub Data
       Item MUST validate the information on receipt prior to the
       information and data plane update described earlier in this
-      section.  The credit window associated with the CID indicated in
-      each Data Item must be located.  It is important to note that the
-      CID value may be present in a Credit Window Initialization Data
-      Item carried in the same message as the sub Data Item. If the CID
-      is not located, the it MUST be treated as an error as described
-      above.
+      section.  Validation failures MUST be treated as an error as
+      described above.
     </t>
     <t>
-      When there are no unknown CIDs, the receiver MUST ensure
-      that each Priority Field value is listed only once across the
-      whole Traffic Classification Data Item.  Note, this check is
-      across the Data Item and not the individual sub Data Item.  If
-      the same Priority Field value is listed more than once within the
-      same Traffic Classification Data Item, the Data Item MUST be
-      treated as an error as described above.
-    </t>
-    <t>
-      In all cases, the router MUST use validated PCPs in data plane
-      credit window identification as described in <xref
-      target="data-plane"/>.
+      Once validated, the receiver MUST ensure
+      that each DS Field value is listed only once across the whole
+      Traffic Classification Data Item.  Note, this check
+      is across the Data Item and not the individual sub Data Item.  If
+      the same DS Field value is listed more than once within the same
+      Traffic Classification Data Item, the Data Item MUST
+      be treated as an error as described above.
     </t>
   </section>
 </section>
@@ -1152,18 +1141,16 @@
 
 <section anchor="sec-sec" title="Security Considerations">
   <t>
-    The extension introduces a DiffServ awareness to the mechanisms
-    defined in <xref target="I-D.ietf-manet-credit-window"/>.  The
-    extension does not inherently introduce any additional threats above
-    those documented in <xref target="RFC8175"/>.  The
-    approach taken to Security in that document and <xref
-    target="I-D.ietf-manet-credit-window"/> apply equally when running
-    the extension defined in this document.
+    This document introduces credit window control and flow mechanisms
+    to DLEP.  These mechanisms do not inherently introduce any
+    additional threats above those documented in <xref
+    target="RFC8175"/>.  The approach taken to Security in that document
+    applies equally to the mechanism defined in this document.
   </t>
 </section>
 <section anchor="sec-iana" title="IANA Considerations">
   <t>
-    This document requests the assignment of 5 values by IANA.  All
+    This document requests the assignment of several values by IANA.  All
     assignments are to registries defined by <xref
     target="RFC8175"/>.
   </t>
@@ -1216,9 +1203,9 @@
       <ttcol>Type Code</ttcol><ttcol>Valid Data Items</ttcol> <ttcol>Description</ttcol>
       <c>0</c> <c>N/A</c> <c>Reserved</c>
       <c>1</c> <c>N/A</c> <c>Reserved (for pause sub-DI)</c>
-      <c>2</c> <c>DiffServ Credit Window Traffic Classification</c>
+      <c>2</c> <c>DiffServ Traffic Classification</c>
       <c>DiffServ Traffic Classification</c>
-      <c>3</c> <c>Ethernet Credit Window Traffic Classification</c>
+      <c>3</c> <c>Ethernet Traffic Classification</c>
       <c>Ethernet Traffic Classification</c>
       <c>4-65407</c> <c></c> <c>Specification Required</c>
       <c>65408-65534</c> <c></c> <c>Private Use</c>
