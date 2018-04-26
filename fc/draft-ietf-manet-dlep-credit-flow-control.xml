@@ -465,7 +465,7 @@
           <vspace blankLines="1"/>
           A 12-bit unsigned integer field indicating the VLAN to be
           used in traffic classification.  A value of zero (0) indicates
-          that the VID is to be ignored and VID is to be accepted during
+          that the VID is to be ignored and any VID is to be accepted during
           traffic classification.
         </t>
         <t hangText="Priority:">
