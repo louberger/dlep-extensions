@@ -20,6 +20,12 @@ To see formatted versions of each document click:
 
 ### idnits: [results](https://tools.ietf.org/idnits?url=https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https://raw.githubusercontent.com/louberger/dlep-extensions/master/credit/draft-ietf-manet-dlep-da-credit-extension.xml&modeAsFormat=html%2Fascii)
 
+## Ether (802.1Q) Credit:
+
+### Fomatted versions: [text](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https://raw.githubusercontent.com/louberger/dlep-extensions/master/credit/draft-ietf-manet-dlep-ether-credit-extension.xml) or  [html](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https://raw.githubusercontent.com/louberger/dlep-extensions/master/credit/draft-ietf-manet-dlep-ether-credit-extension.xml&modeAsFormat=html%2Fascii)
+
+### idnits: [results](https://tools.ietf.org/idnits?url=https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https://raw.githubusercontent.com/louberger/dlep-extensions/master/credit/draft-ietf-manet-dlep-ether-credit-extension.xml&modeAsFormat=html%2Fascii)
+
 ## Pause:
 
 ### Fomatted versions: [text](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https://raw.githubusercontent.com/louberger/dlep-extensions/master/pause/draft-ietf-manet-dlep-pause-extension.xml) or  [html](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https://raw.githubusercontent.com/louberger/dlep-extensions/master/pause/draft-ietf-manet-dlep-pause-extension.xml&modeAsFormat=html%2Fascii)
