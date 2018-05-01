@@ -91,7 +91,7 @@
       supported by an associated virtual or physical queue.  Traffic
       sent by a router will use traffic flow classification information
       provided by the modem to identify which traffic is associated with
-      each credit window.  In this case a flow, is identified based on
+      each credit window.  In this case, a flow is identified based on
       information found in a data plane header and one or more matches
       are associated with a single flow.  (For general background on
       traffic classification see <xref target="RFC2475"/> Section 2.3.)
@@ -171,11 +171,10 @@
     traffic with the flow.  A DLEP destination address is also needed to
     complete traffic classification information used in extensions such
     as flow control.  This information is expected to be provided in an
-    extension specific manner.  For example, this address can provided
+    extension specific manner.  For example, this address can be provided
     by a modem when it identifies the traffic classification set in a
     Destination Up Message using the Credit Window Associate Data Item
-    defined in using the Credit Window Associate Data Item defined in
-    <xref target="sec-di-cwa"/> .
+    defined in <xref target="sec-di-cwa"/> .
   </t>
   <section anchor="sec-di-tc" title="Traffic Classification Data Item">
     <t>
@@ -389,7 +388,7 @@
     <section anchor="sec-di-tc-rrp" title="Router Receive Processing">
       <t>
         A router receiving the Traffic Classification Sub Data
-        Item MUST validate the information on receipt, prior to the using
+        Item MUST validate the information on receipt, prior to using
         the carried information, including potentially updating the data
         behavior as determined by the extension requiring the use of the
         Sub Data Item.  Validation failures MUST be treated as an error as
@@ -549,7 +548,7 @@
   <t>
     Modems provide an initial credit window size at the time of "Credit
     Window Initialization".  Such initialization can take place during
-    session initiation or any point thereafter.  It can also takes place
+    session initiation or any point thereafter.  It can also take place
     when rate information changes.  Additional "Credit Grants", i.e.,
     increments to Credit Window size, are provided using a Destination
     Up or the new "Credit Control" Message.  A router provides its view
@@ -562,7 +561,7 @@
     account any overhead of their attached transmission technology and
     map it into the credit semantics defined in this document.  In
     particular, the credit window is defined below to include per frame
-    (packet) MAC headers and this may not match the actual overhead of
+    (packet) MAC headers, and this may not match the actual overhead of
     the modem attached transmission technology.  In that case a direct
     mapping, or an approximation will need to be made by the modem to
     provide appropriate credit values.
@@ -821,7 +820,7 @@
         MUST ensure that the FID field value has been provided by the
         modem in a Traffic Classification Data Item carried in either
         the current or previous message.  If the FID cannot be found the
-        router SHOULD SHOULD report or log this information.  Note that
+        router SHOULD report or log this information.  Note that
         no traffic will be associated with the credit window in this
         case.  After FID validation, the router MUST locate the credit
         window that is associated with the FID indicated in each
@@ -908,8 +907,8 @@
         Credit Window Grant Data Items in a single message are used to
         indicate different credit values for different credit windows.  In all
         message types, this Data Item provides an additional number of octets
-        to be added to the indicated credit window.  Credit window are
-        identified via using FID values that have been previously been
+        to be added to the indicated credit window.  Credit windows are
+        identified using FID values that have been previously been
         sent by the modem or are listed in a Credit Window Initialization
         Data Item carried in the same messages as the Data Item.
       </t>
