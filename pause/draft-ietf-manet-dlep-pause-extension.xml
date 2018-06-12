@@ -141,7 +141,7 @@ Extension</title>
   An implementation that does not support DSCPs would indicate 1 queue
   with 0 DSCPs, and the number of bytes that may be in its associated
   link transmit queue.  Additional logical queues are represented in a
-  variable series of Queue Parameter sub-data items.
+  variable series of Queue Parameter sub data items.
 </t>
 <t>
   The format of the Queue Parameters Data Item is:
@@ -214,7 +214,7 @@ Extension</title>
   <section anchor="sec-di-qp-sub" title="Queue Parameter Sub Data Item">
 
     <t>
-      Queue Parameter Sub Data Items are an ordered list composed of
+      Queue Parameter Sub Data Items are an unordered list composed of
       sub data items with a common format.  The first sub data item is
       assigned a Queue Index value of 1, and subsequent data items are
       numbered incrementally.  The format of the Queue Parameter Sub
@@ -233,9 +233,9 @@ Extension</title>
      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Must be one (1)               | Length                        |
+    | Sub Data Item Type (1)        | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           Value...                            :
+    |                           Value...                            |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </artwork>
 </figure>
@@ -249,9 +249,9 @@ Extension</title>
      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Num DSCPs Qn  |             Queue Size Qn                     |
+    |  Queue Index  |             Queue Size Qn                     |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |  DS Field Qn  |  DS Field Qn  |              ...              :
+    | Num DSCPs Qn  |  DS Field Qn  |              ...              :
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     :                          ...                  |  DS Field Qn  |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -261,23 +261,42 @@ Extension</title>
 
 <t>
   <list style="hanging">
+    <t hangText="Sub Data Item Type:">
+      <vspace blankLines="1"/>
+      A 16-bit unsigned integer that indicates the type and
+      corresponding format of the Sub Data Item's Value field.  Sub Data
+      Item Types are scoped within the Data Item in which they are
+      carried, i.e., the Sub Data Item Type field MUST be used together
+      with the Data Item Type to identify the format of the Sub Data
+      Item.  This field MUST be set to one (1) for the Queue Parameter
+      Sub Data Item.
+    </t>
     <t hangText="Length:">Variable
       <vspace blankLines="1"/>
       Copying <xref target="RFC8175"/>, Length
       is the number of octets in the sub data item, excluding the Type and
       Length fields.
     </t>
-    <t hangText="Num DSCPs Qn:">
+    <t hangText="Queue Index:">
       <vspace blankLines="1"/>
-      An 8-bit unsigned integer indicating the number of DSCPs
-      associated with the queue index associated with the sub data item.
-      This field MUST contain a value of at least one (1).
+      An 8-bit field indicating the queue index of the queue
+      parameter represented in the sub data item.  Only the first
+      instance a a particular Queue Index value is meaningful.
+      Subsequent sub data items containing the same Queue Index values,
+      if present, MAY be logged via a management interface and MUST
+      otherwise be ignored.
     </t>
     <t hangText="Queue Size Qn:">
       <vspace blankLines="1"/>
       A 24-bit unsigned integer representing the size, in the octet
       scale indicated by the Scale field, of the queue supporting
       traffic with the DSCPs associated with the queue index.
+    </t>
+    <t hangText="Num DSCPs Qn:">
+      <vspace blankLines="1"/>
+      An 8-bit unsigned integer indicating the number of DSCPs
+      associated with the queue index associated with the sub data item.
+      This field MUST contain a value of at least one (1).
     </t>
     <t hangText="DS Field Qn:">
       <vspace blankLines="1"/>
