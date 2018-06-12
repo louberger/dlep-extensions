@@ -233,7 +233,7 @@ Extension</title>
      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Must be one (1)               | Length                        |
+    | Sub Data Item Type (1)        | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |                           Value...                            |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -261,6 +261,16 @@ Extension</title>
 
 <t>
   <list style="hanging">
+    <t hangText="Sub Data Item Type:">
+      <vspace blankLines="1"/>
+      A 16-bit unsigned integer that indicates the type and
+      corresponding format of the Sub Data Item's Value field.  Sub Data
+      Item Types are scoped within the Data Item in which they are
+      carried, i.e., the Sub Data Item Type field MUST be used together
+      with the Data Item Type to identify the format of the Sub Data
+      Item.  This field MUST be set to one (1) for the Queue Parameter
+      Sub Data Item.
+    </t>
     <t hangText="Length:">Variable
       <vspace blankLines="1"/>
       Copying <xref target="RFC8175"/>, Length
