@@ -58,7 +58,7 @@
       associated virtual or physical queue.  The Data Items are defined in
       an extensible and reusable fashion. Their use will be mandated in
       other documents defining specific DLEP extensions.  This document also
-      introduces DLEP sub-data items.
+      introduces DLEP sub data items.
     </t>
   </abstract>
 </front>
@@ -302,7 +302,11 @@
           <t hangText="Sub Data Item Type:">
             <vspace blankLines="1"/>
             A 16-bit unsigned integer that indicates the type and
-            corresponding format of the Data Item's Value field.  Sub Data
+            corresponding format of the Sub Data Item's Value field.
+            Sub Data Item Types are scoped within the Data Item in which
+            they are carried, i.e., the Sub Data Item Type field MUST be
+            used together with the Data Item Type to identify the format
+            of the Sub Data Item.  Traffic Classification Sub Data
             Item Types are managed according to the IANA registry described
             in <xref target="sec-iana-sdi"/>.
           </t>
@@ -338,7 +342,7 @@
      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Must be two (2)               | Length                        |
+    | Must be one (1)               | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Flow Identifier (FID)         |   Num DSCPs   |   DS Field 1  |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -431,7 +435,7 @@
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Must be two (3)               | Length (8)                    |
+    | Must be two (2)               | Length (8)                    |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Flow Identifier (FID)         |NumPCPs| VLAN Identifier (VID) |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -1214,10 +1218,10 @@
       <postamble></postamble>
     </texttable>
   </section>
-  <section anchor="sec-iana-sdi" title="DLEP Sub Data Item Registry">
+  <section anchor="sec-iana-sdi" title="DLEP Traffic Classification Sub Data Item Registry">
     <t>
       Upon approval of this document, IANA is requested to create a new
-      DLEP registry, named "Sub Data Item Type Values".  The registry
+      DLEP registry, named "Traffic Classification Sub Data Item Type Values".  The registry
       shall identify the type code value, the Data Item which may use the
       value, and a description of the value.  While the same value may be
       reused in different Data Items, this is not recommended at this time.
@@ -1228,14 +1232,11 @@
     </t>
     <texttable anchor="table_tc_sdi" title="Initial Registry Values">
       <preamble></preamble>
-      <ttcol>Type Code</ttcol><ttcol>Valid Data Items</ttcol> <ttcol>Description</ttcol>
+      <ttcol>Type Code</ttcol> <ttcol>Description</ttcol>
       <c>0</c> <c>N/A</c> <c>Reserved</c>
-      <c>1</c> <c>N/A</c> <c>Reserved (for pause sub-DI)</c>
-      <c>2</c> <c>DiffServ Traffic Classification</c>
-      <c>DiffServ Traffic Classification</c>
-      <c>3</c> <c>Ethernet Traffic Classification</c>
-      <c>Ethernet Traffic Classification</c>
-      <c>4-65407</c> <c></c> <c>Specification Required</c>
+      <c>1</c> <c>DiffServ Traffic Classification</c>
+      <c>2</c> <c>Ethernet Traffic Classification</c>
+      <c>3-65407</c> <c></c> <c>Specification Required</c>
       <c>65408-65534</c> <c></c> <c>Private Use</c>
       <c>65535</c> <c></c> <c>Reserved</c>
       <postamble></postamble>
