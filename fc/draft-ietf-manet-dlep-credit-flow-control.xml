@@ -1233,12 +1233,12 @@
     <texttable anchor="table_tc_sdi" title="Initial Registry Values">
       <preamble></preamble>
       <ttcol>Type Code</ttcol> <ttcol>Description</ttcol>
-      <c>0</c> <c>N/A</c> <c>Reserved</c>
+      <c>0</c> <c>Reserved</c>
       <c>1</c> <c>DiffServ Traffic Classification</c>
       <c>2</c> <c>Ethernet Traffic Classification</c>
-      <c>3-65407</c> <c></c> <c>Specification Required</c>
-      <c>65408-65534</c> <c></c> <c>Private Use</c>
-      <c>65535</c> <c></c> <c>Reserved</c>
+      <c>3-65407</c> <c>Specification Required</c>
+      <c>65408-65534</c> <c>Private Use</c>
+      <c>65535</c> <c>Reserved</c>
       <postamble></postamble>
     </texttable>
   </section>
