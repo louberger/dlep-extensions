@@ -174,7 +174,8 @@
     extension specific manner.  For example, this address can be provided
     by a modem when it identifies the traffic classification set in a
     Destination Up Message using the Credit Window Associate Data Item
-    defined in <xref target="sec-di-cwa"/> .
+    defined in <xref target="sec-di-cwa"/>.  The scope of TID and FID
+    values is a modem.
   </t>
   <section anchor="sec-di-tc" title="Traffic Classification Data Item">
     <t>
@@ -435,21 +436,26 @@
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Must be two (2)               | Length (8)                    |
+    | Must be two (2)               | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Flow Identifier (FID)         |NumPCPs| VLAN Identifier (VID) |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Pri. 1| Pri. 2| Pri. 3| Pri. 4| Pri. 5| Pri. 6| Pri. 7| Pri. 8|
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Pri. 1| Pri. 2| ..... | ..... | ..... |  Pad  |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
         </artwork>
       </figure>
     </t>
     <t>
       <list style="hanging">
         <t hangText="Length:">Variable
-        <vspace blankLines="1"/>
-        Length is defined above.  For this Sub Data Item, it is
-        equal to eight (8).
+          <vspace blankLines="1"/>
+          Length is defined above.  For this Sub Data Item, it is equal
+          to four (4) plus the number of octets needed to carry the
+          carried Priority fields is indicated by the NumPCPs
+          field. Note that as length is in octets and each Priority
+          field is 4 bits, the additional length is the value carried in
+          the NumPCPs field divided by two and rounded up to the next
+          higher integer quantity.
         </t>
         <t hangText="Flow Identifier (FID):">
           <vspace blankLines="1"/>
@@ -460,9 +466,9 @@
         </t>
         <t hangText="Num PCPs:">
           <vspace blankLines="1"/>
-          A 16-bit unsigned integer representing the data plane
-          information carried in the sub Data Item that is to be used in
-          identifying a flow.
+          A 4-bit unsigned integer indicating the number of Priority
+          fields carried in the sub Data Item.  A zero (0) indicates a
+          (wildcard) match against any PCP value.
         </t>
         <t hangText="VLAN identifier (VID):">
           <vspace blankLines="1"/>
@@ -473,8 +479,9 @@
         </t>
         <t hangText="Priority:">
           <vspace blankLines="1"/>
-          Each Priority Field is an 4-bit whose definition includes the
-          PCP field defined in <xref target="IEEE.802.1Q_2014"/>
+          Each Priority Field is 4-bits long and indicates a
+          PCP field defined in <xref target="IEEE.802.1Q_2014"/>. Note
+          that zero (0) is a valid value for either PCP or DEI.
           <figure>
             <artwork>
         0   1   2   3
@@ -486,6 +493,12 @@
         DEI: currently unused, MUST be zero
             </artwork>
           </figure>
+        </t>
+        <t hangText="Pad:">
+          <vspace blankLines="1"/>
+          A 4-bit long field included when NumPCPs is an odd number.
+          This field MUST be set to zero when added, and MIST be ignored
+          on receipt.
         </t>
       </list>
     </t>
