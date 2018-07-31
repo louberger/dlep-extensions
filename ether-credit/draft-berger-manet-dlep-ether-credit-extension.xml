@@ -56,29 +56,26 @@
       <t>
         The base DLEP specification does not include any flow control
         capability.  There are various flow control techniques
-        theoretically possible with DLEP.  For example, a DiffServ aware
-        credit window extension is defined in <xref
-        target="I-D.ietf-manet-dlep-da-credit-extension"/>.
-      </t>
-      <t>
-        This document defines a DLEP extension which provides a flow
+        theoretically possible with DLEP.
+        This document defines a DLEP extension which provides an Ethernet-based flow
         control mechanism for traffic sent from a router to a
         modem. Flow control is provided using one or more logical
         "Credit Windows", each of which will typically be supported by
         an associated virtual or physical queue.  Traffic sent by a
         router will use traffic flow classification information provided
         by the modem to identify which traffic is associated with each
-        credit window.  (For general background on traffic
-        classification see <xref target="RFC2475"/> Section 2.3.)
+        credit window.
         Credit windows may be shared or dedicated on a per flow
-        basis. The extension is structured to allow for reuse of the
-        defined credit window based flow control with different traffic
-        classification techniques.
+        basis.
+        See <xref
+        target="I-D.ietf-manet-dlep-da-credit-extension"/> for a
+        DiffServ-based version of credit window flow control.
       </t>
       <t>
         This document uses the traffic classification and credit window
         control mechanisms defined in <xref
-        target="I-D.ietf-manet-credit-flow-control"/> to provided credit
+        target="I-D.ietf-manet-dlep-traffic-classification"/> and <xref
+        target="I-D.ietf-manet-dlep-credit-flow-control"/> to provided credit
         window based flow control based on on DLEP destination and
         Ethernet VLANs and Priority Code Points.  Ethernet Priority Code
         Point support is defined as part of the IEEE 802.1Q <xref
@@ -96,7 +93,9 @@
         802.1Q Aware Credit Window" or, more simply, the "Ethernet
         Credit" extension. The reader should be familiar with both the
         traffic classification and credit window control mechanisms
-        defined in <xref target="I-D.ietf-manet-credit-flow-control"/>.
+        defined in <xref
+        target="I-D.ietf-manet-dlep-traffic-classification"/> and <xref
+        target="I-D.ietf-manet-dlep-credit-flow-control"/>.
       </t>
       <t>
         This document defines a new DLEP Extension Type Value in <xref
@@ -119,7 +118,8 @@
       <t>
         The extension defined in this document is composed of the
         mechanisms and processing defined in <xref
-        target="I-D.ietf-manet-credit-flow-control"/>.  To indicate that
+        target="I-D.ietf-manet-dlep-traffic-classification"/> and <xref
+        target="I-D.ietf-manet-dlep-credit-flow-control"/>.  To indicate that
         the IEEE 802.1Q Aware Credit Window Extension is to be used, an
         implementation MUST include the IEEE 802.1Q Aware Credit Window
         Type Value in the Extensions Supported Data Item.  The
@@ -128,7 +128,9 @@
         use of the IEEE 802.1Q Aware Credit Window Extension MUST
         support all Messages, Data Items, the Ethernet Traffic
         Classification Sub Data Item, and all related processing defined
-        in <xref target="I-D.ietf-manet-credit-flow-control"/>.
+        in <xref
+        target="I-D.ietf-manet-dlep-traffic-classification"/> and <xref
+        target="I-D.ietf-manet-dlep-credit-flow-control"/>.
       </t>
       <t>
         The IEEE 802.1Q Aware Credit Window Extension Type Value is
@@ -154,7 +156,7 @@
         Modems MAY support the configuration of PCP to credit window
         (queue) mapping on a per VLAN basis. Note that VID value of zero
         (0) is used by <xref
-        target="I-D.ietf-manet-credit-flow-control"/> to indicate that
+  target="I-D.ietf-manet-dlep-traffic-classification"/> to indicate that
         VID is ignored and any VID value is used in traffic
         classification.
       </t>
@@ -185,7 +187,9 @@ the modem SHOULD support the configuration of VLAN to credit window
       <t>
         This document defines a DLEP extension that uses base DLEP
         mechanisms and the credit window control and flow mechanisms
-        defined in <xref target="I-D.ietf-manet-credit-flow-control"/>.
+        defined in <xref
+        target="I-D.ietf-manet-dlep-traffic-classification"/> and <xref
+        target="I-D.ietf-manet-dlep-credit-flow-control"/>.
         The use of those mechanisms, and the introduction of a new
         extension, do not inherently introduce any additional threats
         above those documented in <xref target="RFC8175"/>.  The
@@ -245,24 +249,53 @@ the modem SHOULD support the configuration of VLAN to credit window
       <?rfc include="reference.RFC.2119"?>
       <?rfc include="reference.RFC.8174"?>
       <?rfc include="reference.RFC.8175"?>
-      <reference anchor="I-D.ietf-manet-credit-flow-control">
-
+      <?rfc include="reference.I-D.ietf-manet-dlep-credit-flow-control"?>
+      <reference anchor="I-D.ietf-manet-dlep-traffic-classification" >
         <front>
           <title>
-            DLEP Credit-Based Flow Control Messages and Data Items
+            DLEP Traffic Classification Data Item
           </title>
-          <author>
-            <organization>IETF</organization>
+          <author initials='B.' surname="Cheng" fullname='Bow-Nan Cheng'>
+            <organization>MIT Lincoln Laboratory</organization>
+            <address>
+              <postal>
+                <street>Massachusetts Institute of Technology</street>
+                <street>244 Wood Street</street>
+                <city>Lexington</city>
+                <region>MA</region>
+                <code>02421-6426</code>
+              </postal>
+              <email>bcheng@ll.mit.edu</email>
+            </address>
           </author>
-          <date day="26" month="April" year="2018"/>
+          <author initials='D.' surname="Wiggins" fullname='David Wiggins'>
+            <organization>MIT Lincoln Laboratory</organization>
+            <address>
+              <postal>
+                <street>Massachusetts Institute of Technology</street>
+                <street>244 Wood Street</street>
+                <city>Lexington</city>
+                <region>MA</region>
+                <code>02421-6426</code>
+              </postal>
+              <email>David.Wiggins@ll.mit.edu</email>
+            </address>
+          </author>
+          <author initials='L.' surname="Berger" fullname='Lou Berger'>
+            <organization>LabN Consulting, L.L.C.</organization>
+            <address>
+              <email>lberger@labn.net</email>
+            </address>
+          </author>
+          <date day="1" month="August" year="2018"/>
         </front>
       </reference>
     </references>
 
     <references title="Informative References">
       <?rfc include="reference.I-D.ietf-manet-dlep-da-credit-extension"?>
-      <?rfc include="reference.RFC.2475"?>
     </references>
+
     <?rfc needLines="100"?>
     <section title="Acknowledgments">
       <t>
