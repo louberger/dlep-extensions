@@ -8,7 +8,7 @@
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
 <rfc category="std" ipr="trust200902"
-     docName="draft-ietf-manet-dlep-credit-flow-control-03">
+     docName="draft-ietf-manet-dlep-credit-flow-control-04">
 
 <front>
   <title abbrev="DLEP Credit-Based Flow Control">
