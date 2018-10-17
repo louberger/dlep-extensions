@@ -26,7 +26,7 @@ WITHXML2RFC := $(shell which xml2rfc > /dev/null 2>&1 ; echo $$? )
 
 ID_DIR	     = IDs
 REVS	    := $(shell grep docName $(DRAFT).xml | tr '"\->' '   ' | \
-		 awk '{printf "%02d %02d %02d",$$NF-1,$$NF,$$NF+1}')
+		 strings | awk '{printf "%02d %02d %02d",$$NF-1,$$NF,$$NF+1}')
 PREV_REV    := $(word 1, $(REVS))
 REV	    := $(word 2, $(REVS))
 NEXT_REV    := $(word 3, $(REVS))
@@ -103,6 +103,7 @@ vars:	$(YANGIMPORT_BASE)
 	@echo MODELS=$(MODELS)
 	@echo TREES=$(TREES)
 	@echo DATE=$(DATE)
+	@echo DRAFT=$(DRAFT)
 	@which xml2rfc
 	@echo WITHXML2RFC=$(WITHXML2RFC)
 	@echo PREV_REV=$(PREV_REV)
