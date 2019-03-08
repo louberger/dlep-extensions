@@ -283,7 +283,7 @@
             corresponding format of the Sub Data Item's Value field.
             Sub Data Item Types are scoped within the Data Item in which
             they are carried, i.e., the Sub Data Item Type field MUST be
-            used together with the Data Item Type to identify the format
+            used together with the Traffic Classification Data Item Type to identify the format
             of the Sub Data Item.  Traffic Classification Sub Data
             Item Types are managed according to the IANA registry described
             in <xref target="sec-iana-sdi"/>.
@@ -539,10 +539,7 @@
   <section anchor="sec-iana-sdi" title="DLEP Traffic Classification Sub Data Item Registry">
     <t>
       Upon approval of this document, IANA is requested to create a new
-      DLEP registry, named "Traffic Classification Sub Data Item Type Values".  The registry
-      shall identify the type code value, the Data Item which may use the
-      value, and a description of the value.  While the same value may be
-      reused in different Data Items, this is not recommended at this time.
+      DLEP registry, named "Traffic Classification Sub Data Item Type Values".
     </t>
     <t>
       The following table provides initial registry values and the
