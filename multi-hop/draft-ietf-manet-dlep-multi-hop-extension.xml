@@ -52,15 +52,26 @@
   document defines one such extension.
 </t>
 <t>
-  Some modem technologies support connectivity to destinations via
-  multi-hop forwarding. DLEP Destination messages can be used to report
-  such connectivity, see <xref target="RFC8175"/>, but do
+  Some modem technologies support mobile ad hoc network (MANET)
+  forwarding where connectivity to destinations is provided via
+  forwarding in intermediate modems. This document refers to forwarding
+  by intermediate modems as 'multi-hop forwarding'.
+  example using . DLEP Destination messages can be used to report
+  such reachable destinations, see <xref target="RFC8175"/>, but do
   not provide any information related to the number or capacity of the
   hops.  The extension defined in this document enables modems to inform
   routers when multi-hop forwarding is being used, and routers to
   request that modems change multi-hop forwarding behavior. The
   extension defined in this document is referred to as "Multi-Hop
-  Forwarding".
+  Forwarding", where each modem that transmits/sends data to reach a
+  particular destination is counted as a hop.
+</t>
+<t>
+  It is important to note that the use of the hop control mechanism
+  defined in this can result in connectivity changes and even loss of
+  the ability to reach one or more destinations.  The defined mechanism
+  will report such connectivity changes, but the details of what a
+  router does or how it reacts to such are out scope of this document.
 </t>
 <t>
   This document defines a new DLEP Extension Type Value in <xref
@@ -96,7 +107,7 @@
 <section anchor="sec-data-items" title="Extension Data Items">
 <t>
    Three data items are defined by this extension. The Hop Count Data
-   Item is used by a modem to provide the number of network hops
+   Item is used by a modem to provide the number of modem hops
    traversed to reach a particular destination.  The Hop Control Data
    Item is used by a router to request that a modem alter connectivity
    to a particular destination.  The Suppress Forwarding Data Item is
@@ -106,19 +117,18 @@
 <section anchor="sec-di-hcount" title="Hop Count">
 <t>
   The Hop Count Data Item is used by a modem to indicate the number of
-  physical hops between the modem and a specific destination.  In other
+  modem that transmits/sends data to reach a particular destination,
+  i.e., hops, between the modem and a specific destination.  In other
   words, each hop represents a transmission and the number of hops is
   equal to the number of transmissions required to go from a router
   connected modem to the destination's connected modem.  The minimum
   number of hops is 1, which represents transmission to destinations
-  that are directly reachable via the router's
-  locally connected
-  modem.
+  that are directly reachable via the router's locally connected modem.
 </t>
 <t>
   The data item also contains an indication of when a destination which
   currently has a hop count of greater than one (1) could be made
-  direcly reachable by a modem, e.g., by re-aiming an antenna.
+  directly reachable by a modem, e.g., by re-aiming an antenna.
 </t>
 <t>
   The Hop Count Data Item SHOULD be carried in the Destination Up,
@@ -127,7 +137,7 @@
   is greater than one (1).
 </t>
 <t>
-  A router receiving a Hop Count Data Item MAY use this information in
+  A router receiving a Hop Count Data Item can use this information in
   its forwarding and routing decisions, and specific use is out of scope
   of this document.  The absence of the Hop Count Data Item MUST be
   interpreted by the router as a Hop Count value of one (1).
@@ -151,13 +161,14 @@
 <t>
   <list style="hanging">
     <t hangText="Data Item Type:">TBA2</t>
-    <t hangText="Length:">4</t>
+    <t hangText="Length:">2</t>
     <t hangText="P:">
       <vspace blankLines="1"/>
       The P-bit indicates that a destination is potentially directly
       reachable. When the P-bit is set, the router MAY request a direct
       link to the associated destination using the Hop Control Data Item
-      described below.
+      described below. This field MUST be ignored when the value
+      contained in the Hop Count field is one (1).
     </t>
     <t hangText="Reserved:">
       <vspace blankLines="1"/>
@@ -166,7 +177,7 @@
     </t>
     <t hangText="Hop Count:">
       <vspace blankLines="1"/>
-      An unsigned 8-bit integer indicating the number of network hops
+      An unsigned 8-bit integer indicating the number of modem hops
       required (i.e., number of times a packet will be transmitted) to
       reach the destination indicated in the message.  The special value
       of 255 (0xFF) is used to indicate that the number of hops is an
@@ -174,9 +185,9 @@
       value of at least one (1) if the associated destination is
       reachable.
       <vspace blankLines="1"/>
-      A value of zero (0) is used to indicated that processing of a Hop
+      A value of zero (0) is used to indicate that processing of a Hop
       Control action, see <xref target="sec-di-hcontrol"/>, has resulted
-      in a destination no longer being reachable.  A zero value MUST NOT
+      in the destination no longer being reachable.  A zero value MUST NOT
       be used in any message other then a Link Characteristics Response
       Message.
     </t>
@@ -216,6 +227,11 @@
   Destination Update Message.
 </t>
 <t>
+  Failures may occur for multiple reasons, for example, the transmission
+  characteristics of the link don't support the one-hop connection at
+  the time of the request. Requests may be rejected by local policy.
+</t>
+<t>
   A modem that receives the Hop Control Data Item in
   a Session Update Message
   SHOULD attempt to make the change indicated by the data item
@@ -248,7 +264,7 @@
 <t>
   <list style="hanging">
     <t hangText="Data Item Type:">TBA3</t>
-    <t hangText="Length:">4</t>
+    <t hangText="Length:">2</t>
     <t hangText="Hop Control Actions:">
       <vspace blankLines="1"/>
       An unsigned 16-bit value with the following meaning:
@@ -268,10 +284,10 @@
 <section anchor="sec-di-hc-r" title="Reset">
   <t>
     The Reset Action requests that the default behavior be restored.
-    When received in a Session Update Message message, a modem SHOULD
+    When received in a Session Update Message message, a modem MUST
     clear all control actions that have previously been processed on a
     device wide basis, and revert to its configured behavior.  When
-    received in a Link Characteristics Request Message, a modem SHOULD clear all
+    received in a Link Characteristics Request Message, a modem MUST clear all
     control actions that have previously been processed for the
     destination indicated in the message.
   </t>
@@ -283,7 +299,7 @@
     that a direct connection is no longer needed
     with the destination identified in the message. This request has no
     impact for multi-hop destinations and may fail even in a single
-    hop case, i.e. MAY result in the Hop Count to the destination not
+    hop case, i.e. can result in the Hop Count to the destination not
     being impacted by the processing of the request.
   </t>
 </section>
@@ -296,9 +312,7 @@
     be sent for destinations for which the Hop Count is greater than 1
     and has the P-Bit set in the previously received Hop Count Data
     Item.  Results of the request for the destination identified in the
-    message are provided as described above.  If any other destination
-    is impacted in the processing of this action, the modem MUST send a
-    Destination Update Message for each impacted destination.
+    message are provided as described above.
   </t>
 </section>
 
@@ -326,7 +340,7 @@
   traffic originating from the modem's peer router SHALL be sent by the
   modem to the destination indicated in the Link Characteristics Request
   Message only when it is one modem hop away.  Notably, data traffic
-  received by the modem from another modem MAY be forwarded by the modem
+  received by the modem from another modem can be forwarded by the modem
   per its normal processing.  Results are provided as described above.
 </t>
 </section>
@@ -341,6 +355,20 @@
    above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
    when running the extension defined in this document.
+</t>
+<t>
+  This extension does define one mechanism that is worth particular
+  note.  This extension includes a Hop Control mechanism, see <xref
+  target="sec-di-hcontrol"/>, that is similar to the Link
+  Characteristics Request Message defined in <xref target="RFC8175"/> in
+  that it can impact the set of destinations reported as reachable.
+  With the Link Characteristics Request Message, this risk is implicit.
+  With the Hop Control mechanism defined in this document it is more
+  likely.  From a security perspective, implementations should be aware
+  of this increased risk and may choose to implement additional
+  configuration control mechanisms to ensure that the Hop Control
+  mechanism is only used under conditions intended by the network
+  operator.
 </t>
 </section>
 <section anchor="sec-iana" title="IANA Considerations">
@@ -383,7 +411,7 @@
     DLEP registry, named "Hop Control Actions Values".
 
    The following table provides initial registry values and the <xref
-   target="RFC8126"/>. defined policies that should apply to the
+   target="RFC8126"/> defined policies that should apply to the
    registry:
 </t>
 <texttable anchor="table_iana_hca" title="Hop Control Actions Values">
