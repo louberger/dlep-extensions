@@ -56,7 +56,7 @@
   forwarding where connectivity to destinations is provided via
   forwarding in intermediate modems. This document refers to forwarding
   by intermediate modems as 'multi-hop forwarding'.
-  example using . DLEP Destination messages can be used to report
+  DLEP Destination messages can be used to report
   such reachable destinations, see <xref target="RFC8175"/>, but do
   not provide any information related to the number or capacity of the
   hops.  The extension defined in this document enables modems to inform
