@@ -49,7 +49,7 @@
   <date/>
   <abstract>
     <t>
-      This document defines a new DLEP protocol Data Item that is used
+      This document defines a new Dynamic Link Exchange Protocol (DLEP) Data Item that is used
       to support traffic classification.  Traffic classification
       information is used to identify traffic flows based on
       frame/packet content such as destination address.  The Data Item

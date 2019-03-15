@@ -36,7 +36,7 @@
     <date/>
     <abstract>
       <t>
-        This document defines an extension to the DLEP protocol that
+        This document defines an extension to the Dynamic Link Exchange Protocol (DLEP) that
         enables a Ethernet IEEE 802.1Q aware credit-window scheme for
         destination-specific and shared flow control.
       </t>

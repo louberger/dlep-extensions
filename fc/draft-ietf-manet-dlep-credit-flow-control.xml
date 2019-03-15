@@ -63,7 +63,7 @@
   <date/>
   <abstract>
     <t>
-      This document defines new DLEP protocol Data Items that are used to
+      This document defines new Dynamic Link Exchange Protocol (DLEP) Data Items that are used to
       support credit-based flow control.
       Credit
       window control is used to regulate when data may be sent to an

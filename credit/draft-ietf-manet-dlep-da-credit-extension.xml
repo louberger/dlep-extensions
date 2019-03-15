@@ -49,7 +49,7 @@ Extension</title>
   <date/>
   <abstract>
 <t>
-  This document defines an extension to the DLEP protocol that enables a
+  This document defines an extension to the Dynamic Link Exchange Protocol (DLEP) that enables a
   DiffServ aware credit-window scheme for destination-specific and
   shared flow control.
 </t>

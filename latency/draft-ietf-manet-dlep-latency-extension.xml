@@ -35,7 +35,7 @@ Extension</title>
   <date/>
   <abstract>
 <t>
-  This document defines an extension to the DLEP protocol to provide the
+  This document defines an extension to the Dynamic Link Exchange Protocol (DLEP) to provide the
   range of latency that can be experienced on a link.
 </t>
 </abstract>
@@ -151,7 +151,7 @@ Extension</title>
 <section anchor="sec-sec" title="Security Considerations">
 <t>
    The extension introduces a new Data Item
-   for the DLEP protocol.  The
+   for DLEP.  The
    extension does not inherently introduce any additional threats
    above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
