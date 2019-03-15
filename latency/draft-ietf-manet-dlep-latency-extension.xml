@@ -36,7 +36,7 @@ Extension</title>
   <abstract>
 <t>
   This document defines an extension to the DLEP protocol to provide the
-  range of latency that may be experienced on a link.
+  range of latency that can be experienced on a link.
 </t>
 </abstract>
 </front>
@@ -96,7 +96,7 @@ Extension</title>
 <t>
   The Latency Range Data Item serves much the same purpose as the
   Latency Data Item defined in <xref target="RFC8175"/> with
-  the addition of being able to communicate the latency range that may
+  the addition of being able to communicate the latency range that can
   be experienced by traffic on a link.  The Latency Range Data Item MAY be
   carried in any message where the Latency Data Item [RFC8175] is
   allowed and is carried as an additional data item.  When present, the
@@ -139,7 +139,7 @@ Extension</title>
     <t hangText="Minimum Latency:">
       <vspace blankLines="1"/>
       A 64-bit unsigned integer, representing the shortest transmission
-      delay, in microseconds, that a packet encounters as it is
+      delay, in microseconds, that a packet can encounter as it is
       transmitted over the link.
     </t>
   </list>
