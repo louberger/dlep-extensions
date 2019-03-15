@@ -188,7 +188,7 @@
       A value of zero (0) is used to indicate that processing of a Hop
       Control action, see <xref target="sec-di-hcontrol"/>, has resulted
       in the destination no longer being reachable.  A zero value MUST NOT
-      be used in any message other then a Link Characteristics Response
+      be used in any message other than a Link Characteristics Response
       Message.
     </t>
   </list>
