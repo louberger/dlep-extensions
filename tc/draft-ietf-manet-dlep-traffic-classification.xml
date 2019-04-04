@@ -512,7 +512,7 @@
   <t>
     This document introduces finer grain flow identification mechanisms
     to DLEP.  These mechanisms do not inherently introduce any
-    additional threats above those documented in <xref
+    additional vulnerabilities above those documented in <xref
     target="RFC8175"/>.  The approach taken to Security in that document
     applies equally to the mechanism defined in this document.
   </t>

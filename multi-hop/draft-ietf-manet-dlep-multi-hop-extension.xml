@@ -351,7 +351,7 @@
    The extension enables
    the reporting and control of forwarding information by DLEP capable
    modems.  The
-   extension does not inherently introduce any additional threats
+   extension does not inherently introduce any additional vulnerabilities
    above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
    when running the extension defined in this document.

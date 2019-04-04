@@ -152,7 +152,7 @@ Extension</title>
 <t>
    The extension introduces a new Data Item
    for DLEP.  The
-   extension does not inherently introduce any additional threats
+   extension does not inherently introduce any additional vulnerabilities
    above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
    when running the extension defined in this document.

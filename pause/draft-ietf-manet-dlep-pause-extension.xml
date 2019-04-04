@@ -72,10 +72,11 @@ Extension</title>
   this document supports flow control of data traffic based on explicit messages sent
   via DLEP by a modem to indicate when a router should hold off sending
   traffic, and when it should resume. The extension also optionally
-  supports DSCP (differentiated services codepoint) aware, see <xref
-  target="RFC2475"/>, flow control.  The extension defined in this
+  supports DSCP (differentiated services codepoint) aware flow control.
+  For general background on Differentiated Services see <xref
+  target="RFC2475"/>. The extension defined in this
   document is referred to as "Control Plane Based Pause".  Note that
-  this mechanism only controls traffic that is to be transmitted on the
+  this mechanism only applies to traffic that is to be transmitted on the
   modem's attached data channel and not to DLEP control messages
   themselves.
 </t>
@@ -98,7 +99,7 @@ Extension</title>
 <section anchor="sec-ext-type" title="Extension Usage and Identification">
 <t>
    The use of the Control Plane Based Pause Extension SHOULD be configurable.
-   To indicate that the Control Plane Based Pause Extension is to be used, an
+   To indicate that the implementation supports use of the Control Plane Based Pause Extension, an
    implementation MUST include the Control Plane Based Pause Extension Type
    Value in the Extensions Supported Data Item. The Extensions Supported
    Data Item is sent and processed according to <xref
@@ -112,7 +113,7 @@ Extension</title>
 <section anchor="sec-data-items" title="Extension Data Items">
 <t>
    Three data items are defined by this extension. The Queue Parameters
-   Data Item is used by a modem to provide information on the DSCPs it
+   Data Item is used by a modem to provide information about the DSCPs it
    uses in forwarding. The Pause Data Item is used by a modem to
    indicate when a router should cease sending packets and the Restart
    Data Item is used by a modem to indicate when a router can resume
@@ -129,8 +130,8 @@ Extension</title>
   Messages.
 </t>
 <t>
-  The Queue Parameters Data Item identifies DSCPs based on groups of
-  logical queues, each of which is referred to via a "Queue Index". The
+  The Queue Parameters Data Item groups DSCPs into
+  logical queues, each of which is identified by a "Queue Index". The
   number of logical queues, or queue indexes, is variable as is the
   number of DSCPs associated with each queue. A queue size (in bytes)
   is provided for informational purposes.  Queue Indexes are numbered
@@ -155,8 +156,6 @@ Extension</title>
     | Data Item Type                | Length                        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |   Num Queues  | Scale |              Reserved                 |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |  Reserved     |             Queue Size Q0                     |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |               Queue Parameter Sub Data Item 1                 |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -191,10 +190,10 @@ Extension</title>
         <artwork>
       Value  Scale
       ------------
-          0   B - Bytes     (Octets)
-          1  KB - Kilobytes (B/1024)
-          2  MB - Megabytes (KB/1024)
-          3  GB - Gigabytes (MB/1024)
+          0    B - Bytes     (Octets)
+          1  KiB - Kilobytes (1024 B)
+          2  MiB - Megabytes (1024 KiB)
+          3  GiB - Gigabytes (1024 MiB)
         </artwork>
       </figure>
     </t>
@@ -203,11 +202,6 @@ Extension</title>
       MUST be set to zero by the sender (a modem) and ignored by the
       receiver (a router).
     </t>
-    <t hangText="Queue Size Q0:">
-      <vspace blankLines="1"/>
-      A 24-bit unsigned integer representing the size, in the octet
-      scale indicated by the Scale field, of queue index zero.
-    </t>
   </list>
 </t>
 
@@ -215,9 +209,7 @@ Extension</title>
 
     <t>
       Queue Parameter Sub Data Items are an unordered list composed of
-      sub data items with a common format.  The first sub data item is
-      assigned a Queue Index value of 1, and subsequent data items are
-      numbered incrementally.  The format of the Queue Parameter Sub
+      sub data items with a common format.  The format of the Queue Parameter Sub
       Data Item is patterned after the standard DLEP data item format,
       see <xref target="RFC8175"/> Section 11.3.  Any errors
       or inconsistencies encountered in parsing Sub Data Items are
@@ -284,7 +276,8 @@ Extension</title>
       instance of a particular Queue Index value is meaningful.
       Subsequent sub data items containing the same Queue Index values,
       if present, MAY be logged via a management interface and MUST
-      otherwise be ignored.
+      otherwise be ignored. Note that the value 255 is reserved and MUST
+      NOT be used in this field.
     </t>
     <t hangText="Queue Size Qn:">
       <vspace blankLines="1"/>
@@ -301,8 +294,7 @@ Extension</title>
     <t hangText="DS Field Qn:">
       <vspace blankLines="1"/>
       The data item contains a sequence of 8 bit DS Fields.  The
-      position in the sequence identifies the associated queue
-      index. The number of DS Fields present MUST equal the sum of all
+      number of DS Fields present MUST equal the sum of all
       Num DSCPs field values.
       <vspace blankLines="1"/>
       The DS Field structure is the same as <xref target="RFC2474"/>.
@@ -325,13 +317,16 @@ Extension</title>
 <section anchor="sec-di-pause" title="Pause">
 <t>
   The Pause Data Item is used by a modem to indicate to its peer that
-  traffic is to be suppressed.  An example of when a modem might send
-  this data item is when an internal queue length exceeds a particular
-  threshold.
+  traffic is to be suppressed.
+  The motivating use case is for this data item is when a modem's
+  internal queue length exceeds a particular threshold.  Other use cases
+  are possible, e.g., when there a non queue related congestion points
+  within a modem, but such are not explicitly  described in this
+  document. 
 </t>
 <t>
-  A modem can indicate that traffic is to be suppressed on a device wide
-  or destination specific basis. An example of when a modem might use
+  A modem can indicate that traffic is to be suppressed on a device-wide
+  or destination-specific basis. An example of when a modem might use
   device wide indications is when output queues are shared across all
   destinations, and destination specific might be used when per
   destination queuing is used.  To indicate that suppression applies to
@@ -356,7 +351,7 @@ Extension</title>
   the identified traffic to the modem. This may of course translate into
   the router's queues exceeding their own thresholds.
   If a received Pause Data Item contains a Queue Index value other than
-  0, 255, or a queue index established by a Session Initialization or
+  255, or a queue index established by a Session Initialization or
   Session Update Message, the router MUST terminate the session with a
   Status Data Item indicating Invalid Data.
 </t>
@@ -393,7 +388,7 @@ Extension</title>
       One or more 8-bit fields used to indicate a queue index defined by
       a Queue Parameters Data Item.  The special value of 255 indicates
       all traffic is to be suppressed to the modem, when the data item
-      is carried in a Session Update Message, or a destination, when the
+      is carried in a Session Update Message, or is to be suppressed to a destination, when the
       data item is carried in Destination Update Message.
     </t>
   </list>
@@ -409,12 +404,13 @@ Extension</title>
 </t>
 <t>
   The sending of this data item parallels the Pause Data Item, see the
-  previous section, and follows the same rules. This includes that to
+  previous section, and follows the same rules. As above, to
   indicate that transmission can resume to all destinations, a modem MUST
   send the Restart Data Item in a Session Update Message.  It also
   includes that to indicate that transmission can resume to a particular
   destination a modem MUST send the Pause Restart Item in a Destination
-  Update Message.  Finally, the same rules apply to queue indexes.
+  Update Message.  Finally, queue indexes are interpreted in the same
+  way as in the Pause Data Item..
 </t>
 <t>
   A router which receives the Restart Data Item SHOULD resume
@@ -452,7 +448,7 @@ Extension</title>
 <t>
    The extension introduces a new mechanism for flow control between a
    router and modem using DLEP.  The
-   extension does not inherently introduce any additional threats
+   extension does not inherently introduce any additional vulnerabilities
    above those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
    when running the extension defined in this document.
@@ -460,7 +456,7 @@ Extension</title>
 <t>
   Note that this extension does allow a compromised or impersonating
   modem to suppress transmission by the router, but this is not a
-  substantively different threat by such a compromised modem simply
+  substantively different attack by such a compromised modem simply
   dropping all traffic destined to, or sent by a router.  <xref
   target="RFC8175"/> defines the use of TLS to protect against the
   impersonating attacker.

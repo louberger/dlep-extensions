@@ -191,7 +191,7 @@ the modem SHOULD support the configuration of VLAN to credit window
         target="I-D.ietf-manet-dlep-traffic-classification"/> and <xref
         target="I-D.ietf-manet-dlep-credit-flow-control"/>.
         The use of those mechanisms, and the introduction of a new
-        extension, do not inherently introduce any additional threats
+        extension, do not inherently introduce any additional vulnerabilities
         above those documented in <xref target="RFC8175"/>.  The
         approach taken to Security in that document applies equally to
         the mechanism defined in this document.
