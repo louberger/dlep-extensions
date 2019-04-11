@@ -60,8 +60,8 @@ Extension</title>
 <t>
   The Dynamic Link Exchange Protocol (DLEP) is defined in <xref
   target="RFC8175"/>. It provides the exchange of link
-  related control information between DLEP peers.  DLEP peers are
-  comprised of a modem and a router. DLEP defines a base set of
+  related control information between a 
+  modem and a router. DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
   document defines one such extension.
 </t>
@@ -78,7 +78,9 @@ Extension</title>
   document is referred to as "Control Plane Based Pause".  Note that
   this mechanism only applies to traffic that is to be transmitted on the
   modem's attached data channel and not to DLEP control messages
-  themselves.
+  themselves.  Furthermore it applies only to the single sub-network
+  that is used to connect a modem and a router, and for traffic sent
+  from a router to a modem.
 </t>
 <t>
   This document defines a new DLEP Extension Type Value in <xref
@@ -121,7 +123,7 @@ Extension</title>
 </t>
 <section anchor="sec-di-qp" title="Queue Parameters">
 <t>
-  The Queue Parameters Data Item is used by a modem to indicate DSCP
+  The Queue Parameters Data Item is sent by a modem to to a router to indicate DSCP
   values that may be independently paused.  This data item MUST be
   included in a Session Initialization Response Message that also
   contains the Control Plane Based Pause Extension Type Value in the
@@ -136,7 +138,7 @@ Extension</title>
   number of DSCPs associated with each queue. A queue size (in bytes)
   is provided for informational purposes.  Queue Indexes are numbered
   sequentially from zero, where queue index zero is a special case
-  covering DSCPs which are not otherwise associated with Queue Index.
+  covering DSCPs which are not otherwise associated with a Queue Index.
 </t>
 <t>
   An implementation that does not support DSCPs would indicate 1 queue
@@ -184,7 +186,7 @@ Extension</title>
     </t>
    <t hangText="Scale:">
       <vspace blankLines="1"/>
-      An 4-bit unsigned integer indicating the scale used in the Queue
+      A 4-bit unsigned integer indicating the scale used in the Queue
       Size fields. The valid values are:
       <figure>
         <artwork>
@@ -316,12 +318,12 @@ Extension</title>
 </section>
 <section anchor="sec-di-pause" title="Pause">
 <t>
-  The Pause Data Item is used by a modem to indicate to its peer that
-  traffic is to be suppressed.
-  The motivating use case is for this data item is when a modem's
+  The Pause Data Item is sent by a modem to a router to indicate to its peer that
+  traffic is to be suppressed, i.e., paused.
+  The motivating use case for this data item is when a modem's
   internal queue length exceeds a particular threshold.  Other use cases
-  are possible, e.g., when there a non queue related congestion points
-  within a modem, but such are not explicitly  described in this
+  are possible, e.g., when there are non queue related congestion points
+  within a modem. Such cases are not explicitly  described in this
   document. 
 </t>
 <t>
@@ -397,7 +399,7 @@ Extension</title>
 </section>
 <section anchor="sec-di-restart" title="Restart">
 <t>
-  The Restart Data Item is used by a modem to indicate to its peer that
+  The Restart Data Item is sent by a modem to a router to indicate to its peer that
   transmission of previously suppressed traffic may be resumed.  An
   example of when a modem might send this data item is when an internal
   queue length drops below a particular threshold.
@@ -455,9 +457,10 @@ Extension</title>
 </t>
 <t>
   Note that this extension does allow a compromised or impersonating
-  modem to suppress transmission by the router, but this is not a
-  substantively different attack by such a compromised modem simply
-  dropping all traffic destined to, or sent by a router.  <xref
+  modem to suppress transmission by the router.  Similar attacks are
+  generally possible base DLEP, for example an impersonating modem may
+  cause a session reset or a compromised modem simply can
+  drop all traffic destined to, or sent by a router.  <xref
   target="RFC8175"/> defines the use of TLS to protect against the
   impersonating attacker.
 </t>
