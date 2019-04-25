@@ -46,8 +46,8 @@
 <t>
   The Dynamic Link Exchange Protocol (DLEP) is defined in <xref
   target="RFC8175"/>. It provides the exchange of link
-  related control information between DLEP peers.  DLEP peers are
-  comprised of a modem and a router. DLEP defines a base set of
+  related control information between a
+  modem and a router. DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
   document defines one such extension.
 </t>
@@ -68,7 +68,7 @@
 </t>
 <t>
   It is important to note that the use of the hop control mechanism
-  defined in this can result in connectivity changes and even loss of
+  defined in this document can result in connectivity changes and even loss of
   the ability to reach one or more destinations.  The defined mechanism
   will report such connectivity changes, but the details of what a
   router does or how it reacts to such are out scope of this document.
@@ -199,7 +199,7 @@
 <t>
   The Hop Control Data Item is used by a router to request a change in
   connectivity to a particular destination, or in multi-hop processing
-  on a device wide basis. A router can request multi-hop reachable
+  on a device wide basis. A router can request that a multi-hop reachable
   destination be changed to a single hop.  A router can also indicate
   that the modem terminates a previous direct connectivity request to a
   particular destination.
@@ -229,7 +229,7 @@
 <t>
   Failures may occur for multiple reasons, for example, the transmission
   characteristics of the link don't support the one-hop connection at
-  the time of the request. Requests may be rejected by local policy.
+  the time of the request. Requests can be rejected by local policy.
 </t>
 <t>
   A modem that receives the Hop Control Data Item in
@@ -305,7 +305,7 @@
 </section>
 <section anchor="sec-di-hc-dc" title="Direct Connection">
   <t>
-    The Direct Connection is only valid on a per destination basis and
+    The Direct Connection Action is only valid on a per destination basis and
     MUST NOT be sent in a Session Update Message message.  It indicates
     that the modem SHOULD attempt to establish a direct connection with
     the destination identified in the message.  This action SHOULD only
@@ -320,11 +320,11 @@
 <t>
   The Suppress Forwarding Action is used by a router to indicate to
   its peer that multi-hop forwarding performed by the modem is to be
-  suppressed.  A router may request that multi-hop forwarding may be
+  suppressed.  A router can request that multi-hop forwarding may be
   suppressed on a device wide or destination specific basis.
 </t>
 <t>
-  A modem which receives the Suppress Forwarding Data Item in a Session
+  A modem that receives the Suppress Forwarding Data Item in a Session
   Update Message MUST suppress multi-hop forwarding on a device wide
   basis. This means that data traffic originating from the modem's peer
   router SHALL only be sent by the modem to destinations that are one
@@ -334,7 +334,7 @@
   router by the modem as described above.
 </t>
 <t>
-  A modem which receives the Suppress Forwarding Data Item in a Link
+  A modem that receives the Suppress Forwarding Data Item in a Link
   Characteristics Request Message MUST suppress multi-hop forwarding for
   only the destination indicated in the message.  This means that data
   traffic originating from the modem's peer router SHALL be sent by the
