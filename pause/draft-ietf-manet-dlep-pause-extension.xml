@@ -67,8 +67,11 @@ Extension</title>
 </t>
 <t>
   The base DLEP specification does not include any data plane flow control
-  capability.  Various flow control methods are possible, e.g., see <xref
-  target="I-D.ietf-manet-dlep-da-credit-extension"/>.  The extension defined in
+  capability.  Examples of other flow control mechanisms can be found in
+  <xref target="RFC5578"/> and <xref target="IEEE.802.1Q_2014"/>.
+  Various flow control methods are possible, e.g., see <xref
+  target="I-D.ietf-manet-dlep-da-credit-extension"/> and <xref
+  target="I-D.ietf-manet-dlep-credit-flow-control"/> .  The extension defined in
   this document supports flow control of data traffic based on explicit messages sent
   via DLEP by a modem to indicate when a router should hold off sending
   traffic, and when it should resume. The extension also optionally
@@ -537,11 +540,14 @@ Extension</title>
 
 <references title="Informative References">
 
-<?rfc include="reference.I-D.ietf-manet-dlep-da-credit-extension"?>
+  <?rfc include="reference.I-D.ietf-manet-dlep-da-credit-extension"?>
+  <?rfc include="reference.I-D.ietf-manet-dlep-credit-flow-control"?>
 <?rfc include="reference.RFC.2474"?>
 <?rfc include="reference.RFC.2475"?>
+<?rfc include="reference.RFC.5578"?>
 <?rfc include="reference.RFC.8126"?>
 
+<?rfc include="https://xml2rfc.tools.ietf.org/public/rfc/bibxml6/reference.IEEE.802.1Q_2014.xml"?>
 </references>
 <?rfc needLines="100"?>
 <section title="Acknowledgments">
