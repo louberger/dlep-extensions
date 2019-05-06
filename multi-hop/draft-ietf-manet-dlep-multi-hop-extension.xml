@@ -10,7 +10,7 @@
 <rfc category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-multi-hop-extension-07" >
 
 <front>
-<title abbrev="DLEP Multi-Hop Extension">DLEP Multi-Hop Forwarding Extension</title>
+<title abbrev="DLEP Multi-Hop Extension">Dynamic Link Exchange Protocol (DLEP) Multi-Hop Forwarding Extension</title>
    <author initials='B.' surname="Cheng" fullname='Bow-Nan Cheng'>
     <organization>MIT Lincoln Laboratory</organization>
     <address>
@@ -117,7 +117,7 @@
 <section anchor="sec-di-hcount" title="Hop Count">
 <t>
   The Hop Count Data Item is used by a modem to indicate the number of
-  modem that transmits/sends data to reach a particular destination,
+  modems that transmit/send data to reach a particular destination,
   i.e., hops, between the modem and a specific destination.  In other
   words, each hop represents a transmission and the number of hops is
   equal to the number of transmissions required to go from a router
@@ -139,7 +139,7 @@
 <t>
   A router receiving a Hop Count Data Item can use this information in
   its forwarding and routing decisions, and specific use is out of scope
-  of this document.  The absence of the Hop Count Data Item MUST be
+  of this document.  When using this extension, the absence of the Hop Count Data Item MUST be
   interpreted by the router as a Hop Count value of one (1).
 </t>
 <t>
@@ -346,6 +346,7 @@
 </section>
 </section>
 </section>
+
 <section anchor="sec-sec" title="Security Considerations">
 <t>
    The extension enables
@@ -370,7 +371,27 @@
   mechanism is only used under conditions intended by the network
   operator.
 </t>
+<t>
+   Implementations of the extension defined in this document MUST support
+   configuration of TLS usage, as describe in <xref target="RFC8175"/>,
+   in order to protect configurations where injection attacks are
+   possible, i.e., when the link between a modem and router is not
+   otherwise protected.
+</t>
+<t>
+  Note that this extension does allow a compromised or impersonating
+  modem to suppress transmission by the router or a switch that
+  interconnects the modem and router.  Similar attacks are
+  generally possible base DLEP, for example an impersonating modem may
+  cause a session reset or a compromised modem simply can
+  drop all traffic destined to, or sent by a router.  <xref
+  target="RFC8175"/> defines the use of TLS to protect against the
+  impersonating attacker.
+</t>
+
 </section>
+
+
 <section anchor="sec-iana" title="IANA Considerations">
 <t>
   This document requests the assignment of 3 values by IANA.  All
