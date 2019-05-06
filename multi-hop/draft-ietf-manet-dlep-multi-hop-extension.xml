@@ -93,8 +93,9 @@
 <section anchor="sec-ext-type" title="Extension Usage and Identification">
 <t>
    The use of the Multi-Hop Forwarding Extension SHOULD be configurable.
-   To indicate that the extension is to be used, an implementation MUST
-   include the Multi-Hop Forwarding Extension Type Value in the
+   Per  <xref target="RFC8175"/>, to indicate that the extension is to
+be used, an implementation
+   includes the Multi-Hop Forwarding Extension Type Value in the
    Extensions Supported Data Item. The Extensions Supported Data Item is
    sent and processed according to <xref target="RFC8175"/>.
 </t>
@@ -222,8 +223,8 @@
   notify the router of each destination that is not identified in the
   Link Characteristics Response Message and is no longer reachable via a
   Destination Down Message.  The modem MUST also notify the router of
-  each destination that is not identified in the Link Characteristics
-  Response Message and has a changed Hop Count impacted via a
+  each impacted destination that is not identified in the Link Characteristics
+  Response Message via a
   Destination Update Message.
 </t>
 <t>
