@@ -60,25 +60,33 @@ Extension</title>
 <t>
   The Dynamic Link Exchange Protocol (DLEP) is defined in <xref
   target="RFC8175"/>. It provides the exchange of link
-  related control information between a 
+  related control information between a
   modem and a router. DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
   document defines one such extension.
 </t>
 <t>
-  The base DLEP specification does not include any data plane flow control
-  capability.  Examples of other flow control mechanisms can be found in
-  <xref target="RFC5578"/> and <xref target="IEEE.802.1Q_2014"/>.
-  Various flow control methods are possible, e.g., see <xref
+  The base DLEP specification does not include any data plane flow
+  control capability.  The extension defined in this document supports
+  flow control of data traffic based on explicit messages sent via DLEP
+  by a modem to indicate when a router should hold off sending traffic,
+  and when it should resume.  This functionality parallels the flow
+  control mechanism found in PPP over Ethernet (PPPoE) per
+  <xref target="RFC5578"/>.  The extension also optionally
+  supports DSCP (differentiated services codepoint) aware flow control
+  for use by DiffServ-aware modems. (For
+  general background on Differentiated Services see <xref
+  target="RFC2475"/>.)
+  This functionality is very similar to that provided by Ethernet
+  Priority flow control, see <xref target="IEEE.802.1Q_2014"/>.
+  The extension defined in this document is referred
+  to as "Control Plane Based Pause".  Other flow control methods are
+  possible with DLEP, e.g., see <xref
   target="I-D.ietf-manet-dlep-da-credit-extension"/> and <xref
-  target="I-D.ietf-manet-dlep-credit-flow-control"/> .  The extension defined in
-  this document supports flow control of data traffic based on explicit messages sent
-  via DLEP by a modem to indicate when a router should hold off sending
-  traffic, and when it should resume. The extension also optionally
-  supports DSCP (differentiated services codepoint) aware flow control.
-  For general background on Differentiated Services see <xref
-  target="RFC2475"/>. The extension defined in this
-  document is referred to as "Control Plane Based Pause".  Note that
+  target="I-D.ietf-manet-dlep-credit-flow-control"/>.
+</t>
+<t>
+  Note that
   this mechanism only applies to traffic that is to be transmitted on the
   modem's attached data channel and not to DLEP control messages
   themselves.  Furthermore it applies only to the single sub-network
@@ -204,7 +212,7 @@ Extension</title>
     </t>
     <t hangText="Reserved:">
       <vspace blankLines="1"/>
-      MUST be set to zero by the sender (a modem) and ignored by the
+      A 20-bit field that MUST be set to zero by the sender (a modem) and ignored by the
       receiver (a router).
     </t>
   </list>
@@ -220,6 +228,10 @@ Extension</title>
       or inconsistencies encountered in parsing Sub Data Items are
       handled in the same fashion as any other Data Item parsing error
       encountered in DLEP.
+      In particular, the receiving implementation MUST issue a
+      Session Termination Message containing a Status Data Item with
+      status code set to 130 'Invalid Data' and transition to the
+      Session Termination state.
     </t>
     <t>
       The format of the Queue Parameter Sub Data Item is:
@@ -327,7 +339,7 @@ Extension</title>
   internal queue length exceeds a particular threshold.  Other use cases
   are possible, e.g., when there are non queue related congestion points
   within a modem. Such cases are not explicitly  described in this
-  document. 
+  document.
 </t>
 <t>
   A modem can indicate that traffic is to be suppressed on a device-wide
@@ -459,8 +471,16 @@ Extension</title>
    when running the extension defined in this document.
 </t>
 <t>
+   Implementations of the extension defined in this document MUST support
+   configuration of TLS usage, as describe in <xref target="RFC8175"/>,
+   in order to protect configurations where injection attacks are
+   possible, i.e., when the link between a modem and router is not
+   otherwise protected.
+</t>
+<t>
   Note that this extension does allow a compromised or impersonating
-  modem to suppress transmission by the router.  Similar attacks are
+  modem to suppress transmission by the router or a switch that
+  interconnects the modem and router.  Similar attacks are
   generally possible base DLEP, for example an impersonating modem may
   cause a session reset or a compromised modem simply can
   drop all traffic destined to, or sent by a router.  <xref
