@@ -311,8 +311,8 @@ Extension</title>
     <t hangText="DS Field Qn:">
       <vspace blankLines="1"/>
       The data item contains a sequence of 8 bit DS Fields.  The
-      number of DS Fields present MUST equal the sum of all
-      Num DSCPs field values.
+      number of DS Fields present MUST equal the value of the
+      Num DSCPs field.
       <vspace blankLines="1"/>
       The DS Field structure is the same as <xref target="RFC2474"/>.
       <figure>
@@ -465,8 +465,8 @@ Extension</title>
 <t>
    The extension introduces a new mechanism for flow control between a
    router and modem using DLEP.  The
-   extension does not inherently introduce any additional vulnerabilities
-   above those documented in <xref target="RFC8175"/>.
+   extension does not introduce any vulnerabilities that are inherently different
+   from those documented in <xref target="RFC8175"/>.
    The approach taken to Security in that document applies equally
    when running the extension defined in this document.
 </t>
