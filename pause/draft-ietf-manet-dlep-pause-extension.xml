@@ -190,10 +190,9 @@ Extension</title>
     </t>
     <t hangText="Num Queues:">
       <vspace blankLines="1"/>
-      An 8-bit unsigned integer indicating the number of queues
-      represented in the data item.  This field MUST contain a value of
-      at least one (1), and is equal to one greater than the number of
-      included Queue Parameter Sub Data Items.
+      An 8-bit unsigned integer indicating the number of Queue Parameter
+      Sub Data Items following.  This field MUST contain a value of
+      at least one (1).
     </t>
    <t hangText="Scale:">
       <vspace blankLines="1"/>
@@ -306,7 +305,6 @@ Extension</title>
       <vspace blankLines="1"/>
       An 8-bit unsigned integer indicating the number of DSCPs
       associated with the queue index associated with the sub data item.
-      This field MUST contain a value of at least one (1).
     </t>
     <t hangText="DS Field Qn:">
       <vspace blankLines="1"/>
