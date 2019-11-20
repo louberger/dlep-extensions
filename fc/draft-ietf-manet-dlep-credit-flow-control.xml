@@ -46,17 +46,7 @@
     </address>
   </author>
   <author fullname="Stan Ratliff" initials="S." surname="Ratliff">
-    <organization>VT iDirect</organization>
-    <address>
-      <postal>
-        <street>13861 Sunrise Valley Drive, Suite 300</street>
-        <city>Herndon</city>
-        <region>VA</region>
-        <code>20171</code>
-        <country>USA</country>
-      </postal>
-      <email>sratliff@idirect.net</email>
-    </address>
+    <organization></organization>
   </author>
 
 
@@ -908,6 +898,12 @@
 </references>
 <?rfc needLines="100"?>
 <section title="Acknowledgments">
+   <t>
+     We morn the loss of Stan Ratliff who passed away on October 22,
+     2019. His guidance, leadership and personal contributions were
+     critical in the development of this work and DLEP as a whole. His
+     leadership and friendship shall be missed.
+   </t>
    <t>
      Many useful comments were
      received from contributors to the MANET working group, notably Rick
