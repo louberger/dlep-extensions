@@ -7,7 +7,7 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-latency-extension-05">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-latency-extension-06">
 
 <front>
 <title abbrev="DLEP Latency Range Extension">Dynamic Link Exchange Protocol (DLEP) Latency Range
