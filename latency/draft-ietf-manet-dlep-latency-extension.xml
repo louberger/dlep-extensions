@@ -10,7 +10,7 @@
 <rfc category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-latency-extension-05">
 
 <front>
-<title abbrev="DLEP Latency Range Extension">DLEP Latency Range
+<title abbrev="DLEP Latency Range Extension">Dynamic Link Exchange Protocol (DLEP) Latency Range
 Extension</title>
    <author initials='B.' surname="Cheng" fullname='Bow-Nan Cheng'>
     <organization>MIT Lincoln Laboratory</organization>
@@ -163,7 +163,7 @@ Extension</title>
 </section>
 <section anchor="sec-iana" title="IANA Considerations">
 <t>
-  This document requests the assignment of 2 values by IANA.  All
+  This document requests the assignment of two values by IANA.  All
   assignments are to registries defined by <xref
   target="RFC8175"/>.
 </t>
