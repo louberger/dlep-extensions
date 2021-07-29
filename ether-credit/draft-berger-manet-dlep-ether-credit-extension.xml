@@ -61,7 +61,7 @@
         control mechanism for traffic sent from a router to a
         modem. Flow control is provided using one or more logical
         "Credit Windows", each of which will typically be supported by
-        an associated virtual or physical queue.  Traffic sent by a
+        an associated virtual or physical queue.  A
         router will use traffic flow classification information provided
         by the modem to identify which traffic is associated with each
         credit window.
@@ -75,8 +75,8 @@
         This document uses the traffic classification and credit window
         control mechanisms defined in <xref
         target="I-D.ietf-manet-dlep-traffic-classification"/> and <xref
-        target="I-D.ietf-manet-dlep-credit-flow-control"/> to provided credit
-        window based flow control based on on DLEP destination and
+        target="I-D.ietf-manet-dlep-credit-flow-control"/> to provide credit
+        window based flow control based on DLEP destinations and
         Ethernet VLANs and Priority Code Points.  Ethernet Priority Code
         Point support is defined as part of the IEEE 802.1Q <xref
         target="IEEE.802.1Q_2014"/> tag format and includes a 3 bit
@@ -127,7 +127,7 @@
         to <xref target="RFC8175"/>.  Any implementation that indicates
         use of the IEEE 802.1Q Aware Credit Window Extension MUST
         support all Messages, Data Items, the Ethernet Traffic
-        Classification Sub Data Item, and all related processing defined
+        Classification Sub-Data Item, and all related processing defined
         in <xref
         target="I-D.ietf-manet-dlep-traffic-classification"/> and <xref
         target="I-D.ietf-manet-dlep-credit-flow-control"/>.
@@ -250,46 +250,7 @@ the modem SHOULD support the configuration of VLAN to credit window
       <?rfc include="reference.RFC.8174"?>
       <?rfc include="reference.RFC.8175"?>
       <?rfc include="reference.I-D.ietf-manet-dlep-credit-flow-control"?>
-      <reference anchor="I-D.ietf-manet-dlep-traffic-classification" >
-        <front>
-          <title>
-            DLEP Traffic Classification Data Item
-          </title>
-          <author initials='B.' surname="Cheng" fullname='Bow-Nan Cheng'>
-            <organization>MIT Lincoln Laboratory</organization>
-            <address>
-              <postal>
-                <street>Massachusetts Institute of Technology</street>
-                <street>244 Wood Street</street>
-                <city>Lexington</city>
-                <region>MA</region>
-                <code>02421-6426</code>
-              </postal>
-              <email>bcheng@ll.mit.edu</email>
-            </address>
-          </author>
-          <author initials='D.' surname="Wiggins" fullname='David Wiggins'>
-            <organization>MIT Lincoln Laboratory</organization>
-            <address>
-              <postal>
-                <street>Massachusetts Institute of Technology</street>
-                <street>244 Wood Street</street>
-                <city>Lexington</city>
-                <region>MA</region>
-                <code>02421-6426</code>
-              </postal>
-              <email>David.Wiggins@ll.mit.edu</email>
-            </address>
-          </author>
-          <author initials='L.' surname="Berger" fullname='Lou Berger'>
-            <organization>LabN Consulting, L.L.C.</organization>
-            <address>
-              <email>lberger@labn.net</email>
-            </address>
-          </author>
-          <date day="1" month="August" year="2018"/>
-        </front>
-      </reference>
+      <?rfc include="reference.I-D.ietf-manet-dlep-traffic-classification"?>
     </references>
 
     <references title="Informative References">
