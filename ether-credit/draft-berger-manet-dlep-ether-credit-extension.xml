@@ -83,7 +83,7 @@
         "PCP" field.  The tag format also includes a 12 bit VLAN
         identifier (VID) field.  The defined mechanism allows for credit
         windows to be shared across traffic sent to multiple DLEP
-        destinations VLANs, and PCPs, or used exclusively for traffic
+        destinations, VLANs, and PCPs, or used exclusively for traffic
         sent to a particular destination and/or VLAN and/or PCP.  The
         extension also supports the "wildcard" matching of any PCP or
         VID.
@@ -262,7 +262,7 @@ the modem SHOULD support the configuration of VLAN to credit window
       <t>
         The document was motivated by discussions in the MANET working
         group. Many useful comments were received from contributors to
-        the MANET working group.
+        the MANET working group, notably Ronald in't Velt.
       </t>
     </section>
   </back>
