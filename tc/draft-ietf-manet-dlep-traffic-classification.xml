@@ -154,7 +154,7 @@
     by a modem when it identifies the traffic classification set in a
     Destination Up Message using the Credit Window Associate Data Item
     defined in <xref target="I-D.ietf-manet-dlep-credit-flow-control"/>.
-    TID and FID values is a modem-local scope.
+    TID and FID values have modem-local scope.
   </t>
   <section anchor="sec-di-tc" title="Traffic Classification Data Item">
     <t>
@@ -242,7 +242,7 @@
       associated traffic classification information is found, the router
       MUST initialize a new information set using the values carried in
       the Data Item.  When associated traffic classification information
-      is found, the router MUST update the information using the values
+      is found, the router MUST replace the corresponding information using the values
       carried in the Data Item.  In both cases, a router MUST also
       ensure that any data plane state, e.g., <xref
       target="I-D.ietf-manet-dlep-credit-flow-control"/>, that is
@@ -351,17 +351,18 @@
         </t>
         <t hangText="DS Field:">
           <vspace blankLines="1"/>
-          Each DS Field is an 8-bit whose definition is the same as <xref
+          Each DS Field is an 8-bit that carries the DSCP field defined
+          in <xref
           target="RFC2474"/>.
           <figure>
             <artwork>
             0   1   2   3   4   5   6   7
           +---+---+---+---+---+---+---+---+
-          |         DSCP          |  CU   |
+          |         DSCP          |  MBZ  |
           +---+---+---+---+---+---+---+---+
 
             DSCP: differentiated services codepoint
-            CU:   currently unused, MUST be zero
+            MBZ:  MUST be zero
             </artwork>
           </figure>
         </t>
@@ -458,16 +459,16 @@
           <vspace blankLines="1"/>
           Each Priority Field is 4-bits long and indicates a
           PCP field defined in <xref target="IEEE.802.1Q_2014"/>. Note
-          that zero (0) is a valid value for either PCP or DEI.
+          that zero (0) is a valid value for either PCP.
           <figure>
             <artwork>
         0   1   2   3
         +---+---+---+---+
-        |    PCP    |DEI|
+        |    PCP    |MBZ|
         +---+---+---+---+
 
         PCP: Priority code point
-        DEI: currently unused, MUST be zero
+        MBZ: MUST be zero
             </artwork>
           </figure>
         </t>
@@ -496,6 +497,11 @@
         Field value is listed more than once within the same Traffic
         Classification Data Item, the Data Item MUST be treated as an
         error as described above.
+      </t>
+      <t>
+        If a packet matches both a DSCP Field Value,see <xref
+        target="sec-di-tc-ds-sub"/> and a Priority Field value, the DSCP
+        associated TID MUST take precedence.
       </t>
     </section>
   </section>
@@ -605,9 +611,9 @@
      received from contributors to the MANET working group.  This
      document was derived from <xref
      target="I-D.ietf-manet-dlep-da-credit-extension"/> as a result of
-     discussions at IETF101. Many useful comments were
+     discussions at IETF 101. Many useful comments were
      received from contributors to the MANET working group, notably
-     Ronald in't Velt.
+     Ronald in't Velt and David Black.
    </t>
 </section>
 </back>

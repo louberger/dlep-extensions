@@ -95,7 +95,8 @@
       as defined in <xref
       target="I-D.ietf-manet-dlep-traffic-classification"/>,
       to identify which traffic is associated with
-      each credit window.  In this case, a flow is identified based on
+      each credit window.
+      In this case, a flow is identified based on
       information found in a data plane header and one or more matches
       are associated with a single flow.  (For general background on
       traffic classification see <xref target="RFC2475"/> Section 2.3.)
@@ -103,6 +104,8 @@
       Data Items are structured to allow for reuse of the defined
       credit window based flow
       control with different traffic classification techniques.
+      A router logically consumes credits for each credit window
+      matching packet sent.
     </t>
     <t>
       Note that this document defines common Messages, Data Items and
@@ -202,8 +205,15 @@
   <t>
     When a destination becomes reachable, a modem "associates"
     (identifies) the appropriate traffic classification information via
-    the Traffic Class. Identifier (TID) to be used for traffic sent by the router to that
-    destination.  As defined, each credit window has a corresponding
+    the Traffic Class Identifier (TID) to be used for traffic sent by the router to that
+    destination.
+    This is supported by the Credit Window
+    Association Data Item which is carried in Destination Up and Update
+    messages, see <xref target ="sec-di-cwa"/>.
+    The TID provides the information to support router traffic classification,
+    based on the FIDs contained in the TID, see <xref
+    target="I-D.ietf-manet-dlep-traffic-classification"/>. 
+    As defined, each credit window has a corresponding
     FID.  This means that the use of FIDs, TIDs and the association of a
     TID to a DLEP destination enables a modem to share or dedicate
     resources as needed to match the specifics of its implementation and
@@ -383,7 +393,7 @@
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     :                         Credit Value                          |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |    Scale      |         Credit Window Size                    |
+    |    Scale      |         Credit Window Max Size                |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
           </artwork>
         </figure>
@@ -429,7 +439,7 @@
               </artwork>
             </figure>
           </t>
-          <t hangText="Credit Window Size:">
+          <t hangText="Credit Window Max Size:">
             <vspace blankLines="1"/>
             A 24-bit unsigned integer representing the maximum size, in the
             octet scale indicated by the Scale field, of the associated credit
@@ -450,7 +460,11 @@
         the router MUST initialize a new credit window using the values
         carried in the Data Item.  When an associated credit window is
         found, the router MUST update the credit window and associated
-        data plane state using the values carried in the Data Item. It
+        data plane state using the values carried in the Data Item.
+        If the resulting Credit Value results in the credit window
+        exceeding the represented Credit Window Max Size, the Credit
+        Window Size is used as the new credit window size.
+        It
         is worth noting, that such updates can result in a credit window
         size being reduced, for example, due to a transmission rate
         change on the modem.
@@ -513,8 +527,8 @@
         locate the traffic classification information indicated by the
         received TID.  If no corresponding information can be located, the
         Data Item MUST be treated as an error as described above. Once the
-        traffic classification information is located, it MUST be associated
-        with the destination and the router MUST ensure that any data plane
+        traffic classification information is located,
+        the router MUST ensure that any data plane
         state, see <xref target="data-plane"/>, that is associated with the
         TID and its corresponding FIDs is updated as needed.
       </t>
@@ -567,7 +581,7 @@
           <t hangText="Flow Identifier (FID):">
             <vspace blankLines="1"/>
             A flow identifier as defined by the Traffic Classification
-            Data Item.  The FID also uniquely identifies a credit
+            Data Item.  The FID also uniquely indicates a credit
             window.
           </t>
           <t hangText="Reserved:">
@@ -596,10 +610,9 @@
       <t>
         Once the credit window is identified, the credit window size MUST be
         increased by the value contained in the Additional Credits field.  If
-        the increase results in a window overflow, i.e., the size of the
-        credit window after the increase is smaller than the original credit
-        window size, the Credit Window must be set to its maximum
-        (0xFFFFFFFFFFFFFFFF).
+        the increase results in a window overflow, the Credit Window
+        must be set to its maximum as defined by the Credit Window Max
+        Size carried in the Credit Window Initialization Data Item.
       </t>
       <t>
         No response is sent by the router to a modem after processing a Credit
@@ -786,7 +799,7 @@
       support and, perhaps, even limits in supported credit window
       combinations, e.g., if per destination queues can even be
       supported at all.  When modem-provided credit window information
-      exceeds the capabilities of a router, the router MAY use a subset of
+      exceeds the capabilities of a router, the router SHOULD use a subset of
       the provided credit windows.  Alternatively, a router MAY reset the
       session and indicate that the extension is not supported.  In either
       case, the mismatch of capabilities SHOULD be reported to the user via
@@ -806,10 +819,11 @@
 <section anchor="sec-sec" title="Security Considerations">
   <t>
     This document introduces credit window control and flow mechanisms
-    to DLEP.  These mechanisms do not inherently introduce any
-    additional vulnerabilities above those documented in <xref
-    target="RFC8175"/>.  The approach taken to Security in that document
-    applies equally to the mechanism defined in this document.
+    to DLEP.  These mechanisms expose vulnerabilities similar to
+    existing DLEP messages, e.g., Destination UP or Down message
+    injection attacks. The security mechanisms documented in <xref
+    target="RFC8175"/> can be applied equally to the mechanism defined
+    in this document.
   </t>
 </section>
 <section anchor="sec-iana" title="IANA Considerations">
@@ -879,10 +893,10 @@
    <t>
      Many useful comments were
      received from contributors to the MANET working group, notably Rick
-     Taylor and Ronald in't Velt.  This
+     Taylor, Ronald in't Velt and David Black.  This
      document was derived from <xref
      target="I-D.ietf-manet-dlep-da-credit-extension"/> as a result of
-     discussions at IETF101.
+     discussions at IETF 101.
    </t>
 </section>
 </back>
