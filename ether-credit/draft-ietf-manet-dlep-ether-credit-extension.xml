@@ -8,7 +8,7 @@
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
 <rfc category="std" ipr="trust200902"
-     docName="draft-ietf-manet-dlep-ether-credit-extension-01">
+     docName="draft-ietf-manet-dlep-ether-credit-extension-02">
 
   <front>
     <title abbrev="DLEP Ethernet Credit Extension">DLEP IEEE 802.1Q Aware Credit Window
