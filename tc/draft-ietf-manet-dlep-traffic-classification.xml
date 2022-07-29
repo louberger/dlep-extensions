@@ -499,9 +499,12 @@
         error as described above.
       </t>
       <t>
-        If a packet matches both a DSCP Field Value,see <xref
-        target="sec-di-tc-ds-sub"/> and a Priority Field value, the DSCP
-        associated TID MUST take precedence.
+        If a packet matches both a DiffServ Traffic Classification
+        Sub-Data Item (<xref target="sec-di-tc-ds-sub"/>), e.g., DSCP
+        match, and an Ethernet Traffic Classification Sub-Data Item (see
+        Section 2.3), e.g., PCP match, then the TID with which the
+        DiffServ Traffic Classification Sub-Data Item is associated MUST
+        take precedence.
       </t>
     </section>
   </section>

@@ -210,11 +210,15 @@
     This is supported by the Credit Window
     Association Data Item which is carried in Destination Up and Update
     messages, see <xref target ="sec-di-cwa"/>.
-    The TID provides the information to support router traffic classification,
-    based on the FIDs contained in the TID, see <xref
+    The TID provides the information to support router traffic
+    classification, based on the FIDs contained in the TID, see <xref
     target="I-D.ietf-manet-dlep-traffic-classification"/>. 
-    As defined, each credit window has a corresponding
-    FID.  This means that the use of FIDs, TIDs and the association of a
+    As defined,
+    each credit window has a corresponding FID, so traffic is
+    mapped to a credit window by locating a matching FID that is
+    contained in the TID that is associated with the traffic's
+    destination.
+    This means that the use of FIDs, TIDs and the association of a
     TID to a DLEP destination enables a modem to share or dedicate
     resources as needed to match the specifics of its implementation and
     its attached transmission technology.
@@ -356,7 +360,10 @@
     <section anchor="sec-di-cwi" title="Credit Window Initialization">
       <t>
         The Credit Window Initialization Data Item is used by a modem to
-        identify a credit window and set its size.  This Data Item
+        identify a credit window and set its size.
+        In order to avoid errors caused by use of undefined FIDs or
+        uninitialized credit windows,
+        this Data Item
         SHOULD be included in any Session Initialization Response
         Message that also indicates support for an extension that
         requires support for the credit window control mechanisms
@@ -427,7 +434,7 @@
           <t hangText="Scale:">
             <vspace blankLines="1"/>
             An 8-bit unsigned integer indicating the scale used in the Credit Window
-            Size field.  The valid values are:
+            Max Size field.  The valid values are:
             <figure>
               <artwork>
       Value  Scale
@@ -463,7 +470,7 @@
         data plane state using the values carried in the Data Item.
         If the resulting Credit Value results in the credit window
         exceeding the represented Credit Window Max Size, the Credit
-        Window Size is used as the new credit window size.
+        Window Max Size field value is used as the new credit window size.
         It
         is worth noting, that such updates can result in a credit window
         size being reduced, for example, due to a transmission rate
@@ -820,8 +827,9 @@
   <t>
     This document introduces credit window control and flow mechanisms
     to DLEP.  These mechanisms expose vulnerabilities similar to
-    existing DLEP messages, e.g., Destination UP or Down message
-    injection attacks. The security mechanisms documented in <xref
+    existing DLEP messages, e.g., an injected message resizes a credit
+    window to a value that results in a denial of service.
+    The security mechanisms documented in <xref
     target="RFC8175"/> can be applied equally to the mechanism defined
     in this document.
   </t>
