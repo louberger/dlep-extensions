@@ -149,7 +149,7 @@ $(DRAFT)-diff.txt: $(DRAFT).txt
 idnits: $(DRAFT).txt
 	@if [ ! -f idnits ] ; then \
 		rm -f $@ 					;\
-		wget http://tools.ietf.org/tools/idnits/idnits	;\
+		wget https://raw.githubusercontent.com/ietf-tools/idnits/main/idnits	;\
 		chmod 755 idnits				;\
 	fi
 	./idnits $(DRAFT).txt > $@.out
@@ -197,3 +197,4 @@ rmid:
 twt:
 	sed 's/\(docName=.*\)'$(REV)'/\1'$(NEXT_REV)'/' < $(NEW).xml > $(DRAFT).xml
 	git diff $(DRAFT).xml
+
