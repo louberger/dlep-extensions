@@ -9,7 +9,7 @@
 SHELL   = bash
 
 #YANG related variables
-MODELS := $(shell awk '/^<CODE BEGINS>/{print gensub(/\"/,"","g",gensub(/@.*/,".yang",1,$$4))}' $(DRAFT).xml)
+MODELS := $(shell awk '/^<CODE BEGINS>/{print gensub(/"/,"","g",gensub(/@.*/,".yang",1,$$4))}' $(DRAFT).xml)
 TREES := $(MODELS:.yang=.tree)
 
 #assumes standard yang modules installed in ~/.yang, ../yang or ../../yang, customize as needed
