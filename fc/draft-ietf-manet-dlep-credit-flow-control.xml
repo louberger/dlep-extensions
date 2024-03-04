@@ -1064,6 +1064,16 @@
      document was derived from <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/> as a result of
      discussions at IETF 101.
       </t>
+      <t>
+        We had the honor of working too briefly with David Wiggins on
+        this and related DLEP work. His contribution to the IETF and
+        publication of the first and definitive open source DLEP
+        implementation have been critical to the acceptance of DLEP. We
+        morn his passing on November 23, 2023.  We wish to recognize his
+        guidance, leadership and professional excellence.  We were
+        fortunate to benefit from his leadership and friendship. He
+        shall be missed.
+      </t>
     </section>
   </back>
 </rfc>
