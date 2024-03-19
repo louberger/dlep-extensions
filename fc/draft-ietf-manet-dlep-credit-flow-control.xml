@@ -531,7 +531,10 @@
         traffic classification information is located,
         the router MUST ensure that any data plane
         state, see <xref target="data-plane" format="default"/>, that is associated with the
-        TID and its corresponding FIDs is updated as needed.
+        TID and its corresponding FIDs is updated as needed.  If a
+        router determines that a newly received Data Item results in
+        credit windows with overlapping TIDs, the Data Item MUST be
+        treated as an error as described above.
           </t>
         </section>
         <section anchor="sec-di-grant" numbered="true" toc="default">
