@@ -25,8 +25,7 @@ DATE		:= $(shell date +%F)
 WITHXML2RFC := $(shell which xml2rfc > /dev/null 2>&1 ; echo $$? )
 
 ID_DIR	     = IDs
-REVS	    := $(shell grep docName $(DRAFT).xml | tr '"\->' '   ' | \
-		 strings | awk '{printf "%02d %02d %02d",$$NF-1,$$NF,$$NF+1}')
+REVS	    := $(shell grep docName $(DRAFT).xml | sed 's/.*docName="//'| sed 's/".*//' | awk -F- '{v=$$NF; printf "%02d %02d %02d",v-1,v,v+1}')
 PREV_REV    := $(word 1, $(REVS))
 REV	    := $(word 2, $(REVS))
 NEXT_REV    := $(word 3, $(REVS))
@@ -51,24 +50,18 @@ NEW          = $(ID_DIR)/$(DRAFT)-$(REV)
 
 %.txt: %.xml
 	@if [ $(WITHXML2RFC) == 0 ] ; then 	\
-		rm -f $@.prev; cp -pf $@ $@.prev > /dev/null 2>&1 ; \
+		if [ -e $@ ]; then rm -f $@.prev; cp -pf $@ $@.prev > /dev/null 2>&1 ; fi ;\
 		xml2rfc --legacy $< -o $@		; \
 		if [ -f $@.prev ] ; then diff $@.prev $@ || exit 0 ; fi ; \
 	fi
 
 %.html: %.xml
 	@if [ $(WITHXML2RFC) == 0 ] ; then 	\
-		rm -f $@.prev; cp -pf $@ $@.prev > /dev/null 2>&1 ; \
+		if [ -e $@ ]; then rm -f $@.prev; cp -pf $@ $@.prev > /dev/null 2>&1 ; fi ;\
 		xml2rfc --legacy --html $< -o $@		; \
 	fi
 
-%.raw: %.xml
-	@if [ $(WITHXML2RFC) == 0 ] ; then 	\
-		rm -f $@.prev; cp -pf $@ $@.prev > /dev/null 2>&1 ; \
-		xml2rfc --legacy --raw $< -o $@	; \
-	fi
-
-all:	$(YANGIMPORT_BASE) $(TREES) xml2rfc $(DRAFT).txt $(DRAFT).html $(DRAFT).raw
+all:	$(YANGIMPORT_BASE) $(TREES) xml2rfc $(DRAFT).txt $(DRAFT).html
 
 $(YANGIMPORT_BASE):
 	@if [ "$(MODELS)" != "" ] ; then \
@@ -110,6 +103,7 @@ vars:	$(YANGIMPORT_BASE)
 	@echo REV=$(REV)
 	@echo NEXT_REV=$(NEXT_REV)
 	@echo OLD=$(OLD)
+	@echo NEW=$(NEW)
 
 xml2rfc:
 	@if [ $(WITHXML2RFC) != 0 ] ; then 	\
@@ -177,7 +171,7 @@ id: $(DRAFT).txt $(DRAFT).html
 		git commit -m "$(DRAFT): Adding ID rev $(REV)" $(NEW).xml $(NEW).txt  $(NEW).html ;\
 		ls -lt $(DRAFT).* $(NEW).* 		;\
 		echo "Bumping rev $(REV)->$(NEXT_REV)" 	;\
-		sed 's/\(docName=.*\)'$(REV)'/\1'$(NEXT_REV)'/' < $(NEW).xml > $(DRAFT).xml  ;\
+		sed -i 's/$(DRAFT)-$(REV)/$(DRAFT)-$(NEXT_REV)/' $(DRAFT).xml  ;\
 		git diff  $(DRAFT).xml			;\
 		git commit -m "$(DRAFT): Bumping rev $(REV)->$(NEXT_REV)" $(DRAFT).xml	  ;\
 		git log --stat HEAD~2...		;\

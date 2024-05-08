@@ -11,12 +11,12 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-credit-flow-control-15" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-credit-flow-control-13" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Credit-Based Flow Control">
   DLEP Credit-Based Flow Control Messages and Data Items</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-15"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-13"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
       <address>
@@ -531,10 +531,7 @@
         traffic classification information is located,
         the router MUST ensure that any data plane
         state, see <xref target="data-plane" format="default"/>, that is associated with the
-        TID and its corresponding FIDs is updated as needed.  If a
-        router determines that a newly received Data Item results in
-        credit windows with overlapping TIDs, the Data Item MUST be
-        treated as an error as described above.
+        TID and its corresponding FIDs is updated as needed.
           </t>
         </section>
         <section anchor="sec-di-grant" numbered="true" toc="default">

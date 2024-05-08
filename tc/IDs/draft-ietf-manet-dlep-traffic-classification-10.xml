@@ -11,12 +11,12 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-traffic-classification-12" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-traffic-classification-10" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Traffic Classification">
   DLEP Traffic Classification Data Item</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-traffic-classification-12"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-traffic-classification-10"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
       <address>
@@ -505,12 +505,9 @@
       <name>Security Considerations</name>
       <t>
     This document introduces finer grain flow identification mechanisms
-    to DLEP.  These mechanisms expose vulnerabilities similar to
-    existing DLEP messages, e.g., an injected message resizes a credit
-    window to a value that results in a denial of service.
-    The security mechanisms documented in <xref target="RFC8175"
-    format="default"/> can be applied equally to the mechanism defined
-    in this document.
+    to DLEP.  These mechanisms do not inherently introduce any
+    additional vulnerabilities above those documented in <xref target="RFC8175" format="default"/>.  The approach taken to Security in that document
+    applies equally to the mechanism defined in this document.
       </t>
     </section>
     <section anchor="sec-iana" numbered="true" toc="default">
