@@ -11,11 +11,11 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-da-credit-extension-17" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-da-credit-extension-18" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP DA Credit Extension">DLEP DiffServ Aware Credit Window Extension</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-da-credit-extension-17"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-da-credit-extension-18"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
       <address>
@@ -32,7 +32,8 @@
     <author initials="D." surname="Wiggins" fullname="David Wiggins">
       <organization/>
       <address>
-    </address>
+        <email>david@none.org</email>
+      </address>
     </author>
     <author initials="L." surname="Berger" fullname="Lou Berger">
       <organization>LabN Consulting, L.L.C.</organization>
@@ -253,7 +254,7 @@
           <seriesInfo name="RFC" value="8175"/>
           <seriesInfo name="DOI" value="10.17487/RFC8175"/>
         </reference>
-        <reference anchor="I-D.ietf-manet-dlep-credit-flow-control" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-credit-flow-control-12" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-credit-flow-control.xml">
+        <reference anchor="I-D.ietf-manet-dlep-credit-flow-control" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-credit-flow-control" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-credit-flow-control.xml">
           <front>
             <title>DLEP Credit-Based Flow Control Messages and Data Items</title>
             <author fullname="Bow-Nan Cheng" initials="B." surname="Cheng">
@@ -273,7 +274,7 @@
           </front>
           <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-12"/>
         </reference>
-        <reference anchor="I-D.ietf-manet-dlep-traffic-classification" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-traffic-classification-09" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-traffic-classification.xml">
+        <reference anchor="I-D.ietf-manet-dlep-traffic-classification" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-traffic-classification" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-traffic-classification.xml">
           <front>
             <title>DLEP Traffic Classification Data Item</title>
             <author fullname="Bow-Nan Cheng" initials="B." surname="Cheng">
@@ -312,7 +313,7 @@
           <seriesInfo name="RFC" value="2475"/>
           <seriesInfo name="DOI" value="10.17487/RFC2475"/>
         </reference>
-        <reference anchor="I-D.berger-manet-dlep-ether-credit-extension" target="https://datatracker.ietf.org/doc/html/draft-berger-manet-dlep-ether-credit-extension-07" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.berger-manet-dlep-ether-credit-extension.xml">
+        <reference anchor="I-D.berger-manet-dlep-ether-credit-extension" target="https://datatracker.ietf.org/doc/html/draft-berger-manet-dlep-ether-credit-extension" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.berger-manet-dlep-ether-credit-extension.xml">
           <front>
             <title>DLEP IEEE 802.1Q Aware Credit Window Extension</title>
             <author fullname="David Wiggins" initials="D." surname="Wiggins">
