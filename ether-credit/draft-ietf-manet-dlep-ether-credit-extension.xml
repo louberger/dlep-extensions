@@ -11,15 +11,16 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-ether-credit-extension-05" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-ether-credit-extension-06" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Ethernet Credit Extension">DLEP IEEE 802.1Q Aware Credit Window
     Extension</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-ether-credit-extension-05"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-ether-credit-extension-06"/>
     <author initials="D." surname="Wiggins" fullname="David Wiggins">
       <organization/>
       <address>
+        <email>david@none.org</email>
       </address>
     </author>
     <author initials="L." surname="Berger" fullname="Lou Berger">
@@ -287,7 +288,7 @@ the modem SHOULD support the configuration of VLAN to credit window
           <seriesInfo name="RFC" value="8175"/>
           <seriesInfo name="DOI" value="10.17487/RFC8175"/>
         </reference>
-        <reference anchor="I-D.ietf-manet-dlep-credit-flow-control" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-credit-flow-control-12" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-credit-flow-control.xml">
+        <reference anchor="I-D.ietf-manet-dlep-credit-flow-control" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-credit-flow-control" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-credit-flow-control.xml">
           <front>
             <title>DLEP Credit-Based Flow Control Messages and Data Items</title>
             <author fullname="Bow-Nan Cheng" initials="B." surname="Cheng">
@@ -307,7 +308,7 @@ the modem SHOULD support the configuration of VLAN to credit window
           </front>
           <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-12"/>
         </reference>
-        <reference anchor="I-D.ietf-manet-dlep-traffic-classification" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-traffic-classification-09" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-traffic-classification.xml">
+        <reference anchor="I-D.ietf-manet-dlep-traffic-classification" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-traffic-classification" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-traffic-classification.xml">
           <front>
             <title>DLEP Traffic Classification Data Item</title>
             <author fullname="Bow-Nan Cheng" initials="B." surname="Cheng">
@@ -329,7 +330,7 @@ the modem SHOULD support the configuration of VLAN to credit window
       </references>
       <references>
         <name>Informative References</name>
-        <reference anchor="I-D.ietf-manet-dlep-da-credit-extension" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-da-credit-extension-14" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-da-credit-extension.xml">
+        <reference anchor="I-D.ietf-manet-dlep-da-credit-extension" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-da-credit-extension" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-da-credit-extension.xml">
           <front>
             <title>DLEP DiffServ Aware Credit Window Extension</title>
             <author fullname="Bow-Nan Cheng" initials="B." surname="Cheng">
