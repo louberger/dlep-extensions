@@ -31,7 +31,9 @@
       </address>
     </author>
     <author initials="D." surname="Wiggins" fullname="David Wiggins">
-      <organization/>
+      <address>
+        <email>david@none.org</email>
+      </address>
     </author>
     <author initials="L." surname="Berger" fullname="Lou Berger">
       <organization>LabN Consulting, L.L.C.</organization>
@@ -40,7 +42,9 @@
       </address>
     </author>
     <author fullname="Stan Ratliff" initials="S." surname="Ratliff">
-      <organization/>
+      <address>
+        <email>stan@none.org</email>
+      </address>
     </author>
     <date/>
     <abstract>
