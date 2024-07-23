@@ -54,14 +54,14 @@
     <section anchor="sec-1" numbered="true" toc="default">
       <name>Introduction</name>
       <t>
-  The Dynamic Link Exchange Protocol (DLEP) is defined in <xref target="RFC8175" format="default"/>.  It provides the exchange of link
+  The Dynamic Link Exchange Protocol (DLEP) is defined in <xref target="RFC8175" format="default"/>.  This protocol provides the exchange of link
   related control information between DLEP peers.  DLEP peers are
   comprised of a modem and a router.  DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
   document defines one such extension.
 </t>
       <t>
-  The base DLEP specification does not include any flow control
+  The DLEP specification does not include any flow control
   capability.  There are various flow control techniques theoretically possible
   with DLEP.
   This document defines a DLEP extension which provides a DiffServ-based
@@ -163,7 +163,7 @@
     <section anchor="sec-sec" numbered="true" toc="default">
       <name>Security Considerations</name>
       <t>
-    This document defines a DLEP extension that uses base DLEP
+    This document defines a DLEP extension that uses DLEP
     mechanisms and the credit window control and flow mechanisms defined
     in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/> and
     <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>.

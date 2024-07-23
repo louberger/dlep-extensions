@@ -31,7 +31,9 @@
       </address>
     </author>
     <author initials="D." surname="Wiggins" fullname="David Wiggins">
-      <organization/>
+      <address>
+        <email>david@none.org</email>
+      </address>
     </author>
     <author initials="L." surname="Berger" fullname="Lou Berger">
       <organization>LabN Consulting, L.L.C.</organization>
@@ -58,13 +60,14 @@
     <section anchor="sec-1" numbered="true" toc="default">
       <name>Introduction</name>
       <t>
-      The Dynamic Link Exchange Protocol (DLEP) is defined in <xref target="RFC8175" format="default"/>.  It provides the exchange of link related
+      The Dynamic Link Exchange Protocol (DLEP) is defined in <xref target="RFC8175" format="default"/>.  This protocol provides the exchange of link related
       control information between DLEP peers.  DLEP peers are comprised
       of a modem and a router.  DLEP defines a base set of mechanisms as
       well as support for possible extensions.  DLEP defines Data Items
       which are sets of information that can be reused in DLEP
-      messaging.  The base DLEP specification does not include any flow
-      identification beyond DLEP endpoints.  This document defines DLEP
+      messaging.  The DLEP specification does not include any flow
+      identification beyond DLEP endpoints, i.e., flows are identified
+      based on their DLPE endpoint.  This document defines DLEP
       Data Item formats which provide flow identification on a more
       granular basis.  Specifically it enables a router
       to use traffic flow classification information provided by the
@@ -74,7 +77,7 @@
       general background on traffic classification see <xref target="RFC2475" format="default"/> Section 2.3.)  The Data Item is structured to
       allow for use of the defined traffic classification information
       with applications such as credit window control as specified in
-      <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/>
+      <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/>.
       </t>
       <t>
       This document defines traffic classification based on a DLEP
@@ -644,7 +647,7 @@
       </references>
       <references>
         <name>Informative References</name>
-        <reference anchor="I-D.ietf-manet-dlep-credit-flow-control" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-credit-flow-control-12" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-credit-flow-control.xml">
+        <reference anchor="I-D.ietf-manet-dlep-credit-flow-control" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-credit-flow-control" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-credit-flow-control.xml">
           <front>
             <title>DLEP Credit-Based Flow Control Messages and Data Items</title>
             <author fullname="Bow-Nan Cheng" initials="B." surname="Cheng">
@@ -664,7 +667,7 @@
           </front>
           <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-12"/>
         </reference>
-        <reference anchor="I-D.ietf-manet-dlep-da-credit-extension" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-da-credit-extension-14" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-da-credit-extension.xml">
+        <reference anchor="I-D.ietf-manet-dlep-da-credit-extension" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-da-credit-extension" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-da-credit-extension.xml">
           <front>
             <title>DLEP DiffServ Aware Credit Window Extension</title>
             <author fullname="Bow-Nan Cheng" initials="B." surname="Cheng">
