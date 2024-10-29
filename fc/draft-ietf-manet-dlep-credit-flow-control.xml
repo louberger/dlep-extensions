@@ -46,6 +46,12 @@
         <email>stan@none.org</email>
       </address>
     </author>
+    <author role="editor" initials="E." surname="Kinzie" fullname="Eric Kinzie">
+      <organization>LabN Consulting, L.L.C.</organization>
+      <address>
+        <email>ekinzie@labn.net</email>
+      </address>
+    </author>
     <date/>
     <abstract>
       <t>
@@ -980,7 +986,7 @@
       <t>
      Many useful comments were
      received from contributors to the MANET working group, notably Rick
-     Taylor, Ronald in't Velt, David Black and Eric Kinzie.  This
+     Taylor, Ronald in't Velt and David Black.  This
      document was derived from <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/> as a result of
      discussions at IETF 101.
       </t>
