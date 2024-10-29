@@ -15,7 +15,7 @@
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Credit-Based Flow Control">
-  DLEP Credit-Based Flow Control Messages and Data Items</title>
+  Dynamic Link Exchange Protocol (DLEP) Credit-Based Flow Control Messages and Data Items</title>
     <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-15"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
@@ -53,8 +53,8 @@
       support credit-based flow control.
       Credit
       window control is used to regulate when data may be sent to an
-      associated virtual or physical queue.  The Data Items are defined in
-      an extensible and reusable fashion. Their use will be mandated in
+      associated virtual or physical queue.  The Data Items are
+      extensible and reusable. Their use will be mandated in
       other documents defining specific DLEP extensions.
       </t>
     </abstract>
@@ -63,10 +63,10 @@
     <section anchor="sec-1" numbered="true" toc="default">
       <name>Introduction</name>
       <t>
-      The Dynamic Link Exchange Protocol (DLEP) is defined in <xref target="RFC8175" format="default"/>.  This protocol provides the exchange of link related
+      The Dynamic Link Exchange Protocol (DLEP), defined in <xref target="RFC8175" format="default"/>, provides the exchange of link related
       control information between DLEP peers.  DLEP peers are comprised
       of a modem and a router.  DLEP defines a base set of mechanisms as
-      well as support for possible extensions.  DLEP defines Data Items
+      well as support for future extensions.  DLEP defines Data Items
       which are sets of information that can be reused in DLEP
       messaging.
       The DLEP specification does not include any flow
@@ -90,8 +90,9 @@
       each credit window.
       In this case, a flow is identified based on
       information found in a data plane header and one or more matches
-      are associated with a single flow.  (For general background on
-      traffic classification see <xref target="RFC2475" format="default"/> Section 2.3.)
+      are associated with a single flow.
+      Refer to Section 2.3 of <xref target="RFC2475" format="default"/>
+      for general background on traffic classification.
       Credit windows may be shared or dedicated on a per flow basis. The
       Data Items are structured to allow for reuse of the defined
       credit window based flow
@@ -106,7 +107,7 @@
       </t>
       <t>
       This document
-      supports credit window control by introducing two new DLEP
+      introduces support for  credit window control by defining two new DLEP
       messages in <xref target="sec-msgs" format="default"/>, and five new DLEP Data
       Items in <xref target="sec-data-items" format="default"/>.
       </t>
@@ -125,25 +126,22 @@
       <name>Credit Window Control</name>
       <t>
     This section defines additions to DLEP used in credit based flow
-    control.  Two
-    new messages and five Data Items are defined to support credit
-    window control.  The use of credit window control impacts the data
-    plane.
+    control.
+    The use of credit window control impacts the data plane.
       </t>
       <t>
     The credit window control mechanisms defined in this document
     support credit based flow control of traffic sent from a router to a
-    modem.  The mapping of specific flows of traffic to a particular
+    modem.  The mapping of specific flows to a particular
     credit window is based on the Traffic Classification Data Item
-    defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>. Both types of
-    DLEP endpoints, 
-    router and modem, negotiate the use of this extension during
-    session initialization, e.g., see <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/>.  When using
+    defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>.
+    Both types of DLEP peers, router and modem, negotiate the use of an
+    extension employing this mechanism during session initialization as
+    required, for example, by
+    <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/>.
+    When using
     credit windows, data traffic is only allowed to be sent by the
-            router to the modem when there are credits available except during
-            transients when the credit window has been reduced. Implementations should 
-            allow exceeding the credit window during the short time that a router might 
-            take to respect the new credit window. 
+    router to the modem when there are credits available.
       </t>
       <t>
     Credits are managed on a per logical "Credit Window" basis.  Each
@@ -151,13 +149,14 @@
     modem.  Credit windows may be shared across, or dedicated to,
     destinations and data plane identifiers, e.g., DSCPs, at a
     granularity that is appropriate for a modem's implementation and its
-    attached transmission technology.  As defined below, there is a
+    attached transmission technology.  As defined below in
+    <xref target="sec-di-cwi" format="default"/>, there is a
     direct one-for-one mapping of credit windows to flows as identified
     by Flow Identifiers (FIDs) carried within the Traffic Classification Data Item.  Modems
     pass to the router information on their credit windows and FIDs
     prior to a router being able to send data when an extension
     requiring the use of credit window control is used.  In addition to
-    the traffic classification information associated with an FID,
+    the traffic classification information associated with a FID,
     modems provide an initial credit window size, as well as the
     maximum size of the logical queue associated with each credit
     window.  The maximum size is included for informative and potential
@@ -189,7 +188,7 @@
       <t>
     Actual flows of traffic are mapped to credit windows based on flow
     identification information provided by modems in the Traffic
-    Classification Data item defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>. This
+    Classification Data Item defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>. This
     data item supports traffic classification on a per destination or
     more fine grain level.  Routers use the combination of the DLEP
     identified destination and flow information associated with a credit
@@ -228,15 +227,18 @@
       When credit windowing is used, a router MUST NOT send data traffic
       to a modem for forwarding when there are no credits available in the
       associated Credit Window.  This document defines credit windows in
-      octets.  A credit window value MUST be larger than the number of
-      octets contained in a packet, including any MAC overhead (e.g.,
-      framing, headers and trailers) used between
-      the router and the modem, in order for the router to send the packet
-      to a modem for forwarding.  The credit window is decremented by the
+      octets.
+      Additionally, a router MUST NOT send a data packet to the modem
+      when there are fewer credits available in the associated Credit
+      Window than there are octets in the packet.
+      The count of octets in the packet includes MAC overhead, such as
+      framing, header and trailer.
+      The credit window is decremented by the
       number of sent octets.
         </t>
         <t>
       A router MUST identify the credit window associated with traffic
+      to be
       sent to a modem based on the traffic classification information
       provided in the Data Items defined in this document.
         </t>
@@ -245,7 +247,7 @@
         <name>Credit Window Messages</name>
         <t>
       Two new messages are defined in support for credit window control:
-      the Credit Control and the Credit Control Response Message.  Sending
+      the Credit Control and the Credit Control Response Messages.  Sending
       and receiving both message types is REQUIRED to support the credit
       window control defined in this document.
         </t>
@@ -254,8 +256,8 @@
           <t>
         Credit Control Messages are sent by modems and routers. Each
         sender is only permitted to have one message outstanding at one
-        time.  That is, a sender (i.e., modem or router) MUST NOT send a
-        second or any subsequent Credit Control Message until a Credit
+        time.  That is, a sender (i.e., modem or router) MUST NOT send
+        any subsequent Credit Control Message until a Credit
         Control Response Message is received from its peer (i.e., router
         or modem).
           </t>
@@ -264,14 +266,14 @@
         window increases.  Modems send credit increases when there is
         transmission or local queue availability that exceeds the credit
         window value previously provided to the router. Modems will need to
-        balance the load generated by sending and processing frequent credit
+        balance the load generated by sending and processing credit
         window increases against a router having data traffic available to send,
         but no credits available.
           </t>
           <t>
         Credit Control Messages MAY be sent by routers to request
         credits and provide window status. Routers will need to
-        balance the load generated by sending and processing frequent credit
+        balance the load generated by sending and processing credit
         window requests against having data traffic available to send,
         but no credits available.
           </t>
@@ -279,34 +281,38 @@
         The Message Type value in the DLEP Message Header is set to TBA2.
           </t>
           <t>
-        A message sent by a modem, MUST contain one or more
-        Credit Window Grant Data Items as defined below in <xref target="sec-di-grant" format="default"/>.  A router receiving this message MUST
+        A Credit Control message sent by a modem, MUST contain one or more
+        Credit Window Grant Data Items as defined in <xref target="sec-di-grant" format="default"/>.  A router receiving this message MUST
         respond with a Credit Control Response Message.
           </t>
           <t>
-        A message sent by a router, MUST contain one or more Credit Window
-        Request Data Items defined below in <xref target="sec-di-request" format="default"/> and SHOULD contain a Credit Window
+        A Credit Control message sent by a router, MUST contain one or more Credit Window
+        Request Data Items defined in <xref target="sec-di-request" format="default"/> and SHOULD contain a Credit Window
         Status Data Item, defined in <xref target="sec-di-status" format="default"/>,
         corresponding to each credit window request. A modem receiving
         this message MUST respond with a Credit Control Response
         Message based on the received message and Data Item and the
-        processing defined below, which will typically result in credit
+        processing defined in
+        <xref target="sec-ccr-msg" format="default"/>,
+        which will typically result in credit
         window increments being provided.
           </t>
           <t>
         Specific processing associated with each Credit Data Item is
-        provided below.
+        provided in
+        <xref target="sec-data-items" format="default"/>.
           </t>
         </section>
         <section anchor="sec-ccr-msg" numbered="true" toc="default">
           <name>Credit Control Response Message</name>
           <t>
         Credit Control Response Messages are sent by routers to report
-        the current Credit Window for a destination.  A message sent by
+        the current Credit Window for a destination.  A Credit Control
+        Response message sent by
         a router, MUST contain one or more Credit Window Status Data
         Items as defined below in <xref target="sec-di-status" format="default"/>.
         Specific receive processing associated with the Credit Window
-        Status Data Item is provided below.
+        Status Data Item is provided in <xref target="sec-di-status" format="default"/>.
           </t>
           <t>
         Credit Control Response Messages sent by modems MUST contain one
@@ -316,7 +322,7 @@
         included.  Each Credit Grant Data Item MAY provide zero or more
         additional credits based on the modem's transmission or local
         queue availability.  Specific receive processing associated with
-        each Grant Data Item is provided below.
+        each Grant Data Item is provided in <xref target="sec-di-grant" format="default"/>.
           </t>
           <t>
         The Message Type value in the DLEP Message Header is set to TBA3.
@@ -334,11 +340,11 @@
       Data Item is used by a modem to identify which traffic classification
       identifiers (flows) should be used when sending traffic to a particular DLEP
       identified destination.
-      The Credit Window Grant is used by a modem to provide additional
+      The Credit Window Grant Data Item is used by a modem to provide additional
       credits to a router.
-      The Credit Window Request is used by a router to request additional
+      The Credit Window Request Data Item is used by a router to request additional
       credits.
-      The Credit Window Status is used to advertise the sender's view of
+      The Credit Window Status Data Item is used to advertise the sender's view of
       number of available credits for state synchronization purposes.
         </t>
         <t>
@@ -370,7 +376,7 @@
         The Credit Window Initialization Data Item identifies a credit
         window using a Flow Identifier, or FID.  It also provides the
         size of the identified credit window.  Finally, a queue size (in
-        bytes) is provided for informational purposes.  Note that to be
+        octets) is provided for informational purposes.  Note that to be
         used, a FID must be defined within a Traffic Classification Data
         Item and the associated TID must be provided via a Credit Window
         Association Data Item.
@@ -409,7 +415,9 @@
             <dt>Flow Identifier (FID):</dt>
             <dd>
             A flow identifier as defined by the Traffic Classification
-            Data Item.  The FID also uniquely identifies a credit
+            Data Item
+            <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>.
+            The FID also uniquely identifies a credit
             window.
           </dd>
             <dt>Reserved:</dt>
@@ -450,7 +458,9 @@
         MUST ensure that the FID field value has been provided by the
         modem in a Traffic Classification Data Item carried in either
         the current or a previous message.  If the FID cannot be found the
-        router SHOULD report or log this information.  Note that
+        router SHOULD log this information.
+        The method of logging is left to the router implementation.
+        Note that
         no traffic will be associated with the credit window in this
         case.  After FID validation, the router MUST locate the credit
         window that is associated with the FID indicated in each
@@ -487,12 +497,14 @@
         The traffic classification information is identified using a TID
         value that has previously been sent by the modem or is listed
         in a Traffic Classification Data Item carried in the same message
-        as the Data Item.  TIDs in different Credit windows must not
+        as the
+        Credit Window Association
+        Data Item.  TIDs in different Credit windows must not
         overlap.
           </t>
           <t>
-        A single Credit Window Association Data Item MUST be included in all
-        Destination Up and Destination Update Messages sent by a modem when
+        A single Credit Window Association Data Item MUST be included in every
+        Destination Up and Destination Update Message sent by a modem when
         the credit window control defined in this document is used. Note
         that a TID will not be used unless it is listed in a Credit Window
         Association Data Item.
@@ -530,11 +542,12 @@
           </dd>
           </dl>
           <t>
-        A router that receives the Credit Window Association Data Item MUST
+        A router that receives a Credit Window Association Data Item MUST
         locate the traffic classification information indicated by the
-        received TID.  If no corresponding information can be located, the
+        received TID.  If no corresponding information is found, the
+        Credit Window Association
         Data Item MUST be treated as an error as described above.
-        Once the traffic classification information is located, the
+        If the traffic classification information is located, the
         router MUST ensure that any data plane state that is associated
         with the TID and its corresponding FIDs are updated as needed
         (per <xref target="data-plane" format="default"/>).
@@ -551,9 +564,12 @@
         provide credits to a router.  One or more Credit Window Grant Data
         Items MAY be carried in the DLEP Destination Up, Destination Announce
         Response, Destination Update, Credit Control Messages, and Credit
-        Control Response Messages.  Multiple
-        Credit Window Grant Data Items in a single message are used to
-        indicate different credit values for different credit windows.  In all
+        Control Response Messages.
+        Multiple Credit Window Grant Data Items may be present in a
+        single message.
+        Each item grants credits to a different credit window and,
+        therefor, references a different FID.
+        In all
         message types, this Data Item provides an additional number of octets
         to be added to the indicated credit window.  Credit windows are
         identified using FID values that have been previously been
@@ -610,7 +626,8 @@
           <t>
         When receiving this Data Item, a router MUST identify the credit
         window indicated by the FID.  If the FID is not known to the router,
-        it SHOULD report or log this information and discard the Data Item.
+        it SHOULD log this information and discard the Data Item.
+        The method of logging is left to the router implementation.
         It is important to note that while this Data Item can be received in a
         destination specific message, credit windows are managed independently
         from the destination identified in the message carrying this Data
@@ -627,7 +644,7 @@
           <t>
         No response is sent by the router to a modem after processing a Credit
         Window Grant Data Item received in a Credit Control Response Message.
-        In other cases, the receiving router MUST send a
+        For other message types, the receiving router MUST send a
         Credit Window Status Data Item or items reflecting the
         resulting Credit Window value of the updated credit window.  When the
         Credit Grant Data Item is received in a Destination Up Message, the
@@ -643,7 +660,9 @@
         a router to report the current credit window size to its peer modem.  One
         or more Credit Window Status Data Items MAY be carried in a
         Destination Up Response Message or a Credit Control Response Message.
-        As discussed above, the Destination Up Response Message is used when
+        As discussed in
+        <xref target="sec-di-grant" format="default"/>,
+        the Destination Up Response Message is used when
         the Data Item is sent in response to a Destination Up Message, and
         the Credit Control Response Message is sent in response to a Credit
         Control Message.  Multiple Credit Window Status Data Items in a
@@ -696,15 +715,15 @@
             <dd>
             A 64-bit unsigned integer, indicating
             the current number of credits, in octets, available for the
-            router to send to the modem.  This is referred to as the
-            Modem Receive Window in <xref target="I-D.ietf-manet-credit-window" format="default"/>.
+            router to send to the modem.
           </dd>
           </dl>
           <t>
         When receiving this Data Item, a modem MUST identify the credit
         window indicated by the FID.  If the FID is not known to the modem,
-        it SHOULD report or log this information and discard the Data Item.  As
-        with the Credit Window Grant Data Item, the FID MAY be unrelated to
+        it SHOULD log this information and discard the Data Item.
+        The method of logging is left to the modem implementation.
+        As with the Credit Window Grant Data Item, the FID MAY be unrelated to
         the Destination indicated in the message carrying the Data Item.
           </t>
           <t>
@@ -716,7 +735,9 @@
         be accounted for based on observed data frames, then the modem SHOULD
         send a Credit Window Initialization Data Item to reset the associated
         credit window size to the modem's current view of the available
-        credits.  As defined above, Credit Window Initialization Data Items are
+        credits.  As defined in
+        <xref target="sec-di-cwi" format="default"/>,
+        Credit Window Initialization Data Items are
         sent in Session Update Messages.  When multiple Data Items need to be
         sent, they SHOULD be combined into a single message when possible.
         Alternatively, and also in cases where there are small differences,
@@ -734,7 +755,7 @@
         message.
           </t>
           <t>
-        Credit windows are identified using a FID as defined above in <xref target="sec-di-cwi" format="default"/>.  Multiple FIDs MAY be present to allow for the
+        Credit windows are identified using a FID as defined in <xref target="sec-di-cwi" format="default"/>.  Multiple FIDs MAY be present to allow for the
         case where the router identifies that credits are needed in multiple
         credit windows.  A special FID value, as defined below, is used to
         indicate that a credit request is being made across all queues.
@@ -763,7 +784,7 @@
               <t>
           Per <xref target="RFC8175" format="default"/> Length
           is the number of octets in the Data Item, excluding the Type and
-          Length fields.  It will equal the number of FID
+          Length fields.  It is equal the number of FID
           fields carried in the Data Item times 2 and MUST be at least 2.
               </t>
             </dd>
@@ -784,8 +805,9 @@
         the indicated credit windows via Credit Window Grant Data Items
         carried in a new Credit Control Message.  Multiple values and queue
         indexes SHOULD be combined into a single Credit Control Message when
-        possible.  Unknown FID values SHOULD be reported or logged and then
+        possible.  Unknown FID values SHOULD be logged and then
         ignored by the modem.
+        The method of logging is left to the modem implementation.
           </t>
         </section>
       </section>
@@ -821,12 +843,12 @@
     <section anchor="sec-compat" numbered="true" toc="default">
       <name>Compatibility</name>
       <t>
-    The messages and data items defined in this document will only be used when
+    The messages and Data Items defined in this document will only be used when
     extensions require their use.
       </t>
       <t>
     The DLEP specification <xref target="RFC8175" format="default"/> defines handling of unexpected
-    appearances of any data items, including those defined in this
+    appearances of any Data Items, including those defined in this
     document.
       </t>
     </section>
