@@ -137,7 +137,7 @@
     credit window is based on the Traffic Classification Data Item
     defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>. Both types of
     DLEP endpoints, 
-    i.e., a router and a modem, negotiate the use of this extension during
+    router and modem, negotiate the use of this extension during
     session initialization, e.g., see <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/>.  When using
     credit windows, data traffic is only allowed to be sent by the
             router to the modem when there are credits available except during
@@ -167,9 +167,11 @@
     Modems provide an initial credit window size at the time of "Credit
     Window Initialization".  Such initialization can take place during
     session initiation or any point thereafter.  It can also take place
-    when rate information changes.  Additional "Credit Grants", i.e.,
-    increments to Credit Window size, are provided using a Destination
-    Up or the new "Credit Control" Message.  A router provides its view
+    when rate information changes.
+    An increment to a Credit Window size, specified in a Credit Grant
+    Data Item, is provided in a Destination Up or the new "Credit Control"
+    Message.
+    A router provides its view
     of the Credit Window, which is known as "Status", in Destination Up
     Response and the new "Credit Control Response" Messages.  Routers
     can also request credits using the new "Credit Control" Message.
@@ -351,13 +353,14 @@
           <t>
         The Credit Window Initialization Data Item is used by a modem to
         identify a credit window and set its size.
-        In order to avoid errors caused by use of undefined FIDs or
-        uninitialized credit windows,
-        this Data Item
-        SHOULD be included in any Session Initialization Response
-        Message that also indicates support for an extension that
-        requires support for the credit window control mechanisms
-        defined in this document, e.g., see <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/>.  Updates to
+        Some DLEP extensions, such as
+        <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/>,
+        require the credit window control mechanism defined in this document.
+        In order to avoid errors caused by the use of undefined FIDs or
+        uninitialized credit windows, this Data Item SHOULD be included
+        in any Session Initialization Response Message that indicates
+        support for any such extension.
+        Updates to
         previously identified credit windows or new credit windows MAY
         be sent by a modem by including the Data Item in Session Update
         Messages.  More than one data item MAY be included in a message
@@ -470,11 +473,10 @@
         that match the indicated FIDs, fit within the window for the
         unmodified Credit Window Max Size and arrive before the modem
         receives the corresponding Session Update Response Message.
-        The modem SHOULD NOT issue additional credits for each affected
-        FID until the associated affected Window has drained to be
-        less than the new Credit Window Max Size, regardless of whether
-        sufficient draining occurs before or after the modem receives
-        that corresponding Session Update Response Message.
+        The modem SHOULD NOT issue additional credits for any affected
+        FID until that FID's associated Window has drained to be
+        less than the new Credit Window Max Size, regardless of when
+        the corresponding Session Update Response Message is received.
           </t>
         </section>
         <section anchor="sec-di-cwa" numbered="true" toc="default">
@@ -531,11 +533,12 @@
         A router that receives the Credit Window Association Data Item MUST
         locate the traffic classification information indicated by the
         received TID.  If no corresponding information can be located, the
-        Data Item MUST be treated as an error as described above. Once the
-        traffic classification information is located,
-        the router MUST ensure that any data plane
-        state, see <xref target="data-plane" format="default"/>, that is associated with the
-        TID and its corresponding FIDs is updated as needed.  If a
+        Data Item MUST be treated as an error as described above.
+        Once the traffic classification information is located, the
+        router MUST ensure that any data plane state that is associated
+        with the TID and its corresponding FIDs are updated as needed
+        (per <xref target="data-plane" format="default"/>).
+        If a
         router determines that a newly received Data Item results in
         credit windows with overlapping TIDs, the Data Item MUST be
         treated as an error as described above.
@@ -799,15 +802,15 @@
         </t>
         <t>
       Routers may have limits on the number of queues that they can
-      support and, perhaps, even limits in supported credit window
-      combinations, e.g., if per destination queues can even be
+      support.  They may even have limits on supported credit window
+      combinations.  For example, per destination queues may not be
       supported at all.  When modem-provided credit window information
       exceeds the capabilities of a router, the router SHOULD use a subset of
       the provided credit windows.  Alternatively, a router MAY reset the
       session and indicate that the extension is not supported.  In either
       case, the mismatch of capabilities SHOULD be reported to the user via
-      normal network management mechanisms, e.g., user interface or error
-      logging.
+      normal network management mechanisms, such as the user interface
+      or error logging.
         </t>
         <t>
       In all cases, if credit windows are in use, traffic for which credits are not
@@ -831,10 +834,14 @@
       <name>Security Considerations</name>
       <t>
     This document introduces credit window control and flow mechanisms
-    to DLEP.  These mechanisms expose vulnerabilities similar to
-    existing DLEP messages, e.g., an injected message resizes a credit
-    window to a value that results in a denial of service.
-    The security mechanisms documented in <xref target="RFC8175" format="default"/> can be applied equally to the mechanism defined
+    to DLEP.  These mechanisms expose vulnerabilities similar to existing
+    DLEP messages.
+    For example, a malicious actor masquerading as a DLEP peer could
+    inject a Credit Window Initialization Data Item which resizes a
+    credit window to a value that results in a denial of service.
+    The Layer 2 and transport layer security mechanisms documented in
+    <xref target="RFC8175" format="default"/> can be applied equally to
+    the mechanism defined
     in this document.
       </t>
     </section>
