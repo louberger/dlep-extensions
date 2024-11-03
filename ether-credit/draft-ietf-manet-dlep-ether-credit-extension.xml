@@ -70,7 +70,7 @@
         control mechanisms defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/> and <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/> to provide credit
         window based flow control based on DLEP destinations and
         Ethernet VLANs and Priority Code Points.  Ethernet Priority Code
-        Point support is defined as part of the IEEE 802.1Q <xref target="IEEE.802.1Q_2014" format="default"/> tag format and includes a 3 bit
+        Point support is defined as part of the IEEE 802.1Q <xref target="IEEE8021Q" format="default"/> tag format and includes a 3 bit
         "PCP" field.  The tag format also includes a 12 bit VLAN
         identifier (VID) field.  The defined mechanism allows for credit
         windows to be shared across traffic sent to multiple DLEP
@@ -223,132 +223,26 @@ the modem SHOULD support the configuration of VLAN to credit window
       <name>References</name>
       <references>
         <name>Normative References</name>
-        <reference anchor="IEEE.802.1Q_2014" target="http://ieeexplore.ieee.org/servlet/opac?punumber=6991460">
-          <front>
-            <title>
-            IEEE Standard for Local and metropolitan area
-            networks--Bridges and Bridged Networks
-            </title>
-            <author>
-              <organization>IEEE</organization>
-            </author>
-            <date day="18" month="December" year="2014"/>
-            <abstract>
-              <t>
-              This standard specifies how the Media Access Control (MAC)
-              Service is supported by Bridged Networks, the principles
-              of operation of those networks, and the operation of MAC
-              Bridges and VLAN Bridges, including management, protocols,
-              and algorithms
-              </t>
-            </abstract>
-          </front>
-          <seriesInfo name="IEEE" value="802.1Q-2014"/>
-          <seriesInfo name="DOI" value="10.1109/ieeestd.2014.6991462"/>
+      <reference anchor="IEEE8021Q" target="https://ieeexplore.ieee.org/document/8403927" quoteTitle="true" derivedAnchor="IEEE8021Q">
+        <front>
+          <title>IEEE Standard for Local and Metropolitan Area Networks--Bridges and Bridged Networks</title>
+          <author>
+            <organization showOnFrontPage="true">IEEE</organization>
+          </author>
+          <date month="July" year="2022"/>
+        </front>
+        <seriesInfo name="DOI" value="10.1109/IEEESTD.2022.10004498"/>
+        <seriesInfo name="IEEE" value="802.1Q-2022"/>
         </reference>
-        <reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
-          <front>
-            <title>Key words for use in RFCs to Indicate Requirement Levels</title>
-            <author fullname="S. Bradner" initials="S." surname="Bradner"/>
-            <date month="March" year="1997"/>
-            <abstract>
-              <t>In many standards track documents several words are used to signify the requirements in the specification. These words are often capitalized. This document defines these words as they should be interpreted in IETF documents. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="BCP" value="14"/>
-          <seriesInfo name="RFC" value="2119"/>
-          <seriesInfo name="DOI" value="10.17487/RFC2119"/>
-        </reference>
-        <reference anchor="RFC8174" target="https://www.rfc-editor.org/info/rfc8174" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
-          <front>
-            <title>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</title>
-            <author fullname="B. Leiba" initials="B." surname="Leiba"/>
-            <date month="May" year="2017"/>
-            <abstract>
-              <t>RFC 2119 specifies common key words that may be used in protocol specifications. This document aims to reduce the ambiguity by clarifying that only UPPERCASE usage of the key words have the defined special meanings.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="BCP" value="14"/>
-          <seriesInfo name="RFC" value="8174"/>
-          <seriesInfo name="DOI" value="10.17487/RFC8174"/>
-        </reference>
-        <reference anchor="RFC8175" target="https://www.rfc-editor.org/info/rfc8175" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8175.xml">
-          <front>
-            <title>Dynamic Link Exchange Protocol (DLEP)</title>
-            <author fullname="S. Ratliff" initials="S." surname="Ratliff"/>
-            <author fullname="S. Jury" initials="S." surname="Jury"/>
-            <author fullname="D. Satterwhite" initials="D." surname="Satterwhite"/>
-            <author fullname="R. Taylor" initials="R." surname="Taylor"/>
-            <author fullname="B. Berry" initials="B." surname="Berry"/>
-            <date month="June" year="2017"/>
-            <abstract>
-              <t>When routing devices rely on modems to effect communications over wireless links, they need timely and accurate knowledge of the characteristics of the link (speed, state, etc.) in order to make routing decisions. In mobile or other environments where these characteristics change frequently, manual configurations or the inference of state through routing or transport protocols does not allow the router to make the best decisions. This document introduces a new protocol called the Dynamic Link Exchange Protocol (DLEP), which provides a bidirectional, event-driven communication channel between the router and the modem to facilitate communication of changing link characteristics.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="RFC" value="8175"/>
-          <seriesInfo name="DOI" value="10.17487/RFC8175"/>
-        </reference>
-        <reference anchor="I-D.ietf-manet-dlep-credit-flow-control" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-credit-flow-control" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-credit-flow-control.xml">
-          <front>
-            <title>DLEP Credit-Based Flow Control Messages and Data Items</title>
-            <author fullname="Bow-Nan Cheng" initials="B." surname="Cheng">
-              <organization>MIT Lincoln Laboratory</organization>
-            </author>
-            <author fullname="David Wiggins" initials="D." surname="Wiggins">
-              <organization>MIT Lincoln Laboratory</organization>
-            </author>
-            <author fullname="Lou Berger" initials="L." surname="Berger">
-              <organization>LabN Consulting, L.L.C.</organization>
-            </author>
-            <author fullname="Stan Ratliff" initials="S." surname="Ratliff"/>
-            <date day="11" month="July" year="2023"/>
-            <abstract>
-              <t>This document defines new Dynamic Link Exchange Protocol (DLEP) Data Items that are used to support credit-based flow control. Credit window control is used to regulate when data may be sent to an associated virtual or physical queue. The Data Items are defined in an extensible and reusable fashion. Their use will be mandated in other documents defining specific DLEP extensions.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-12"/>
-        </reference>
-        <reference anchor="I-D.ietf-manet-dlep-traffic-classification" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-traffic-classification" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-traffic-classification.xml">
-          <front>
-            <title>DLEP Traffic Classification Data Item</title>
-            <author fullname="Bow-Nan Cheng" initials="B." surname="Cheng">
-              <organization>MIT Lincoln Laboratory</organization>
-            </author>
-            <author fullname="David Wiggins" initials="D." surname="Wiggins">
-              <organization>MIT Lincoln Laboratory</organization>
-            </author>
-            <author fullname="Lou Berger" initials="L." surname="Berger">
-              <organization>LabN Consulting, L.L.C.</organization>
-            </author>
-            <date day="10" month="July" year="2023"/>
-            <abstract>
-              <t>This document defines a new Dynamic Link Exchange Protocol (DLEP) Data Item that is used to support traffic classification. Traffic classification information is used to identify traffic flows based on frame/packet content such as destination address. The Data Item is defined in an extensible and reusable fashion. Its use will be mandated in other documents defining specific DLEP extensions. This document also introduces DLEP Sub-Data Items, and Sub-Data Items are defined to support DiffServ and Ethernet traffic classification.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-traffic-classification-09"/>
-        </reference>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8175.xml"/>
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-credit-flow-control.xml"/>
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-traffic-classification.xml"/>
       </references>
       <references>
         <name>Informative References</name>
-        <reference anchor="I-D.ietf-manet-dlep-da-credit-extension" target="https://datatracker.ietf.org/doc/html/draft-ietf-manet-dlep-da-credit-extension" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-manet-dlep-da-credit-extension.xml">
-          <front>
-            <title>DLEP DiffServ Aware Credit Window Extension</title>
-            <author fullname="Bow-Nan Cheng" initials="B." surname="Cheng">
-              <organization>MIT Lincoln Laboratory</organization>
-            </author>
-            <author fullname="David Wiggins" initials="D." surname="Wiggins">
-              <organization>MIT Lincoln Laboratory</organization>
-            </author>
-            <author fullname="Lou Berger" initials="L." surname="Berger">
-              <organization>LabN Consulting, L.L.C.</organization>
-            </author>
-            <date day="10" month="July" year="2023"/>
-            <abstract>
-              <t>This document defines an extension to the Dynamic Link Exchange Protocol (DLEP) that enables a DiffServ aware credit-window scheme for destination-specific and shared flow control.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-da-credit-extension-14"/>
-        </reference>
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-da-credit-extension.xml"/>
       </references>
     </references>
     <section numbered="true" toc="default">
