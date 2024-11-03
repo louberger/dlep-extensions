@@ -747,9 +747,9 @@
 Router                                        Modem
 
   |<----------------DLEP Messages---------------|
-  |   Credit Window Initialization Data Item(s) |
-  |   Window Association Data Item(s)           |
   |   Traffic Classification Data Item(s)       |
+  |   Window Association Data Item(s)           |
+  |   Credit Window Initialization Data Item(s) |
   |                                             |
   |============================================>|
   |   Traffic                                   |
