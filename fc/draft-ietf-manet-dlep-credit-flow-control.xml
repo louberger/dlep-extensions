@@ -1001,6 +1001,67 @@
         shall be missed.
       </t>
     </section>
+
+    <section  anchor="Tree" numbered="true" toc="default">
+      <name>Example DLEP Credit Flow Control and Traffic Classification Data Item Exchange</name>
+      <t>
+        Below <xref target="dlep-exchange" format="default"/> illustrates
+        a credit flow control and traffic classification exchange between
+        a Router and a Modem.
+        The Modem will initialize a number of queues with Credit Window
+        Initialization Data Items, Window Association Data Item(s)
+        and Traffic Classification Item(s) included in DLEP messages as
+        outlined in this document.
+        If the Data Items are successfully validated, traffic is mapped
+        to the corresponding credit window on the router and forwarded
+        when there are sufficient credits.
+        Routers can periodically report the status of the credit window.
+        Modems will send periodic updates with more credits as packets are
+        transmitted.  Routers may request more credits for a particular
+        window if the router requires more credits.
+
+        This document defines window credit flow information for flow
+        Identifiers (FIDs) that map to the queues.
+        <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>
+        defines the traffic classification data sub items such as DiffServ
+        code points that map to the FIDs.
+      </t>
+       <figure anchor="dlep-exchange" align="left" suppress-title="false">
+         <name slugifiedName="dlep_exchange">Example DLEP Traffic Classification/Credit Flow Exchange</name>
+         <artwork name="" type="" align="center" alt=""><![CDATA[
+Router                                        Modem
+
+  |<----------------DLEP Messages---------------|
+  |   Traffic Classification Data Item(s)       |
+  |   Window Association Data Item(s)           |
+  |   Credit Window Initialization Data Item(s) |
+  |                                             |
+  |============================================>|
+  |   Traffic                                   |
+  |                                             |
+  |<----------------DLEP Messages---------------|
+  |   Credit Window Grant Data Item(s)          | T
+  |============================================>| i
+  |   Traffic                                   | m
+  |                                             | e
+  |----------------DLEP Messages--------------->|
+  |   Credit Window Status Data Item(s)         | |
+  |                                             | V
+  |============================================>|
+  |   Traffic                                   |
+  |                                             |
+  |----------------DLEP Messages--------------->|
+  |   Credit Window Request Data Item(s)        |
+  |                                             |
+  |<------------------------------------------- |
+  |   Credit Window Grant Data Item(s)          |
+  |                                             |
+  |============================================>|
+  |   Traffic                                   |
+  |                                             |
+]]></artwork>
+       </figure>
+    </section>
   </back>
 </rfc>
 <!-- Local Variables: -->
