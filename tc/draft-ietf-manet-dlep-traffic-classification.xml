@@ -96,7 +96,7 @@
       <xref target="RFC2475" format="default"/> Section 2.3.) 
       This document defines traffic classification based on a DLEP
       destination and flows identified by either DiffServ 
-      <xref target="RFC2475" format="default"/> DSCPs (differentiated services codepoints) or IEEE
+      <xref target="RFC2475" format="default"/> DSCPs (Differentiated Services Codepoints) or IEEE
       802.1Q <xref target="IEEE.802.1Q_2014" format="default"/> Ethernet Priority Code Points
       (PCP).  The data Items for these are specified in
       <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/> and
@@ -293,11 +293,9 @@
         that is patterned after the standard DLEP Data Item format, see
         <xref target="RFC8175" format="default"/> Section 11.3.  There is no requirement
         on, or meaning to Sub-Data Item ordering. 
-        Any errors or inconsistencies encountered in parsing Data Items
-        are handled in the same fashion as any other data item parsing error
-        encountered in DLEP, see <xref target="RFC8175" format="default"/>. In particular, the
-        node parsing the Data Item MUST terminate the session with a
-        Status Data Item indicating Invalid Data.
+        Any errors or inconsistencies encountered in parsing Sub-Data Items
+        are handled in the same fashion as any other Data Item parsing error
+        encountered in DLEP, see <xref target="RFC8175" format="default"/>. 
           </t>
           <t>
         The format of the Traffic Classification Sub-Data Item is:
@@ -397,7 +395,7 @@
           |         DSCP          |  MBZ  |
           +---+---+---+---+---+---+---+---+
 
-            DSCP: differentiated services codepoint
+            DSCP: Differentiated Services Codepoint
             MBZ:  MUST be zero
             ]]></artwork>
           </dd>
@@ -410,7 +408,7 @@
         the carried information, including potentially updating the data
         behavior as determined by the extension requiring the use of the
         Sub-Data Item.  Validation failures MUST be treated as an error as
-        described above.
+        described above in <xref target="sec-di-tc-sub" format="default"/>.
           </t>
           <t>
         Once validated, the receiver MUST ensure that each DS Field
@@ -419,7 +417,8 @@
         Item and not the individual Sub-Data Item.  If the same DS Field
         value is listed more than once within the same Traffic
         Classification Data Item, the Data Item MUST be treated as an
-        error as described above.
+        error as 
+        described above in <xref target="sec-di-tc-sub" format="default"/>.
           </t>
         </section>
       </section>
@@ -501,7 +500,7 @@
         |    PCP    |MBZ|
         +---+---+---+---+
 
-        PCP: Priority code point
+        PCP: Priority Code Point
         MBZ: MUST be zero
             ]]></artwork>
           </dd>
@@ -519,9 +518,11 @@
         Item MUST validate the information on receipt, prior to the using
         the carried information, including potentially updating the data
         behavior as determined by the extension requiring the use of the
-        Sub-Data Item.  Validation includes make sure the TID is defined
+        Sub-Data Item.  Validation ensures the TID is defined
         in a Window Association Data Item as defined in 
-        <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. 
+	<xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. 
+	Any failures MUST be treated as an error as 
+        described above in <xref target="sec-di-tc-sub" format="default"/>.
           </t>
           <t>
         Once the TID is validated, the receiver MUST ensure that each Priority
@@ -531,7 +532,7 @@
         Field value is listed more than once within the same Traffic
         Classification Data Item, the Data Item MUST be treated as an
         error as 
-        described in <xref target="RFC8175" format="default"/>.
+        described above in <xref target="sec-di-tc-sub" format="default"/>.
           </t>
           <t>
         If a packet matches exactly a DiffServ Traffic Classification
@@ -540,7 +541,7 @@
         Section 2.3), e.g., PCP match, then the TID with which the
         DiffServ Traffic Classification Sub-Data Item is associated MUST
         take precedence. An Ethernet PCP exact match would be used only if there
-        is no DiffServ code point or no DiffServ code point exact match. 
+        is no DiffServ Codepoint or no DiffServ Codepoint exact match. 
           </t>
         </section>
       </section>
@@ -553,15 +554,13 @@
       </t>
       <t>
     The DLEP specification <xref target="RFC8175" format="default"/> defines handling of unexpected
-    appearances of any data items, including those defined in this
+    appearances of any Data Items, including those defined in this
     document. 
       </t>
-      <t> Both the router and the modem need to support 
-      Traffic classification and Credit flow control 
-      <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/> .  Since DLEP is 
-      a local protocol between a router and one or more modems, these data items are managed per DLEP 
-      session. Traffic classification will be inoperative on any modem not properly configured 
-      and validated. This may require disabling traffic classification until a router supports the capability. 
+      <t> Both the router and the modem need to support this document, 
+      DLEP Traffic Classification, and DLEP Credit Flow Control,  
+      <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. 
+
       </t>
     </section>
     <section anchor="sec-sec" numbered="true" toc="default">
@@ -665,10 +664,10 @@
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8175.xml"/>
-	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-credit-flow-control.xml"/>
       </references>
       <references>
         <name>Informative References</name>
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-credit-flow-control.xml"/>
 	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-da-credit-extension.xml"/>
 	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-ether-credit-extension.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2474.xml"/>
@@ -718,66 +717,6 @@
         shall be missed.
       </t>
     </section>
-    <section  anchor="Tree" numbered="true" toc="default">
-<name>Example DLEP Traffic Classification data item</name>
-<t>
-        Below <xref target="dlep-exchange" format="default"/>
-        illustrates an exchange between a Router and a Modem. 
-        The Modem will initialize a number of queues with 
-        Credit Window Initialization Data Items, 
-        Window Association Data Item(s) and 
-        Traffic Classification Item(s) included
-	in DLEP messages as outlined in this document.
-	If the data items are successfully validated, 
-	traffic is mapped to the corresponding credit window 
-	on the router and forwarded when there are sufficient credits.
-        Routers can periodically report the status of the credit window.
-	Modems will send periodic updates with more credits as packets are 
-	transmitted.  Routers may request more credits for a particular window if
-        the router requires more credits.
-
-        <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/> 
-        defines window credit flow
-        information for Flow Identifiers that map to the queues.  This document 
-        defines the traffic classification data sub items. 
-        </t>
-         <figure anchor="dlep-exchange" align="left" suppress-title="false">
-                 <name slugifiedName="dlep_exchange">Example DLEP Traffic Classification/Credit Flow Exchange</name>
-      <artwork name="" type="" align="center" alt=""><![CDATA[                 
-Router                                        Modem
-
-  |<----------------DLEP Messages---------------|
-  |   Traffic Classification Data Item(s)       |
-  |   Window Association Data Item(s)           |
-  |   Credit Window Initialization Data Item(s) |
-  |                                             |
-  |============================================>|
-  |   Traffic                                   |
-  |                                             |
-  |<----------------DLEP Messages---------------|
-  |   Credit Window Grant Data Item(s)          | T
-  |============================================>| i
-  |   Traffic                                   | m
-  |                                             | e
-  |----------------DLEP Messages--------------->| 
-  |   Credit Window Status Data Item(s)         | |
-  |                                             | V
-  |============================================>|
-  |   Traffic                                   |
-  |                                             |
-  |----------------DLEP Messages--------------->| 
-  |   Credit Window Request Data Item(s)        |
-  |                                             |
-  |<------------------------------------------- |
-  |   Credit Window Grant Data Item(s)          |
-  |                                             |
-  |============================================>|
-  |   Traffic                                   |
-  |                                             |
-]]></artwork>
-      </figure>
-    </section>
-    
   </back>
 </rfc>
 <!-- Local Variables: -->
