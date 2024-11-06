@@ -84,21 +84,49 @@
       based mechanism is defined in <xref target="RFC8651" format="default"/>.
       </t>
       <t>
-      This document defines DLEP Data Items and Messages which provide
-      a flow control mechanism for traffic sent
-      from a router to a modem. Flow control is provided using one or
-      more logical "Credit Windows", each of which will typically be
-      supported by an associated virtual or physical queue.
-      A router will use traffic flow classification information
-      provided by the modem,
-      as defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>,
-      to identify which traffic is associated with
-      each credit window.
+      <xref target="router-modem" format="default"/>  illustrates 
+      a local node consisting of a router and a modem with a 
+      DLEP.
+      DLEP messages optionally contain a number of Data Items and 
+      Sub-data Items.
+      Traffic flow classification Data Items provided by the modem,
+      are defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>.
       In this case, a flow is identified based on
       information found in a data plane header and one or more matches
       are associated with a single flow.
       Refer to Section 2.3 of <xref target="RFC2475" format="default"/>
       for general background on traffic classification.
+      </t>
+      <figure anchor="router-modem" align="left" suppress-title="false">
+      <name slugifiedName="router_to_modem">Router and Modem DLEP Exchange</name>
+      <artwork name="" type="" align="left" alt=""><![CDATA[                 
+        
+|--------------------Local Node--------------------|          
+|                                                  |         
++-----------------------------+            +-------+          
+| Router                      |            |Modem  |
+|                             |            |Device |{~~~~~~~~} Remote 
+|                             |            |       | Link      Nodes       
+| Traffic Classification:     |            |       | Protocol    
+| Per TID:                    |            |       | (e.g.,      
+| DSCPs to FID / PCPs to FID  |            |       | 802.11)
+|                             | Data Items |       | 
+| Per Modem: (list of TIDs)   |<---------->|       | 
+| FID to Credit Window Queues |============|       | 
+|                             |            |       |      
++-----------------------------+            +-------+      
+                              |            |
+                              |----DLEP--- |
+                              
+
+]]></artwork>
+      </figure>
+      <t>
+      This document defines DLEP Data Items which provide
+      a flow control mechanism for traffic sent
+      from a router to a modem. Flow control is provided using one or
+      more logical "Credit Windows", each of which will typically be
+      supported by an associated virtual or physical queue.
       Credit windows may be shared or dedicated on a per flow basis. The
       Data Items are structured to allow for reuse of the defined
       credit window based flow
@@ -649,8 +677,9 @@
           </t>
           <t>
         No response is sent by the router to a modem after processing a Credit
-        Window Grant Data Item received in a Credit Control Response Message.
-        For other message types, the receiving router MUST send a
+	Window Grant Data Item received in a Credit Control Response Message.
+        When a Credit Window Grant Data Item is received in other message types,
+        the receiving router MUST send a
         Credit Window Status Data Item or items reflecting the
         resulting Credit Window value of the updated credit window.  When the
         Credit Grant Data Item is received in a Destination Up Message, the
@@ -721,7 +750,9 @@
             <dd>
             A 64-bit unsigned integer, indicating
             the current number of credits, in octets, available for the
-            router to send to the modem.
+		    router to send to the modem. 
+		    This is referred to as the Modem Receive Window in
+        <xref target="I-D.ietf-manet-credit-window" format="default"/>.
           </dd>
           </dl>
           <t>
@@ -790,7 +821,7 @@
               <t>
           Per <xref target="RFC8175" format="default"/> Length
           is the number of octets in the Data Item, excluding the Type and
-          Length fields.  It is equal the number of FID
+          Length fields.  It is equal to the number of FID
           fields carried in the Data Item times 2 and MUST be at least 2.
               </t>
             </dd>
@@ -964,6 +995,7 @@
       <references>
         <name>Informative References</name>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-da-credit-extension.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-ether-credit-extension.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-credit-window.xml"/>
 	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2475.xml"/>
 	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8651.xml"/>

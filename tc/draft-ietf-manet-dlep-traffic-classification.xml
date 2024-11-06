@@ -79,55 +79,20 @@
       Data Item formats which provide flow identification on a more
       granular basis.  Specifically it enables a router
       to use traffic flow classification information provided by the
-      modem to identify traffic flows.  
-      <xref target="local_router" format="default"/>  illustrates the
-      Traffic Class Data Item exchange for the classification of packets to Flow Identifiers (FID)s 
-      based on the data plane header.
-      <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/> 
-      defines the credit windows per FID.  Routers then create queues
-      to support each credit window.
-      In this case, a flow is
-      identified based on information found in a data plane header and
-      one or more matches are associated with a single flow. 
-      See <xref target="sec-di-tc-q-rrp"/> for validation and matching rules.
-      </t>
-      <t>
-              For general background on traffic classification see 
-      <xref target="RFC2475" format="default"/> Section 2.3.) 
-      This document defines traffic classification based on a DLEP
-      destination and flows identified by either DiffServ 
-      <xref target="RFC2475" format="default"/> DSCPs (Differentiated Services Codepoints) or IEEE
-      802.1Q <xref target="IEEE.802.1Q_2014" format="default"/> Ethernet Priority Code Points
-      (PCP).  The data Items for these are specified in
-      <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/> and
-      <xref target="I-D.ietf-manet-dlep-ether-credit-extension" format="default"/> respectively.
-      </t>
-      <figure anchor="local_router" align="left" suppress-title="false">
-      <name slugifiedName="router_to_modem">Router to Modem Traffic Classification</name>
-      <artwork name="" type="" align="left" alt=""><![CDATA[                 
-        
-|--------------------Local Node--------------------|          
-|                                                  |         
-+-----------------------------+            +-------+          
-| Router                      |     TC     |Modem  |
-|                             | Data Item  |Device |{~~~~~~~~} Remote 
-|                             |<-----------|       | Link      Nodes       
-| Traffic Classification:     |            |       | Protocol    
-| Per TID:                    |            |       | (e.g.,      
-| DSCPs to FID / PCPs to FID  |            |       | 802.11)
-|                             |            |       | 
-| Per Modem: (list of TIDs)   |            |       | 
-| FID to Credit Window Queues |============|       | 
-|                             |            |       |      
-+-----------------------------+            +-------+      
-                              |            |
-                              |----DLEP--- |
-                              
-
-]]></artwork>
-      </figure>
-
-      <t>
+      modem to identify traffic flows based on a combination of
+      information found in a data plane header. 
+      Identification can be based on a combination of DLEP 
+      destination and either IP DiffServ 
+      <xref target="RFC2475" format="default"/>
+      DSCPs (differentiated services codepoints) or IEEE 802.1Q
+      <xref target="IEEE8021Q" format="default"/>
+      Ethernet Priority Code Points (PCP).
+      The expectation is for the defined flow identification
+      related Data Items to be used to support other extensions
+      such as credit window control as specified in
+      <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/> 
+       </t>
+       <t>
        The defined mechanism allows for flows to be described in
       a flexible fashion and when combined with applications such as
       credit window control, allows credit windows to be shared
@@ -429,7 +394,7 @@
       identifies the VLAN and PCPs that should be treated as a single
       flow, i.e., receive the same traffic treatment.  Ethernet Priority
                 Code Point support is defined as part of the IEEE 802.1Q 
-                <xref target="IEEE.802.1Q_2014" format="default"/> tag format and includes a 3 bit "PCP"
+                <xref target="IEEE8021Q" format="default"/> tag format and includes a 3 bit "PCP"
       field.  The tag format also includes a 12 bit VLAN identifier
       (VID) field. PCPs are identified in a list of priority fields.  An
       implementation that does not support PCPs and wants the same
@@ -491,7 +456,7 @@
           <dd>
             <t>
           Each Priority Field is 4-bits long and indicates a
-          PCP field defined in <xref target="IEEE.802.1Q_2014" format="default"/>. Note
+          PCP field defined in <xref target="IEEE8021Q" format="default"/>. Note
           that zero (0) is a valid value for either PCP.
             </t>
             <artwork name="" type="" align="left" alt=""><![CDATA[
@@ -675,25 +640,18 @@
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2475.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8126.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8651.xml"/>
-        <reference anchor="IEEE.802.1Q_2014" target="http://ieeexplore.ieee.org/servlet/opac?punumber=6991460">
-          <front>
-            <title>
-      IEEE Standard for Local and metropolitan area networks--Bridges and Bridged Networks
-            </title>
-            <author>
-              <organization>IEEE</organization>
-            </author>
-            <date day="18" month="December" year="2014"/>
-            <abstract>
-              <t>
-        This standard specifies how the Media Access Control (MAC) Service is supported by Bridged Networks, the principles of operation of those networks, and the operation of MAC Bridges and VLAN Bridges, including management, protocols, and algorithms
-              </t>
-            </abstract>
-          </front>
-          <seriesInfo name="IEEE" value="802.1Q-2014"/>
-          <seriesInfo name="DOI" value="10.1109/ieeestd.2014.6991462"/>
-        </reference>
-      </references>
+      <reference anchor="IEEE8021Q" target="https://ieeexplore.ieee.org/document/8403927" quoteTitle="true" derivedAnchor="IEEE8021Q">
+        <front>
+          <title>IEEE Standard for Local and Metropolitan Area Networks--Bridges and Bridged Networks</title>
+          <author>
+            <organization showOnFrontPage="true">IEEE</organization>
+          </author>
+          <date month="July" year="2022"/>
+        </front>
+        <seriesInfo name="DOI" value="10.1109/IEEESTD.2022.10004498"/>
+        <seriesInfo name="IEEE" value="802.1Q-2022"/>
+      </reference>
+    </references>
     </references>
     <section numbered="true" toc="default">
       <name>Acknowledgments</name>
