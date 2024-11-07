@@ -487,14 +487,15 @@
         Item MUST validate the information on receipt, prior to the using
         the carried information, including potentially updating the data
         behavior as determined by the extension requiring the use of the
-        Sub-Data Item.  Validation ensures the TID is defined
-        in a Window Association Data Item as defined in 
+		  Sub-Data Item.  
+
+        Note that validation can include usage specific semantics such as those found in 
         <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. 
         Any failures MUST be treated as an error as 
         described above in <xref target="sec-di-tc-sub" format="default"/>.
           </t>
           <t>
-        Once the TID is validated, the receiver MUST ensure that each Priority
+        After successful validation, the receiver MUST ensure that each Priority
         Field value is listed only once across the whole Traffic
         Classification Data Item.  Note, this check is across the Data
         Item and not the individual Sub-Data Items.  If the same Priority
@@ -504,13 +505,14 @@
         described above in <xref target="sec-di-tc-sub" format="default"/>.
           </t>
           <t>
-        If a packet matches exactly a DiffServ Traffic Classification
-        Sub-Data Item (<xref target="sec-di-tc-ds-sub" format="default"/>), e.g., DSCP
-        match, and an Ethernet Traffic Classification Sub-Data Item (see
-        Section 2.3), e.g., PCP match, then the TID with which the
-        DiffServ Traffic Classification Sub-Data Item is associated MUST
-        take precedence. An Ethernet PCP exact match would be used only if there
-        is no DiffServ Codepoint or no DiffServ Codepoint exact match. 
+        In cases where multiple matches exist in traffic classification, matching on
+        Ethernet information takes precedence. More specifically, when a packet
+        matches both a DSCP indicated in a DiffServ Traffic Classification Sub-Data
+        Item (<xref target="sec-di-tc-ds-sub" format="default"/>) and a VID/PCP
+        identified in an Ethernet Traffic Classification  Sub-Data Item (<xref
+        target="sec-di-tc-e-sub" format="default"/>),  then the TID associated with the
+        matching VLAN/PCP MUST be used. 
+
           </t>
         </section>
       </section>
@@ -526,11 +528,10 @@
     appearances of any Data Items, including those defined in this
     document. 
       </t>
-      <t> Both the router and the modem need to support this document, 
+      <!--t> Both the router and the modem need to support this document, 
       DLEP Traffic Classification, and DLEP Credit Flow Control,  
       <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. 
-
-      </t>
+      </t-->
     </section>
     <section anchor="sec-sec" numbered="true" toc="default">
       <name>Security Considerations</name>

@@ -393,9 +393,6 @@
           <t>
         The Credit Window Initialization Data Item is used by a modem to
         identify a credit window and set its size.
-        Some DLEP extensions, such as
-        <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/>,
-        require the credit window control mechanism defined in this document.
         In order to avoid errors caused by the use of undefined FIDs or
         uninitialized credit windows, this Data Item SHOULD be included
         in any Session Initialization Response Message that indicates
