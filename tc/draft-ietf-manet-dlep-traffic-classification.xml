@@ -88,9 +88,12 @@
       <xref target="IEEE8021Q" format="default"/>
       Ethernet Priority Code Points (PCP).
       The expectation is for the defined flow identification
-      related Data Items to be used to support other extensions
+      related Data Items to work with other extensions
       such as credit window control as specified in
-      <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/> 
+      <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>.
+      The credit window control document provides an
+      example of traffic classification
+      and credit window flow control.
        </t>
        <t>
        The defined mechanism allows for flows to be described in
@@ -166,8 +169,8 @@
       Data Item is used by a modem to provide a router with traffic
       classification information.  When an extension requires use of
       this Data Item the Traffic Classification Data Item SHOULD be
-      included by a modem in any Session Initialization Response Message,
-      e.g., see <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/>.  Updates to
+      included by a modem in any Session Initialization Response Message, e.g., see 
+      <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. Updates to
       previously provided traffic classifications or new traffic
       classifications MAY be sent by a modem by including the Data Item
       in Session Update Messages.  More than one Data Item MAY be
