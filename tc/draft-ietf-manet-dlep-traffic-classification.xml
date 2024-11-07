@@ -77,26 +77,27 @@
       </t>
       <t>This document defines DLEP
       Data Item formats which provide flow identification on a more
-      granular basis.  Specifically it enables a router
+      granular basis.  Specifically, it enables a router
       to use traffic flow classification information provided by the
       modem to identify traffic flows based on a combination of
       information found in a data plane header. 
-      Identification can be based on a combination of DLEP 
-      destination and either IP DiffServ 
-      <xref target="RFC2475" format="default"/>
-      DSCPs (differentiated services codepoints) or IEEE 802.1Q
-      <xref target="IEEE8021Q" format="default"/>
-      Ethernet Priority Code Points (PCP).
-      The expectation is for the defined flow identification
-      related Data Items to work with other extensions
-      such as credit window control as specified in
+      (For general background on traffic classification see
+      <xref target="RFC2475" format="default"/> Section 2.3.) 
+      The Data Item is structured to
+      allow for use of the defined traffic classification information
+      with applications such as credit window control as specified in
       <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>.
       The credit window control document provides an
-      example of traffic classification
+      example of combining traffic classification
       and credit window flow control.
        </t>
        <t>
-       The defined mechanism allows for flows to be described in
+      This document defines traffic classification based on a DLEP
+      destination and flows identified by either DiffServ
+      <xref target="RFC2475" format="default"/> 
+      DSCPs (differentiated services codepoints) or IEEE
+      802.1Q <xref target="IEEE8021Q" format="default"/> Ethernet
+      (PCP).  The defined mechanism allows for flows to be described in
       a flexible fashion and when combined with applications such as
       credit window control, allows credit windows to be shared
       across traffic sent to multiple DLEP destinations and as part of
@@ -488,8 +489,8 @@
         behavior as determined by the extension requiring the use of the
         Sub-Data Item.  Validation ensures the TID is defined
         in a Window Association Data Item as defined in 
-	<xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. 
-	Any failures MUST be treated as an error as 
+        <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. 
+        Any failures MUST be treated as an error as 
         described above in <xref target="sec-di-tc-sub" format="default"/>.
           </t>
           <t>
@@ -539,8 +540,8 @@
     existing DLEP messages, e.g., an injected message resizes a credit
     window to a value that results in a denial of service.
     The security mechanisms documented in <xref target="RFC8175"
-	    format="default"/> including using TLS to protect DLEP messaging,
-	    can be applied equally to the mechanism defined
+            format="default"/> including using TLS to protect DLEP messaging,
+            can be applied equally to the mechanism defined
     in this document.
       </t>
     </section>
@@ -636,8 +637,8 @@
       </references>
       <references>
         <name>Informative References</name>
-	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-credit-flow-control.xml"/>
-	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-da-credit-extension.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-credit-flow-control.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-da-credit-extension.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2474.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2475.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8126.xml"/>
