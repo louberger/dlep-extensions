@@ -505,7 +505,7 @@
         described above in <xref target="sec-di-tc-sub" format="default"/>.
           </t>
           <t>
-        In cases where multiple matches exist in traffic classification, matching on
+        In cases where both Traffic Classification Sub-Data Item types are defined, matching on
         Ethernet information takes precedence. More specifically, when a packet
         matches both a DSCP indicated in a DiffServ Traffic Classification Sub-Data
         Item (<xref target="sec-di-tc-ds-sub" format="default"/>) and a VID/PCP
