@@ -262,9 +262,8 @@
       to a modem for forwarding when there are no credits available in the
       associated Credit Window.  This document defines credit windows in
       octets.
-      Additionally, a router MUST NOT send a data packet to the modem
-      when there are fewer credits available in the associated Credit
-      Window than there are octets in the packet.
+      Additionally, a router MUST ensure sufficient credits are available in the associated 
+      Credit Window for the current data packet before sending that data packet to the modem. 
       The count of octets in the packet includes MAC overhead, such as
       framing, header and trailer.
       The credit window is decremented by the
@@ -674,7 +673,7 @@
           </t>
           <t>
         No response is sent by the router to a modem after processing a Credit
-	Window Grant Data Item received in a Credit Control Response Message.
+        Window Grant Data Item received in a Credit Control Response Message.
         When a Credit Window Grant Data Item is received in other message types,
         the receiving router MUST send a
         Credit Window Status Data Item or items reflecting the
@@ -747,8 +746,8 @@
             <dd>
             A 64-bit unsigned integer, indicating
             the current number of credits, in octets, available for the
-		    router to send to the modem. 
-		    This is referred to as the Modem Receive Window in
+                    router to send to the modem. 
+                    This is referred to as the Modem Receive Window in
         <xref target="I-D.ietf-manet-credit-window" format="default"/>.
           </dd>
           </dl>
@@ -984,17 +983,17 @@
       <name>References</name>
       <references>
         <name>Normative References</name>
-	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
-	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
-	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8175.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8175.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-traffic-classification.xml"/>
       </references>
       <references>
         <name>Informative References</name>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-da-credit-extension.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-credit-window.xml"/>
-	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2475.xml"/>
-	<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8651.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2475.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8651.xml"/>
       </references>
     </references>
     <section numbered="true" toc="default">
