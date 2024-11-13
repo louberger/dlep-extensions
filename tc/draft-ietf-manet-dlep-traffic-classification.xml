@@ -97,7 +97,7 @@
       <xref target="RFC2475" format="default"/> 
       Differentiated Services Codepoints (DSCPs) or IEEE 
       802.1Q <xref target="IEEE8021Q" format="default"/> Ethernet 
-      (PCPs) Priority Code Points.
+       Priority Code Points (PCPs).
       The defined mechanism allows for flows to be described in
       a flexible fashion and when combined with applications such as
       credit window control, allows credit windows to be shared
