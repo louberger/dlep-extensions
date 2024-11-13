@@ -95,9 +95,10 @@
       This document defines traffic classification based on a DLEP
       destination and flows identified by either DiffServ
       <xref target="RFC2475" format="default"/> 
-      DSCPs (differentiated services codepoints) or IEEE
-      802.1Q <xref target="IEEE8021Q" format="default"/> Ethernet
-      (PCP).  The defined mechanism allows for flows to be described in
+      Differentiated Services Codepoints (DSCPs) or IEEE 
+      802.1Q <xref target="IEEE8021Q" format="default"/> Ethernet 
+      (PCPs) Priority Code Points.
+      The defined mechanism allows for flows to be described in
       a flexible fashion and when combined with applications such as
       credit window control, allows credit windows to be shared
       across traffic sent to multiple DLEP destinations and as part of
@@ -487,7 +488,7 @@
         Item MUST validate the information on receipt, prior to the using
         the carried information, including potentially updating the data
         behavior as determined by the extension requiring the use of the
-		  Sub-Data Item.  
+                  Sub-Data Item.  
 
         Note that validation can include usage specific semantics such as those found in 
         <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. 
@@ -537,13 +538,15 @@
       <name>Security Considerations</name>
       <t>
     This document introduces finer grain flow identification mechanisms
-    to DLEP.  These mechanisms expose vulnerabilities similar to
-    existing DLEP messages, e.g., an injected message resizes a credit
-    window to a value that results in a denial of service.
-    The security mechanisms documented in <xref target="RFC8175"
-            format="default"/> including using TLS to protect DLEP messaging,
-            can be applied equally to the mechanism defined
+    to DLEP.  These mechanisms expose vulnerabilities similar to existing    DLEP messages. 
+    For example, a malicious actor masquerading as a DLEP peer could
+    inject a modified Traffic Flow Classification Data Item 
+    resulting in changes to class of service for affected flows.
+    The Layer 2 and transport layer security mechanisms documented in
+    <xref target="RFC8175" format="default"/> can be applied equally to
+    the mechanism defined
     in this document.
+
       </t>
     </section>
     <section anchor="sec-iana" numbered="true" toc="default">
