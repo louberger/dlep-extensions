@@ -15,7 +15,7 @@
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Traffic Classification">
-  DLEP Traffic Classification Data Item</title>
+  Dynamic Link Exchange Protocol (DLEP) Traffic Classification Data Item</title>
     <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-traffic-classification-13"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
