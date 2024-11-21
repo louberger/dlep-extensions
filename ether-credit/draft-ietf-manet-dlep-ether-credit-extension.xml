@@ -11,7 +11,9 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-ether-credit-extension-07" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902"
+	docName="draft-ietf-manet-dlep-ether-credit-extension-07"
+	obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Ethernet Credit Extension">DLEP IEEE 802.1Q Aware Credit Window
@@ -79,15 +81,19 @@
         credit window.
         Credit windows may be shared or dedicated on a per flow
         basis.
-        See <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/> for a
+        See <xref target="I-D.ietf-manet-dlep-da-credit-extension"/> for a
         DiffServ-based version of credit window flow control.
+	As specified in Section 2.3.1 of <xref target="I-D.ietf-manet-dlep-traffic-classification"/>,
+  	when both DiffServ and Ethernet traffic classification are specified
+  	for a flow, the Ethertype information takes precedence.
       </t>
       <t>
         This document uses the traffic classification and credit window
-        control mechanisms defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/> and <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/> to provide credit
+        control mechanisms defined in <xref target="I-D.ietf-manet-dlep-traffic-classification"/>
+	and <xref target="I-D.ietf-manet-dlep-credit-flow-control"/> to provide credit
         window based flow control based on DLEP destinations and
         Ethernet VLANs and Priority Code Points.  Ethernet Priority Code
-        Point support is defined as part of the IEEE 802.1Q <xref target="IEEE8021Q" format="default"/> tag format and includes a 3-bit
+        Point support is defined as part of the IEEE 802.1Q <xref target="IEEE8021Q"/> tag format and includes a 3-bit
         "PCP" field.  The tag format also includes a 12-bit VLAN
         identifier (VID) field.  The defined mechanism allows for credit
         windows to be shared across traffic sent to multiple DLEP
@@ -101,10 +107,11 @@
         802.1Q Aware Credit Window" or, more simply, the "Ethernet
         Credit" extension. The reader should be familiar with both the
         traffic classification and credit window control mechanisms
-        defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/> and <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>.
+        defined in <xref target="I-D.ietf-manet-dlep-traffic-classification"/>
+	and <xref target="I-D.ietf-manet-dlep-credit-flow-control"/>.
       </t>
       <t>
-        This document defines a new DLEP Extension Type Value in <xref target="sec-ext-type" format="default"/> which is used to indicate support for
+        This document defines a new DLEP Extension Type Value in <xref target="sec-ext-type"/> which is used to indicate support for
         the extension.
       </t>
       <section anchor="sec-1.1" numbered="true" toc="default">
@@ -123,7 +130,8 @@
       <name>Extension Usage and Identification</name>
       <t>
         The extension defined in this document is composed of the
-        mechanisms and processing defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/> and <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>.  To indicate that
+        mechanisms and processing defined in <xref target="I-D.ietf-manet-dlep-traffic-classification"/>
+	and <xref target="I-D.ietf-manet-dlep-credit-flow-control"/>.  To indicate that
         the IEEE 802.1Q Aware Credit Window Extension is to be used, an
         implementation MUST include the IEEE 802.1Q Aware Credit Window
         Type Value in the Extensions Supported Data Item.  The
@@ -132,7 +140,8 @@
         use of the IEEE 802.1Q Aware Credit Window Extension MUST
         support all Messages, Data Items, the Ethernet Traffic
         Classification Sub-Data Item, and all related processing defined
-        in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/> and <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>.
+        in <xref target="I-D.ietf-manet-dlep-traffic-classification"/>
+	and <xref target="I-D.ietf-manet-dlep-credit-flow-control"/>.
       </t>
       <t>
         The IEEE 802.1Q Aware Credit Window Extension Type Value is
@@ -147,7 +156,13 @@
         Extension.
       </t>
       <t>
-        The use of the extension defined in this document SHOULD be
+        If this extension is supported, that support MUST be declare using
+ 	configurable on both modems and routers.
+ 	the Extensions Supported Data Item (see Section 13.6 of [RFC8175]).
+ 	DiffServ Aware Credit Window Extension Data Items MUST NOT be emitted
+ 	by a DLEP participant unless such support was specified in the
+ 	initialization message received from its peer.
+	The use of the extension defined in this document SHOULD be
         configurable on both modems and routers.
       </t>
       <t>
@@ -157,13 +172,13 @@
       <t>
         Modems MAY support the configuration of PCP to credit window
         (queue) mapping on a per VLAN basis. VID value zero
-        (0) is used by <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/> to indicate that
+        (0) is used by <xref target="I-D.ietf-manet-dlep-traffic-classification"/> to indicate that
         VID is ignored and any VID value is used in traffic
         classification.
       </t>
       <t>
         When VLANs are supported by a modem without support from PCPs,
-the modem SHOULD support the configuration of VLAN to credit window
+	the modem SHOULD support the configuration of VLAN to credit window
         (queue) mapping.
       </t>
       <t>
@@ -211,16 +226,9 @@ the modem SHOULD support the configuration of VLAN to credit window
     <section anchor="sec-iana" numbered="true" toc="default">
       <name>IANA Considerations</name>
       <t>
-        This document requests one assignment by IANA.  All assignments
-        are to registries defined by <xref target="RFC8175" format="default"/>.
-      </t>
-      <section anchor="sec-iana-ext" numbered="true" toc="default">
-        <name>Extension Type Value</name>
-        <t>
-          This document requests 1 new assignment to the DLEP Extensions
-          Registry named "Extension Type Values" in the range with the
-          "Specification Required" policy.  The requested value is as
-          follows:
+        IANA is requested to assign one code point in the "Extension Type
+ 	Values" registry in the "Dynamic Link Exchange Protocol (DLEP)
+ 	Parameters" registry group as follows:
         </t>
         <t keepWithNext="true"/>
         <table anchor="table_et" align="center">
@@ -239,7 +247,6 @@ the modem SHOULD support the configuration of VLAN to credit window
           </tbody>
         </table>
         <t keepWithPrevious="true"/>
-      </section>
     </section>
   </middle>
   <back>
