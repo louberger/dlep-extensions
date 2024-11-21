@@ -29,7 +29,24 @@
         <email>lberger@labn.net</email>
       </address>
     </author>
+   <author fullname="Donald E. Eastlake 3rd" initials="D."
+           surname="Eastlake" role="editor">
+     <organization>Independent</organization>
+     <address>
+       <postal>
+         <street>2386 Panoramic Circle</street>
+         <city>Apopka</city>
+         <region>Florida</region>
+         <code>32703</code>
+         <country>USA</country>
+       </postal>        
+       <phone>+1-508-333-2270</phone>
+       <email>d3e3e3@gmail.com</email>
+     </address>
+   </author>
     <date/>
+    <area>Routing</area>
+    <workgroup>MANET</workgroup>
     <abstract>
       <t>
         This document defines an extension to the Dynamic Link Exchange Protocol (DLEP) that
@@ -43,8 +60,8 @@
       <name>Introduction</name>
       <t>
         The Dynamic Link Exchange Protocol (DLEP) is defined in <xref target="RFC8175" format="default"/>.  This protocol provides the exchange of link related
-        control information between DLEP peers.  DLEP peers are
-        comprised of a modem and a router.  DLEP defines a base set of
+        control information between DLEP peers.  DLEP peers 
+        consist of a modem and a router.  DLEP defines a base set of
         mechanisms as well as support for possible extensions.  This
         document defines one such extension.
       </t>
@@ -70,8 +87,8 @@
         control mechanisms defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/> and <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/> to provide credit
         window based flow control based on DLEP destinations and
         Ethernet VLANs and Priority Code Points.  Ethernet Priority Code
-        Point support is defined as part of the IEEE 802.1Q <xref target="IEEE8021Q" format="default"/> tag format and includes a 3 bit
-        "PCP" field.  The tag format also includes a 12 bit VLAN
+        Point support is defined as part of the IEEE 802.1Q <xref target="IEEE8021Q" format="default"/> tag format and includes a 3-bit
+        "PCP" field.  The tag format also includes a 12-bit VLAN
         identifier (VID) field.  The defined mechanism allows for credit
         windows to be shared across traffic sent to multiple DLEP
         destinations, VLANs, and PCPs, or used exclusively for traffic
@@ -139,7 +156,7 @@
       </t>
       <t>
         Modems MAY support the configuration of PCP to credit window
-        (queue) mapping on a per VLAN basis. Note that VID value of zero
+        (queue) mapping on a per VLAN basis. VID value zero
         (0) is used by <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/> to indicate that
         VID is ignored and any VID value is used in traffic
         classification.
@@ -154,16 +171,15 @@ the modem SHOULD support the configuration of VLAN to credit window
         windows (queues) to advertise to a router.
       </t>
       <t>
-        Routers may have limits on the number of queues that they can
-        support and, perhaps, even limits in supported credit window
-        combinations, e.g., if per destination queues can even be
-        supported at all.  When modem-provided credit window information
+        Routers may have limits on the number of queues that they can support
+        and limits on supported credit window combinations. Per destination
+        queues might not be supported at all.  When modem-provided credit window information
         exceeds the capabilities of a router, the router SHOULD use a
         subset of the provided credit windows.  Alternatively, a router
         MAY reset the session and indicate that the extension is not
-        supported.  In either case, the mismatch of capabilities SHOULD
-        be reported to the user via normal network management
-        mechanisms, e.g., user interface or error logging.
+        supported.  In either case, the mismatch of
+        capabilities SHOULD be reported to the user via normal network
+        management mechanisms such as user interface messages or error logging.
       </t>
       <t>
         In all cases, if credit windows are in use, traffic for which
@@ -177,9 +193,17 @@ the modem SHOULD support the configuration of VLAN to credit window
         This document defines a DLEP extension that uses DLEP
         mechanisms and the credit window control and flow mechanisms
         defined in <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/> and <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>.
-        The defined extension exposes vulnerabilities similar to
-        existing DLEP messages, e.g., an injected message resizes a credit
-        window to a value that results in a denial of service.
+        The defined extension is exposed to vulnerabilities similar to existing
+        DLEP messages and discussed in the Security Considerations section
+        of <xref target="RFC8175"/> such as an injected message
+	resizing a credit window to a value that results in a
+	denial of service.
+	Wildcards for matching PCP and VID fields are provided which
+	may be convenient to match a
+        number of packet flows but could inadvertently match unexpected flows or
+        new flows that appear after the wildcard matching has been set up. It is
+        therefore RECOMMENDED that wildcards not be used unless clearly
+        needed.
         The security mechanisms documented in <xref target="RFC8175"
         format="default"/> can be applied equally to the mechanism defined in this document.
       </t>
@@ -257,7 +281,7 @@ the modem SHOULD support the configuration of VLAN to credit window
         this and related DLEP work. His contribution to the IETF and
         publication of the first and definitive open source DLEP
         implementation have been critical to the acceptance of DLEP. We
-        morn his passing on November 23, 2023.  We wish to recognize his
+        mourn his passing on November 23, 2023.  We wish to recognize his
         guidance, leadership and professional excellence.  We were
         fortunate to benefit from his leadership and friendship. He
         shall be missed.
