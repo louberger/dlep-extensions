@@ -60,8 +60,7 @@
       Credit
       window control is used to regulate when data may be sent to an
       associated virtual or physical queue.  The Data Items are
-      extensible and reusable. Their use will be mandated in
-      other documents defining specific DLEP extensions.
+      extensible and reusable.
       </t>
     </abstract>
   </front>
@@ -82,6 +81,15 @@
       destination-specific flow control which provides aggregate flow
       control for both modem and routers has been proposed in <xref target="I-D.ietf-manet-credit-window" format="default"/>, and a control plane pause
       based mechanism is defined in <xref target="RFC8651" format="default"/>.
+      The use of other flow control mechanisms simultaneously with
+      Credit-Based Flow Control is not within the scope of this document.
+      </t>
+      <t>
+      Credit-Based Flow Control, as a result of its proactive nature,
+      may offer some advantages over a pause mechanism.
+      Packet loss resulting from insufficient buffer space is less
+      likely, as a transmitter does not send packets until the receiver
+      has indicated that there is sufficient buffer available.
       </t>
       <t>
       <xref target="router-modem" format="default"/>  illustrates 
@@ -189,7 +197,11 @@
     by Flow Identifiers (FIDs) carried within the Traffic Classification Data Item.  Modems
     pass to the router information on their credit windows and FIDs
     prior to a router being able to send data when an extension
-    requiring the use of credit window control is used.  In addition to
+    requiring the use of credit window control is used.
+    Note that TID and FID values are significant only to the issuing modem.
+    There is no relationship implied by the same TID or FID value being
+    issued by more than one modem.
+    In addition to
     the traffic classification information associated with a FID,
     modems provide an initial credit window size, as well as the
     maximum size of the logical queue associated with each credit
@@ -228,6 +240,10 @@
     identified destination and flow information associated with a credit
     window in order to match traffic they send to specific credit
     windows.
+    The Traffic Classification Data Item allows the modem to specify a
+    wildcard to match any packets that do not match other data items.
+    In the absence of a wildcard, a packet may not match any of the data
+    items and, in this case, SHOULD be dropped by the router.
       </t>
       <t>
     When a destination becomes reachable, a modem "associates"
@@ -259,15 +275,19 @@
         <name>Data Plane Considerations</name>
         <t>
       When credit windowing is used, a router MUST NOT send data traffic
-      to a modem for forwarding when there are no credits available in the
-      associated Credit Window.  This document defines credit windows in
-      octets.
+      to a modem for forwarding if there is no matching classifier.
+      If a matching classifier is found, a router MUST NOT send data
+      traffic to a modem when there are no credits available in the
+      associated Credit Window.
+      Section <xref target="sec-cw-control" format="default"/> describes
+      how classifiers are associated with destinations and how credit
+      windows are associated with classifiers.
       Additionally, a router MUST ensure sufficient credits are available in the associated 
       Credit Window for the current data packet before sending that data packet to the modem. 
       The count of octets in the packet includes MAC overhead, such as
       framing, header and trailer.
-      The credit window is decremented by the
-      number of sent octets.
+      This document defines credit windows in octets and the credit
+      window is decremented by the number of sent octets.
         </t>
         <t>
       A router MUST identify the credit window associated with traffic
@@ -448,7 +468,7 @@
             Data Item
             <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>.
             The FID also uniquely identifies a credit
-            window.
+            window for a specific DLEP session.
           </dd>
             <dt>Reserved:</dt>
             <dd>
