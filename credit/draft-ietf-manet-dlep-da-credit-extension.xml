@@ -12,13 +12,13 @@
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902"
-	docName="draft-ietf-manet-dlep-da-credit-extension-19"
+	docName="draft-ietf-manet-dlep-da-credit-extension-20"
 	obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP DA Credit Extension">DLEP DiffServ Aware Credit Window Extension</title>
     <seriesInfo name="Internet-Draft"
-		value="draft-ietf-manet-dlep-da-credit-extension-19"/>
+		value="draft-ietf-manet-dlep-da-credit-extension-20"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
       <address>
@@ -74,9 +74,10 @@
     <section anchor="sec-1" numbered="true" toc="default">
       <name>Introduction</name>
       <t>
-  The Dynamic Link Exchange Protocol (DLEP) is defined in <xref target="RFC8175" format="default"/>.  This protocol provides the exchange of link
-  related control information between DLEP peers.  DLEP peers are
-  comprised of a modem and a router.  DLEP defines a base set of
+  The Dynamic Link Exchange Protocol (DLEP) is defined in
+  <xref target="RFC8175" format="default"/>.  This protocol provides the exchange of link
+  related control information between DLEP peers.  DLEP peers
+  consist of a modem and a router.  DLEP defines a base set of
   mechanisms as well as support for possible extensions.  This
   document defines one such extension.
 </t>
@@ -204,7 +205,8 @@
     DLEP messages and discussed in the Security Considerations section
     of <xref target="RFC8175"/> such as an injected message resizing a credit window
     to a value that results in a denial of service.
-    Wildcards for matching PCP and VID fields are provided which may be
+    Wildcards for matching Priority Code point (PCP) and VLAN ID (VID) fields (see
+    <xref target="I-D.ietf-manet-dlep-ether-credit-extension"/>) are provided which may be
     convenient to match a number of packet flows but could inadvertently
     match unexpected flows or new flows that appear after the wildcard
     matching has been set up. It is therefore RECOMMENDED that wildcards
@@ -262,7 +264,7 @@
       <t>
      The Sub-Data item format was inspired by Rick Taylor's "Data Item
      Containers".  He also proposed the separation of credit windows from
-     traffic classification at IETF98. Many useful comments were
+     traffic classification at IETF 98. Many useful comments were
      received from contributors to the MANET working group, notably
      Ronald in't Velt.
       </t>
