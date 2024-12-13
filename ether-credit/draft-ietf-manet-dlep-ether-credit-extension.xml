@@ -12,13 +12,13 @@
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902"
-	docName="draft-ietf-manet-dlep-ether-credit-extension-07"
+	docName="draft-ietf-manet-dlep-ether-credit-extension-08"
 	obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Ethernet Credit Extension">DLEP IEEE 802.1Q Aware Credit Window
     Extension</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-ether-credit-extension-07"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-ether-credit-extension-08"/>
     <author initials="D." surname="Wiggins" fullname="David Wiggins">
       <organization/>
       <address>
@@ -52,7 +52,7 @@
     <abstract>
       <t>
         This document defines an extension to the Dynamic Link Exchange Protocol (DLEP) that
-        enables a Ethernet IEEE 802.1Q aware credit-window scheme for
+        enables an Ethernet IEEE 802.1Q aware credit-window scheme for
         destination-specific and shared flow control.
       </t>
     </abstract>
@@ -97,7 +97,8 @@
         "PCP" field.  The tag format also includes a 12-bit VLAN
         identifier (VID) field.  The defined mechanism allows for credit
         windows to be shared across traffic sent to multiple DLEP
-        destinations, VLANs, and PCPs, or used exclusively for traffic
+        destinations, Virtual Area Netwokrs (VLANs), and 
+	Priority Code Points (PCPs), or used exclusively for traffic
         sent to a particular destination and/or VLAN and/or PCP.  The
         extension also supports the "wildcard" matching of any PCP or
         VID.
@@ -156,9 +157,9 @@
         Extension.
       </t>
       <t>
-        If this extension is supported, that support MUST be declare using
- 	configurable on both modems and routers.
- 	the Extensions Supported Data Item (see Section 13.6 of [RFC8175]).
+        If this extension is supported, that support MUST be declared using
+ 	the Extensions Supported Data Item (see Section 13.6 of [RFC8175])
+	which is configurable on both modens and routers.
  	DiffServ Aware Credit Window Extension Data Items MUST NOT be emitted
  	by a DLEP participant unless such support was specified in the
  	initialization message received from its peer.
