@@ -11,12 +11,12 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-credit-flow-control-16" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-credit-flow-control-17" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Credit-Based Flow Control">
   Dynamic Link Exchange Protocol (DLEP) Credit-Based Flow Control Messages and Data Items</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-16"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-17"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
       <address>
@@ -189,7 +189,7 @@
     Credits are managed on a per logical "Credit Window" basis.  Each
     credit window can be thought of as corresponding to a queue within a
     modem.  Credit windows may be shared across, or dedicated to,
-    destinations and data plane identifiers, e.g., DSCPs, at a
+    destinations and data plane identifiers, for example, DSCPs, at a
     granularity that is appropriate for a modem's implementation and its
     attached transmission technology.  As defined below in
     <xref target="sec-di-cwi" format="default"/>, there is a
@@ -284,8 +284,9 @@
       windows are associated with classifiers.
       Additionally, a router MUST ensure sufficient credits are available in the associated 
       Credit Window for the current data packet before sending that data packet to the modem. 
-      The count of octets in the packet includes MAC overhead, such as
-      framing, header and trailer.
+      The count of octets in the packet includes MAC overhead.
+      In the example of Ethernet, framing, header and trailer are all
+      included in this count.
       This document defines credit windows in octets and the credit
       window is decremented by the number of sent octets.
         </t>
@@ -309,10 +310,9 @@
           <t>
         Credit Control Messages are sent by modems and routers. Each
         sender is only permitted to have one message outstanding at one
-        time.  That is, a sender (i.e., modem or router) MUST NOT send
+        time.  That is, a sender (either modem or router) MUST NOT send
         any subsequent Credit Control Message until a Credit
-        Control Response Message is received from its peer (i.e., router
-        or modem).
+        Control Response Message is received from its peer.
           </t>
           <t>
         Credit Control Messages are sent by modems to provide credit
@@ -784,7 +784,7 @@
         received Current Credit Window Size field value against the outstanding credit
         window's available credits at the time the most recent Credit Window
         Initialization or Grant Data Item associated with the indicated FID
-        was sent.  If the values significantly differ, i.e., greater than can
+        was sent.  If the difference in values is greater than can
         be accounted for based on observed data frames, then the modem SHOULD
         send a Credit Window Initialization Data Item to reset the associated
         credit window size to the modem's current view of the available
