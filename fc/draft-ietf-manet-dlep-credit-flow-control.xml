@@ -279,7 +279,7 @@
       If a matching classifier is found, a router MUST NOT send data
       traffic to a modem when there are no credits available in the
       associated Credit Window.
-      Section <xref target="sec-cw-control" format="default"/> describes
+      <xref target="sec-cw-control" format="default"/> describes
       how classifiers are associated with destinations and how credit
       windows are associated with classifiers.
       Additionally, a router MUST ensure sufficient credits are available in the associated 
