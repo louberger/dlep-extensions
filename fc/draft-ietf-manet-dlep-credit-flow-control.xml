@@ -240,8 +240,10 @@
     identified destination and flow information associated with a credit
     window in order to match traffic they send to specific credit
     windows.
-    The Traffic Classification Data Item allows the modem to specify a
-    wildcard to match any packets that do not match other data items.
+    The Traffic Classification Data Item, included in either a Session
+    Initialization Response Message or a Session Update Message, allows
+    the modem to specify a wildcard to match any packets that do not
+    match other data items.
     In the absence of a wildcard, a packet may not match any of the data
     items and, in this case, SHOULD be dropped by the router.
       </t>
@@ -472,8 +474,9 @@
           </dd>
             <dt>Reserved:</dt>
             <dd>
-            MUST be set to zero by the sender (a modem) and ignored by the
+            MUST be set to zero by the sender (a modem) and validated by the
             receiver (a router).
+	    A received non-zero value in Reserved is treated as an error.
           </dd>
             <dt>Credit Value:</dt>
             <dd>
@@ -663,8 +666,9 @@
           </dd>
             <dt>Reserved:</dt>
             <dd>
-            MUST be set to zero by the sender and ignored by the
+            MUST be set to zero by the sender and verified by the
             receiver.
+	    A received non-zero value in Reserved is treated as an error.
           </dd>
             <dt>Additional Credit:</dt>
             <dd>
@@ -759,8 +763,9 @@
           </dd>
             <dt>Reserved:</dt>
             <dd>
-            MUST be set to zero by the sender and ignored by the
+            MUST be set to zero by the sender and verified by the
             receiver.
+	    A received non-zero value in Reserved is treated as an error.
           </dd>
             <dt>Current Credit Window Size:</dt>
             <dd>
@@ -914,10 +919,18 @@
     For example, a malicious actor masquerading as a DLEP peer could
     inject a Credit Window Initialization Data Item which resizes a
     credit window to a value that results in a denial of service.
-    The Layer 2 and transport layer security mechanisms documented in
-    <xref target="RFC8175" format="default"/> can be applied equally to
-    the mechanism defined
-    in this document.
+    The transport layer security mechanisms documented in
+    <xref target="RFC8175" format="default"/> can, with some updates,
+    be applied to this document.
+    Implementations following the "networked deployment" model described
+    in the "Implementation Scenarios" of
+    <xref target="RFC8175" format="default"/> SHOULD refer to
+    <xref target="BCP195" format="default"/> for additional details.
+    The Layer 2 security mechanisms documented in
+    <xref target="RFC8175" format="default"/> can also, with some updates,
+    be applied to the mechanism defined in this document.
+    Examples of technologies that can be deployed to secure the Layer
+    2 link include <xref target="IEEE-802.1AEdk"/> and <xref target="IEEE-8802-1X"/>.
       </t>
     </section>
     <section anchor="sec-iana" numbered="true" toc="default">
@@ -1014,6 +1027,22 @@
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-credit-window.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2475.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8651.xml"/>
+	<referencegroup anchor="BCP195" target="https://www.rfc-editor.org/info/bcp195">
+          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9325.xml"/>
+          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8996.xml"/>
+        </referencegroup>
+	<reference anchor="IEEE-802.1AEdk" target="https://ieeexplore.ieee.org/document/10225636">
+	  <front>
+	      <title>IEEE Standard for Local and metropolitan area networks-Media Access Control (MAC) Security Amendment 4: MAC Privacy protection</title>
+	      <author/>
+          </front>
+        </reference>
+	<reference anchor="IEEE-8802-1X" target="https://ieeexplore.ieee.org/document/9650828">
+	  <front>
+	      <title>8802-1X-2021 - IEEE/ISO/IEC International Standard-Telecommunications and exchange between information technology systems--Requirements for local and metropolitan area networks--Part 1X:Port-based network access control</title>
+	      <author/>
+          </front>
+        </reference>
       </references>
     </references>
     <section numbered="true" toc="default">
