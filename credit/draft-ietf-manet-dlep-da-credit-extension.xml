@@ -1,6 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
-<?xml-model href="rfc7991bis.rnc"?>  <!-- Required for schema
-      validation and schema-aware editing -->
 <!DOCTYPE rfc [
   <!ENTITY filename "draft-ietf-manet-dlep-da-credit-extension-21">
   <!ENTITY nbsp    "&#160;">
@@ -14,7 +12,8 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902"
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude"
+     category="std" ipr="trust200902"
 	docName="&filename;"
 	obsoletes="" updates="" submissionType="IETF" xml:lang="en"
 	tocInclude="true" symRefs="true" sortRefs="true" version="3">
@@ -70,13 +69,13 @@
     <abstract>
       <t>
   This document defines an extension to the Dynamic Link Exchange
-  Protocol (DLEP) that enables a DiffServ aware credit-window scheme for
-  destination-specific and shared flow control.
+  Protocol (DLEP) that enables a DiffServ aware credit-window scheme
+  for destination-specific and shared flow control.
       </t>
     </abstract>
   </front>
   <middle>
-    <section anchor="sec-1" numbered="true">
+    <section anchor="sec-1" numbered="true" toc="default">
       <name>Introduction</name>
       <t>
   The Dynamic Link Exchange Protocol (DLEP) is defined in <xref
@@ -171,13 +170,16 @@
     Extension.
       </t>
       <t>
-    If this extension is supported, that support MUST be declared using
-    the Extensions Supported Data Item (see Section 13.6 of <xref
-    target="RFC8175"/>). DiffServ Aware Credit Window Extension Data
-    Items MUST NOT be emitted by a DLEP participant unless such support
-    was specified in the initialization message received from its peer.
-    The use of the extension defined in this document SHOULD be
-    configurable on both modems and routers.
+    If this extension is supported, that support MUST be declared
+    using the Extensions Supported Data Item (see Section 13.6 of
+    <xref target="RFC8175"/>). DiffServ Aware Credit Window Extension
+    Data Items MUST NOT be emitted by a DLEP participant unless such
+    support was specified in the initialization message received from
+    its peer.  The use of the extension defined in this document
+    SHOULD be configurable on both modems and routers. That
+    configuration can be implemented using a proprietary CLI or by
+    implementing a YANG module. The definition of the YANG module is
+    out of the scope of this document.
       </t>
       <t>
     Modems SHOULD support the configuration of DSCP to credit
@@ -234,7 +236,7 @@
       </t>
     </section>
 	  
-    <section anchor="sec-iana" numbered="true">
+    <section anchor="sec-iana" numbered="true" toc="default">
       <name>IANA Considerations</name>
       <t>
   IANA is requested to assign one code point in the "Extension Type Values"
