@@ -11,12 +11,12 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-traffic-classification-13" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-traffic-classification-14" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Traffic Classification">
   Dynamic Link Exchange Protocol (DLEP) Traffic Classification Data Item</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-traffic-classification-13"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-traffic-classification-14"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
       <address>
@@ -133,7 +133,9 @@
       <name>Traffic Classification</name>
       <t>
     The Traffic Classification Data Item represents a list of
-    flows that may be used at the same time for traffic sent from a
+    flows that may be used at the same time to provide
+    different service classes 
+    for traffic sent from a
     router to a modem.  The data plane information used to identify each
     flow is represented in a separate Sub-Data Item.  The Data Item and
     Sub-Data Item structure is intended to be independent of any
@@ -167,12 +169,13 @@
       <section anchor="sec-di-tc" numbered="true" toc="default">
         <name>Traffic Classification Data Item</name>
         <t>
-      This sections defines the Traffic Classification Data Item.  This
+      This section defines the Traffic Classification Data Item.  This
       Data Item is used by a modem to provide a router with traffic
       classification information.  When an extension requires use of
-      this Data Item the Traffic Classification Data Item SHOULD be
+      any Data Item, the Data Items, including this Traffic Classification Data Item SHOULD be
       included by a modem in any Session Initialization Response Message, e.g., see 
-      <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. Updates to
+      <xref target="I-D.ietf-manet-dlep-credit-flow-control" format="default"/>. 
+                Updates to
       previously provided traffic classifications or new traffic
       classifications MAY be sent by a modem by including the Data Item
       in Session Update Messages.  More than one Data Item MAY be
@@ -214,7 +217,11 @@
             <t>
         Per <xref target="RFC8175" format="default"/> Length
         is the number of octets in the Data Item, excluding the Type and
-        Length fields.
+        Length fields. The length here is limited by the packet data unit (PDU) length 
+        supported.  For example if the Packet is limited to 1400 bytes then the 
+        length MUST not exceed this value. If larger packets are supported
+        the maximum MUST be adjusted to be smaller or equal to the maximum PDU.
+        Multiple messages can be used if there is more than fits in a single TLV. 
             </t>
           </dd>
           <dt> Traffic Classification Identifier (TID):</dt>
@@ -232,9 +239,12 @@
         </dd>
           <dt>Reserved:</dt>
           <dd>
-          MUST be set to zero by the sender (a modem) and ignored by the
-          receiver (a router).
-        </dd>
+                  This field allows future extensions for this general structure. For the
+                  Traffic Classification Data Item this reserved field is unused 
+                  It MUST be set to all zeros and it is validated on reception, 
+                  in the event it is fails validation an error message MUST be generated and
+                  the session MAY be terminated. 
+          </dd>
           <dt>Traffic Classification Sub-Data Item:</dt>
           <dd>
           Zero or more Traffic Classification Sub-Data Items of the format
@@ -298,7 +308,8 @@
               <t>
           Copying <xref target="RFC8175" format="default"/>, Length is a 16-bit unsigned
           integer that is the number of octets in the Sub-Data Item,
-          excluding the Type and Length fields.
+          excluding the Type and Length fields. The maximum length is limited on a per
+          Sub-Data Item Type.  
               </t>
             </dd>
           </dl>
@@ -323,7 +334,7 @@
      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Must be one (1)               | Length                        |
+    | Sub-Data Item Type (1)            | Length                    |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Flow Identifier (FID)         |   Num DSCPs   |   DS Field 1  |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -331,13 +342,24 @@
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
         ]]></artwork>
         <dl newline="true" spacing="normal">
+          <dt>Sub-Data Item Type:</dt>
+          <dd>
+            <t> 
+             Sub-Data Item Type with value one (1) identifies the DiffServ 
+             Traffic Classification Sub-Data Item Type in the format
+             defined in <xref target="sec-di-tc-sub"/>.
+            </t>
+          </dd>
           <dt>Length:</dt>
           <dd>
             <t>Variable
             </t>
             <t>
-        Length is defined above.  For this Sub-Data Item, it is
-        equal to three (3) plus the value of the Num DSCPs field.
+             Length is defined above.  For this Sub-Data Item, it is
+                    equal to three (3) octets plus the value of the Num DSCPs field.
+                    This means that the maximum Length base on a FID per DSCP for this TLV could be 
+                    64 times 3 plus one for Num DSCPs plus one DSCPs or 320 octets. 
+                    The definition can be in multiple Sub-Data Items that are much smaller than this. 
             </t>
           </dd>
           <dt>Flow Identifier (FID):</dt>
@@ -347,11 +369,12 @@
           identifying a flow.  The value of 0xFFFF is reserved and MUST
           NOT be used in this field.
         </dd>
-          <dt>Num DSCPs:</dt>
+        <dt>Num DSCPs:</dt>
           <dd>
           An 8-bit unsigned integer indicating the number of DSCPs
           carried in the Sub-Data Item.  A zero (0) indicates a (wildcard)
-          match against any DSCP value.
+          match against any DSCP value that does not have an explicit match to a FID.  A typical 
+          use of this is mapping any DSCPs that are not explicitly mapped to a default queue. 
         </dd>
           <dt>DS Field:</dt>
           <dd>
@@ -365,9 +388,9 @@
           |         DSCP          |  MBZ  |
           +---+---+---+---+---+---+---+---+
 
-            DSCP: Differentiated Services Codepoint
-            MBZ:  MUST be zero
-            ]]></artwork>
+          DSCP: Differentiated Services Codepoint (RFC 2474).
+                MBZ:  Must Be Zero - set to zero when transmitted. 
+          ]]></artwork>
           </dd>
         </dl>
         <section anchor="sec-di-tc-rrp" numbered="true" toc="default">
@@ -387,8 +410,8 @@
         Item and not the individual Sub-Data Item.  If the same DS Field
         value is listed more than once within the same Traffic
         Classification Data Item, the Data Item MUST be treated as an
-        error as 
-        described above in <xref target="sec-di-tc-sub" format="default"/>.
+        error as described above in 
+        <xref target="sec-di-tc-sub" format="default"/>.
           </t>
         </section>
       </section>
@@ -415,7 +438,7 @@
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Must be two (2)               | Length                        |
+    | Sub-Data Item Type (2)            | Length                    |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Flow Identifier (FID)         |NumPCPs| VLAN Identifier (VID) |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -423,6 +446,14 @@
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
         ]]></artwork>
         <dl newline="true" spacing="normal">
+          <dt>Sub-Data Item Type:</dt>
+          <dd>
+            <t> 
+             Sub-Data Item Type with value two (2) identifies the Ethernet 
+             Traffic Classification Sub-Data Item Type in the format
+             defined in <xref target="sec-di-tc-sub"/>.
+            </t>
+          </dd>
           <dt>Length:</dt>
           <dd>
             <t>Variable
@@ -434,7 +465,12 @@
           field. Note that as length is in octets and each Priority
           field is 4 bits, the additional length is the value carried in
           the NumPCPs field divided by two and rounded up to the next
-          higher integer quantity.
+          higher integer quantity. 
+          This TLV has maximum length of 4 plus 8 divided by 2 or 16 octets. 
+
+
+
+
             </t>
           </dd>
           <dt>Flow Identifier (FID):</dt>
@@ -448,14 +484,18 @@
           <dd>
           A 4-bit unsigned integer indicating the number of Priority
           fields carried in the Sub-Data Item.  A zero (0) indicates a
-          (wildcard) match against any PCP value.
+          (wildcard) match against any PCP value
+          that does not have an explicit match to a FID.  A typical 
+          use of a wildcard is mapping any PCPs that are not explicitly mapped to a default queue. 
+          The maximum number of PCPs 8. 
         </dd>
           <dt>VLAN identifier (VID):</dt>
           <dd>
           A 12-bit unsigned integer field indicating the VLAN to be
           used in traffic classification.  A value of zero (0) indicates
           that the VID is to be ignored and any VID is to be accepted during
-          traffic classification.
+          traffic classification. Any explicitly mapped VLANs are match first and 
+          then any VLANs that do not have a mapping map to this default mapping. 
         </dd>
           <dt>Priority:</dt>
           <dd>
@@ -470,8 +510,9 @@
         |    PCP    |MBZ|
         +---+---+---+---+
 
-        PCP: Priority Code Point
-        MBZ: MUST be zero
+        PCP: Priority Code Point (IEEE8021Q)
+             MBZ:  Must Be Zero - set to zero when transmitted. 
+
             ]]></artwork>
           </dd>
           <dt>Pad:</dt>
@@ -537,7 +578,7 @@
     <section anchor="sec-sec" numbered="true" toc="default">
       <name>Security Considerations</name>
       <t>
-    This document introduces finer grain flow identification mechanisms
+    This document introduces finer grained flow identification mechanisms
     to DLEP.  These mechanisms expose vulnerabilities similar to existing    DLEP messages. 
     For example, a malicious actor masquerading as a DLEP peer could
     inject a modified Traffic Flow Classification Data Item 
@@ -546,21 +587,34 @@
     <xref target="RFC8175" format="default"/> can be applied equally to
     the mechanism defined
     in this document.
-
-      </t>
+    </t>
+    <t>
+    The transport layer security mechanisms documented in
+    <xref target="RFC8175" format="default"/> can, with some updates,
+    be applied to this document.
+    Implementations following the "networked deployment" model described
+    in the "Implementation Scenarios" of
+    <xref target="RFC8175" format="default"/> SHOULD refer to
+    <xref target="BCP195" format="default"/> for additional details.
+    The Layer 2 security mechanisms documented in
+    <xref target="RFC8175" format="default"/> can also, with some updates,
+    be applied to the mechanism defined in this document.
+    Examples of technologies that can be deployed to secure the Layer
+            2 link include <xref target="IEEE-802.1AE"/> and <xref target="IEEE-8802-1X"/>.
+    </t>
     </section>
     <section anchor="sec-iana" numbered="true" toc="default">
       <name>IANA Considerations</name>
-      <t>
-    This document requests the assignment of several values by IANA.  All
-    assignments are to registries defined by <xref target="RFC8175" format="default"/>.
-      </t>
+      <!--t>
+       <This document requests the assignment of several values by IANA.  All
+      assignments are to registries defined by <xref target="RFC8175" format="default"/>.
+      </t-->
       <section anchor="sec-iana-di" numbered="true" toc="default">
         <name>Data Item Values</name>
         <t>
       This document requests the following new assignments to the DLEP Data Item
-      Registry named "Data Item Type Values" in the range with the "Specification
-      Required" policy.  The requested values are as follows:
+      Registry named "Data Item Type Values" from the range with the "Specification
+      Required" policy.  The requested value is as follows:
         </t>
         <t keepWithNext="true"/>
         <table anchor="table_di" align="center">
@@ -597,32 +651,39 @@
             <tr>
               <th align="left">Type Code</th>
               <th align="left">Description</th>
+              <th align="left">Reference</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td align="left">0</td>
               <td align="left">Reserved</td>
+              <td align="left"></td>
             </tr>
             <tr>
               <td align="left">1</td>
               <td align="left">DiffServ Traffic Classification</td>
+              <td align="left"><xref target="RFC2474"/></td>
             </tr>
             <tr>
               <td align="left">2</td>
               <td align="left">Ethernet Traffic Classification</td>
+              <td align="left"><xref target="IEEE8021Q"/></td>
             </tr>
             <tr>
               <td align="left">3-65407</td>
               <td align="left">Specification Required</td>
+              <td align="left"></td>
             </tr>
             <tr>
               <td align="left">65408-65534</td>
               <td align="left">Private Use</td>
+              <td align="left"></td>
             </tr>
             <tr>
               <td align="left">65535</td>
               <td align="left">Reserved</td>
+              <td align="left"></td>
             </tr>
           </tbody>
         </table>
@@ -658,6 +719,22 @@
         <seriesInfo name="DOI" value="10.1109/IEEESTD.2022.10004498"/>
         <seriesInfo name="IEEE" value="802.1Q-2022"/>
       </reference>
+	<referencegroup anchor="BCP195" target="https://www.rfc-editor.org/info/bcp195">
+          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9325.xml"/>
+          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8996.xml"/>
+        </referencegroup>
+	<reference anchor="IEEE-802.1AE" target="https://ieeexplore.ieee.org/document/8585421">
+	  <front>
+	      <title>802.1AE-2018 - IEEE Standard for Local and metropolitan area networks-Media Access Control (MAC) Security</title>
+	      <author/>
+          </front>
+        </reference>
+	<reference anchor="IEEE-8802-1X" target="https://ieeexplore.ieee.org/document/9650828">
+	  <front>
+	      <title>8802-1X-2021 - IEEE/ISO/IEC International Standard-Telecommunications and exchange between information technology systems--Requirements for local and metropolitan area networks--Part 1X:Port-based network access control</title>
+	      <author/>
+          </front>
+        </reference>
     </references>
     </references>
     <section numbered="true" toc="default">
@@ -677,7 +754,7 @@
         this and related DLEP work. His contribution to the IETF and
         publication of the first and definitive open source DLEP
         implementation have been critical to the acceptance of DLEP. We
-        morn his passing on November 23, 2023.  We wish to recognize his
+        mourn his passing on November 23, 2023.  We wish to recognize his
         guidance, leadership and professional excellence.  We were
         fortunate to benefit from his leadership and friendship. He
         shall be missed.
