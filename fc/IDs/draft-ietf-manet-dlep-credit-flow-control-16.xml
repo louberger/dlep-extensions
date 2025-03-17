@@ -11,12 +11,12 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-credit-flow-control-17" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-credit-flow-control-16" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Credit-Based Flow Control">
   Dynamic Link Exchange Protocol (DLEP) Credit-Based Flow Control Messages and Data Items</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-17"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-16"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
       <address>
@@ -60,7 +60,8 @@
       Credit
       window control is used to regulate when data may be sent to an
       associated virtual or physical queue.  The Data Items are
-      extensible and reusable.
+      extensible and reusable. Their use will be mandated in
+      other documents defining specific DLEP extensions.
       </t>
     </abstract>
   </front>
@@ -81,15 +82,6 @@
       destination-specific flow control which provides aggregate flow
       control for both modem and routers has been proposed in <xref target="I-D.ietf-manet-credit-window" format="default"/>, and a control plane pause
       based mechanism is defined in <xref target="RFC8651" format="default"/>.
-      The use of other flow control mechanisms simultaneously with
-      Credit-Based Flow Control is not within the scope of this document.
-      </t>
-      <t>
-      Credit-Based Flow Control, as a result of its proactive nature,
-      may offer some advantages over a pause mechanism.
-      Packet loss resulting from insufficient buffer space is less
-      likely, as a transmitter does not send packets until the receiver
-      has indicated that there is sufficient buffer available.
       </t>
       <t>
       <xref target="router-modem" format="default"/>  illustrates 
@@ -189,7 +181,7 @@
     Credits are managed on a per logical "Credit Window" basis.  Each
     credit window can be thought of as corresponding to a queue within a
     modem.  Credit windows may be shared across, or dedicated to,
-    destinations and data plane identifiers, for example, DSCPs, at a
+    destinations and data plane identifiers, e.g., DSCPs, at a
     granularity that is appropriate for a modem's implementation and its
     attached transmission technology.  As defined below in
     <xref target="sec-di-cwi" format="default"/>, there is a
@@ -197,11 +189,7 @@
     by Flow Identifiers (FIDs) carried within the Traffic Classification Data Item.  Modems
     pass to the router information on their credit windows and FIDs
     prior to a router being able to send data when an extension
-    requiring the use of credit window control is used.
-    Note that TID and FID values are significant only to the issuing modem.
-    There is no relationship implied by the same TID or FID value being
-    issued by more than one modem.
-    In addition to
+    requiring the use of credit window control is used.  In addition to
     the traffic classification information associated with a FID,
     modems provide an initial credit window size, as well as the
     maximum size of the logical queue associated with each credit
@@ -240,12 +228,6 @@
     identified destination and flow information associated with a credit
     window in order to match traffic they send to specific credit
     windows.
-    The Traffic Classification Data Item, included in either a Session
-    Initialization Response Message or a Session Update Message, allows
-    the modem to specify a wildcard to match any packets that do not
-    match other data items.
-    In the absence of a wildcard, a packet may not match any of the data
-    items and, in this case, SHOULD be dropped by the router.
       </t>
       <t>
     When a destination becomes reachable, a modem "associates"
@@ -277,20 +259,15 @@
         <name>Data Plane Considerations</name>
         <t>
       When credit windowing is used, a router MUST NOT send data traffic
-      to a modem for forwarding if there is no matching classifier.
-      If a matching classifier is found, a router MUST NOT send data
-      traffic to a modem when there are no credits available in the
-      associated Credit Window.
-      <xref target="sec-cw-control" format="default"/> describes
-      how classifiers are associated with destinations and how credit
-      windows are associated with classifiers.
+      to a modem for forwarding when there are no credits available in the
+      associated Credit Window.  This document defines credit windows in
+      octets.
       Additionally, a router MUST ensure sufficient credits are available in the associated 
       Credit Window for the current data packet before sending that data packet to the modem. 
-      The count of octets in the packet includes MAC overhead.
-      In the example of Ethernet, framing, header and trailer are all
-      included in this count.
-      This document defines credit windows in octets and the credit
-      window is decremented by the number of sent octets.
+      The count of octets in the packet includes MAC overhead, such as
+      framing, header and trailer.
+      The credit window is decremented by the
+      number of sent octets.
         </t>
         <t>
       A router MUST identify the credit window associated with traffic
@@ -312,9 +289,10 @@
           <t>
         Credit Control Messages are sent by modems and routers. Each
         sender is only permitted to have one message outstanding at one
-        time.  That is, a sender (either modem or router) MUST NOT send
+        time.  That is, a sender (i.e., modem or router) MUST NOT send
         any subsequent Credit Control Message until a Credit
-        Control Response Message is received from its peer.
+        Control Response Message is received from its peer (i.e., router
+        or modem).
           </t>
           <t>
         Credit Control Messages are sent by modems to provide credit
@@ -470,13 +448,12 @@
             Data Item
             <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>.
             The FID also uniquely identifies a credit
-            window for a specific DLEP session.
+            window.
           </dd>
             <dt>Reserved:</dt>
             <dd>
-            MUST be set to zero by the sender (a modem) and validated by the
+            MUST be set to zero by the sender (a modem) and ignored by the
             receiver (a router).
-	    A received non-zero value in Reserved is treated as an error.
           </dd>
             <dt>Credit Value:</dt>
             <dd>
@@ -666,9 +643,8 @@
           </dd>
             <dt>Reserved:</dt>
             <dd>
-            MUST be set to zero by the sender and verified by the
+            MUST be set to zero by the sender and ignored by the
             receiver.
-	    A received non-zero value in Reserved is treated as an error.
           </dd>
             <dt>Additional Credit:</dt>
             <dd>
@@ -763,9 +739,8 @@
           </dd>
             <dt>Reserved:</dt>
             <dd>
-            MUST be set to zero by the sender and verified by the
+            MUST be set to zero by the sender and ignored by the
             receiver.
-	    A received non-zero value in Reserved is treated as an error.
           </dd>
             <dt>Current Credit Window Size:</dt>
             <dd>
@@ -789,7 +764,7 @@
         received Current Credit Window Size field value against the outstanding credit
         window's available credits at the time the most recent Credit Window
         Initialization or Grant Data Item associated with the indicated FID
-        was sent.  If the difference in values is greater than can
+        was sent.  If the values significantly differ, i.e., greater than can
         be accounted for based on observed data frames, then the modem SHOULD
         send a Credit Window Initialization Data Item to reset the associated
         credit window size to the modem's current view of the available
@@ -919,18 +894,10 @@
     For example, a malicious actor masquerading as a DLEP peer could
     inject a Credit Window Initialization Data Item which resizes a
     credit window to a value that results in a denial of service.
-    The transport layer security mechanisms documented in
-    <xref target="RFC8175" format="default"/> can, with some updates,
-    be applied to this document.
-    Implementations following the "networked deployment" model described
-    in the "Implementation Scenarios" of
-    <xref target="RFC8175" format="default"/> SHOULD refer to
-    <xref target="BCP195" format="default"/> for additional details.
-    The Layer 2 security mechanisms documented in
-    <xref target="RFC8175" format="default"/> can also, with some updates,
-    be applied to the mechanism defined in this document.
-    Examples of technologies that can be deployed to secure the Layer
-    2 link include <xref target="IEEE-802.1AEdk"/> and <xref target="IEEE-8802-1X"/>.
+    The Layer 2 and transport layer security mechanisms documented in
+    <xref target="RFC8175" format="default"/> can be applied equally to
+    the mechanism defined
+    in this document.
       </t>
     </section>
     <section anchor="sec-iana" numbered="true" toc="default">
@@ -1027,22 +994,6 @@
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-credit-window.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2475.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8651.xml"/>
-	<referencegroup anchor="BCP195" target="https://www.rfc-editor.org/info/bcp195">
-          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9325.xml"/>
-          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8996.xml"/>
-        </referencegroup>
-	<reference anchor="IEEE-802.1AEdk" target="https://ieeexplore.ieee.org/document/10225636">
-	  <front>
-	      <title>IEEE Standard for Local and metropolitan area networks-Media Access Control (MAC) Security Amendment 4: MAC Privacy protection</title>
-	      <author/>
-          </front>
-        </reference>
-	<reference anchor="IEEE-8802-1X" target="https://ieeexplore.ieee.org/document/9650828">
-	  <front>
-	      <title>8802-1X-2021 - IEEE/ISO/IEC International Standard-Telecommunications and exchange between information technology systems--Requirements for local and metropolitan area networks--Part 1X:Port-based network access control</title>
-	      <author/>
-          </front>
-        </reference>
       </references>
     </references>
     <section numbered="true" toc="default">
