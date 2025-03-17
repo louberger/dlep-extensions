@@ -930,7 +930,7 @@
     <xref target="RFC8175" format="default"/> can also, with some updates,
     be applied to the mechanism defined in this document.
     Examples of technologies that can be deployed to secure the Layer
-    2 link include <xref target="IEEE-802.1AEdk"/> and <xref target="IEEE-8802-1X"/>.
+    2 link include <xref target="IEEE-802.1AE"/> and <xref target="IEEE-8802-1X"/>.
       </t>
     </section>
     <section anchor="sec-iana" numbered="true" toc="default">
@@ -1031,7 +1031,7 @@
           <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9325.xml"/>
           <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8996.xml"/>
         </referencegroup>
-	<reference anchor="IEEE-802.1AEdk" target="https://ieeexplore.ieee.org/document/10225636">
+	<reference anchor="IEEE-802.1AE" target="https://ieeexplore.ieee.org/document/8585421">
 	  <front>
 	      <title>IEEE Standard for Local and metropolitan area networks-Media Access Control (MAC) Security Amendment 4: MAC Privacy protection</title>
 	      <author/>
