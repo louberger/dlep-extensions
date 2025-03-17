@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE rfc [
+  <!ENTITY filename "draft-ietf-manet-dlep-credit-flow-control-18">
   <!ENTITY nbsp    "&#160;">
   <!ENTITY zwsp   "&#8203;">
   <!ENTITY nbhy   "&#8209;">
@@ -11,7 +12,14 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-credit-flow-control-18" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std"
+     ipr="trust200902"
+     docName="&filename;"
+     obsoletes="" updates=""
+     submissionType="IETF" xml:lang="en"
+     tocInclude="true"
+     symRefs="true" sortRefs="true"
+     version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Credit-Based Flow Control">
@@ -35,15 +43,15 @@
         <email>david@none.org</email>
       </address>
     </author>
+    <author fullname="Stan Ratliff" initials="S." surname="Ratliff">
+      <address>
+        <email>stan@none.org</email>
+      </address>
+    </author>
     <author initials="L." surname="Berger" fullname="Lou Berger">
       <organization>LabN Consulting, L.L.C.</organization>
       <address>
         <email>lberger@labn.net</email>
-      </address>
-    </author>
-    <author fullname="Stan Ratliff" initials="S." surname="Ratliff">
-      <address>
-        <email>stan@none.org</email>
       </address>
     </author>
     <author role="editor" initials="E." surname="Kinzie" fullname="Eric Kinzie">
@@ -52,20 +60,21 @@
         <email>ekinzie@labn.net</email>
       </address>
     </author>
-    <date/>
-    <abstract>
-      <t>
-      This document defines new Dynamic Link Exchange Protocol (DLEP) Data Items that are used to
-      support credit-based flow control.
-      Credit
-      window control is used to regulate when data may be sent to an
-      associated virtual or physical queue.  The Data Items are
-      extensible and reusable.
-      </t>
-    </abstract>
-  </front>
-  <middle>
-    <section anchor="sec-1" numbered="true" toc="default">
+
+   <date/>
+   <abstract>
+     <t>
+     This document defines new Dynamic Link Exchange Protocol (DLEP)
+     Data Items that are used to support credit-based flow control.
+     Credit window control is used to regulate when data may be sent to
+     an associated virtual or physical queue.  The Data Items are
+     extensible and reusable.
+     </t>
+   </abstract>
+</front>
+
+<middle>
+    <section anchor="sec-1" numbered="true">
       <name>Introduction</name>
       <t>
       The Dynamic Link Exchange Protocol (DLEP), defined in <xref target="RFC8175" format="default"/>, provides the exchange of link related
@@ -240,10 +249,10 @@
     identified destination and flow information associated with a credit
     window in order to match traffic they send to specific credit
     windows.
-    The Traffic Classification Data Item, included in either a Session
-    Initialization Response Message or a Session Update Message, allows
+    In some cases, the Traffic Classification Data Item allows
     the modem to specify a wildcard to match any packets that do not
-    match other data items.
+    match other data items, for example see <xref target
+    ="I-D.ietf-manet-dlep-ether-credit-extension"/>.
     In the absence of a wildcard, a packet may not match any of the data
     items and, in this case, SHOULD be dropped by the router.
       </t>
@@ -273,7 +282,8 @@
       One notable difference from that credit control is that in this
       document, credits are never provided by the router to the modem.
       </t>
-      <section anchor="data-plane" numbered="true" toc="default">
+
+      <section anchor="data-plane" numbered="true">
         <name>Data Plane Considerations</name>
         <t>
       When credit windowing is used, a router MUST NOT send data traffic
@@ -299,7 +309,8 @@
       provided in the Data Items defined in this document.
         </t>
       </section>
-      <section anchor="sec-msgs" numbered="true" toc="default">
+
+      <section anchor="sec-msgs" numbered="true">
         <name>Credit Window Messages</name>
         <t>
       Two new messages are defined in support for credit window control:
@@ -307,7 +318,8 @@
       and receiving both message types is REQUIRED to support the credit
       window control defined in this document.
         </t>
-        <section anchor="sec-cc-msg" numbered="true" toc="default">
+	
+        <section anchor="sec-cc-msg" numbered="true">
           <name>Credit Control Message</name>
           <t>
         Credit Control Messages are sent by modems and routers. Each
@@ -358,7 +370,8 @@
         <xref target="sec-data-items" format="default"/>.
           </t>
         </section>
-        <section anchor="sec-ccr-msg" numbered="true" toc="default">
+	
+        <section anchor="sec-ccr-msg" numbered="true">
           <name>Credit Control Response Message</name>
           <t>
         Credit Control Response Messages are sent by routers to report
@@ -384,7 +397,8 @@
           </t>
         </section>
       </section>
-      <section anchor="sec-data-items" numbered="true" toc="default">
+
+      <section anchor="sec-data-items" numbered="true">
         <name>Credit Window Control Data Items</name>
         <t>
       Five new Data Items are defined to support credit window control.
@@ -409,7 +423,8 @@
       node parsing the Data Item MUST terminate the session with a
       Status Data Item indicating Invalid Data.
         </t>
-        <section anchor="sec-di-cwi" numbered="true" toc="default">
+	
+        <section anchor="sec-di-cwi" numbered="true">
           <name>Credit Window Initialization</name>
           <t>
         The Credit Window Initialization Data Item is used by a modem to
@@ -427,11 +442,10 @@
           <t>
         The Credit Window Initialization Data Item identifies a credit
         window using a Flow Identifier, or FID.  It also provides the
-        size of the identified credit window.  Finally, a queue size (in
-        octets) is provided for informational purposes.  Note that to be
-        used, a FID must be defined within a Traffic Classification Data
-        Item and the associated TID must be provided via a Credit Window
-        Association Data Item.
+        size of the identified credit window.  To be used, a FID must be
+        defined within a Traffic Classification Data Item and the
+        associated TID must be provided via a Credit Window Association
+        Data Item.
           </t>
           <t>
         The format of the Credit Window Initialization Data Item is:
@@ -452,25 +466,29 @@
           ]]></artwork>
           <dl newline="true" spacing="normal">
             <dt>Data Item Type:</dt>
-            <dd>TBA4</dd>
+            <dd>Data Item Type (TBA4)</dd>
+
             <dt>Length:</dt>
             <dd>
-              <t> 16
-              </t>
+              <t>16</t>
               <t>
-          Per <xref target="RFC8175" format="default"/> Length
-          is the number of octets in the Data Item.  It MUST be equal to
-          sixteen (16).
+          As specified in <xref target="RFC8175"/>, Length is the number
+          of octets in the Data Item.  It MUST be equal to sixteen
+          (16). If it is some other value, the Data Item is corrupt so
+          the message in which it appears cannot be reliably parsed and
+          is ignored.
               </t>
             </dd>
+
             <dt>Flow Identifier (FID):</dt>
             <dd>
-            A flow identifier as defined by the Traffic Classification
-            Data Item
-            <xref target="I-D.ietf-manet-dlep-traffic-classification" format="default"/>.
-            The FID also uniquely identifies a credit
-            window for a specific DLEP session.
-          </dd>
+            A two-octet flow identifier as defined by the Traffic
+            Classification Data Item <xref
+            target="I-D.ietf-manet-dlep-traffic-classification" />.  The
+            FID also uniquely identifies a credit window for a specific
+            DLEP session.
+            </dd>
+
             <dt>Reserved:</dt>
             <dd>
             MUST be set to zero by the sender (a modem) and validated by the
@@ -503,7 +521,7 @@
             A 24-bit unsigned integer representing the maximum size, in the
             octet scale indicated by the Scale field, of the associated credit
             window.
-          </dd>
+            </dd>
           </dl>
           <t>
         A router that receives a Credit Window Initialization Data Item
@@ -541,7 +559,8 @@
         the corresponding Session Update Response Message is received.
           </t>
         </section>
-        <section anchor="sec-di-cwa" numbered="true" toc="default">
+	
+        <section anchor="sec-di-cwa" numbered="true">
           <name>Credit Window Association</name>
           <t>
         The Credit Window Association Data Item is used by a modem to
@@ -575,15 +594,16 @@
           ]]></artwork>
           <dl newline="true" spacing="normal">
             <dt>Data Item Type:</dt>
-            <dd>TBA5</dd>
+            <dd>Data Item Type (TBA5)</dd>
+
             <dt>Length:</dt>
             <dd>
-              <t> 2
-              </t>
+              <t>2</t>
               <t>
-          Per <xref target="RFC8175" format="default"/> Length
-          is the number of octets in the Data Item. It MUST be equal to
-          two (2).
+          As specified in <xref target="RFC8175"/>, Length is the number
+          of octets in the Data Item. It MUST be equal to two (2). If it
+          is some other value, the Data Item is corrupt so the message
+          in which it appears cannot be reliably parsed and is ignored.
               </t>
             </dd>
             <dt> Traffic Classification Identifier (TID):</dt>
@@ -609,7 +629,8 @@
         treated as an error as described above.
           </t>
         </section>
-        <section anchor="sec-di-grant" numbered="true" toc="default">
+	
+        <section anchor="sec-di-grant" numbered="true">
           <name>Credit Window Grant</name>
           <t>
         The Credit Window Grant Data Item is used by a modem to
@@ -645,23 +666,26 @@
           ]]></artwork>
           <dl newline="true" spacing="normal">
             <dt>Data Item Type:</dt>
-            <dd>TBA6</dd>
+            <dd>Data Item Type (TBA6)</dd>
+
             <dt>Length:</dt>
             <dd>
-              <t>12
-              </t>
+              <t>12</t>
               <t>
-          Per <xref target="RFC8175" format="default"/>, Length
-          is the number of octets in the Data Item.  It MUST be equal to
-          twelve (12).
+          As specified in <xref target="RFC8175"/>, Length is the number
+          of octets in the Data Item.  It MUST be equal to twelve
+          (12). If it is some other value, the Data Item is corrupt so
+          the message in which it appears cannot be reliably parsed and
+          is ignored.
               </t>
             </dd>
             <dt>Flow Identifier (FID):</dt>
             <dd>
-            A flow identifier as defined by the Traffic Classification
-            Data Item.  The FID also uniquely indicates a credit
-            window.
-          </dd>
+            A two-octet flow identifier as defined by the Traffic
+            Classification Data Item.  The FID also uniquely indicates a
+            credit window.
+            </dd>
+
             <dt>Reserved:</dt>
             <dd>
             MUST be set to zero by the sender and verified by the
@@ -706,7 +730,8 @@
         Credit Control Message MUST be sent.
           </t>
         </section>
-        <section anchor="sec-di-status" numbered="true" toc="default">
+	
+        <section anchor="sec-di-status" numbered="true">
           <name>Credit Window Status</name>
           <t>
         The Credit Window Status Data Item is used by
@@ -741,23 +766,27 @@
           ]]></artwork>
           <dl newline="true" spacing="normal">
             <dt>Data Item Type:</dt>
-            <dd>TBA7</dd>
+            <dd>Data Item Type (TBA7)</dd>
+
             <dt>Length:</dt>
             <dd>
-              <t>12
-              </t>
+              <t>12</t>
               <t>
-          Per <xref target="RFC8175" format="default"/> Length
-          is the number of octets in the Data Item. It MUST be equal to
-          twelve (12).
+          As specified in <xref target="RFC8175"/>, Length is the number
+          of octets in the Data Item. It MUST be equal to twelve
+          (12). If it is some other value, the Data Item is corrupt so
+          the message in which it appears cannot be reliably parsed and
+          is ignored.
               </t>
             </dd>
+
             <dt>Flow Identifier (FID):</dt>
             <dd>
-            A flow identifier as defined by the Traffic Classification
-            Data Item.  The FID also uniquely identifies a credit
-            window.
-          </dd>
+            A two-octet flow identifier as defined by the Traffic
+            Classification Data Item.  The FID also uniquely identifies
+            a credit window.
+            </dd>
+
             <dt>Reserved:</dt>
             <dd>
             MUST be set to zero by the sender and verified by the
@@ -800,7 +829,8 @@
         to account for the reported Credit Window.
           </t>
         </section>
-        <section anchor="sec-di-request" numbered="true" toc="default">
+	
+        <section anchor="sec-di-request" numbered="true">
           <name>Credit Window Request</name>
           <t>
         The Credit Window Request Data Item is used by a router to
@@ -831,28 +861,28 @@
           ]]></artwork>
           <dl newline="true" spacing="normal">
             <dt>Data Item Type:</dt>
-            <dd>TBA8</dd>
+            <dd>Data Item Type (TBA8)</dd>
+
             <dt>Length:</dt>
             <dd>
-              <t>Variable
-              </t>
+              <t>Variable</t>
               <t>
-          Per <xref target="RFC8175" format="default"/> Length
-          is the number of octets in the Data Item, excluding the Type and
-          Length fields.  It is equal to the number of FID
-          fields carried in the Data Item times 2 and MUST be at least 2.
+          As specified in <xref target="RFC8175"/>, Length is the number
+          of octets in the Data Item, excluding the Type and Length
+          fields.  It is equal to the number of FID fields carried in
+          the Data Item times 2 and MUST be at least 2. If it is less
+          than 2, the Data Item is corrupt so the message in which it
+          appears cannot be reliably parsed and is ignored.
               </t>
             </dd>
             <dt>Flow Identifier (FID):</dt>
             <dd>
-            A flow identifier as defined by the Traffic Classification
-            Data Item.  The FID also uniquely identifies a credit
-            window.
-            The special value of 0xFFFF indicates that the
-            request applies to all FIDs.
-            Note that when the special value is included, all other FID
-            values included in the Data Item are redundant as the
-            special value indicates all FIDs.
+            A two-octet flow identifier as defined by the Traffic
+            Classification Data Item.  The FID also uniquely identifies
+            a credit window.  The special value of 0xFFFF indicates that
+            the request applies to all FIDs.  When this special value is
+            included, all other FID values included in the Data Item are
+            redundant as the special value indicates all FIDs.
           </dd>
           </dl>
           <t>
@@ -866,7 +896,8 @@
           </t>
         </section>
       </section>
-      <section anchor="sec-mgmnt" numbered="true" toc="default">
+
+      <section anchor="sec-mgmnt" numbered="true">
         <name>Management Considerations</name>
         <t>
       This section provides several network management guidelines
@@ -895,7 +926,8 @@
         </t>
       </section>
     </section>
-    <section anchor="sec-compat" numbered="true" toc="default">
+
+    <section anchor="sec-compat" numbered="true">
       <name>Compatibility</name>
       <t>
     The messages and Data Items defined in this document will only be used when
@@ -907,7 +939,8 @@
     document.
       </t>
     </section>
-    <section anchor="sec-sec" numbered="true" toc="default">
+
+    <section anchor="sec-sec" numbered="true">
       <name>Security Considerations</name>
       <t>
     This document introduces credit window control and flow mechanisms
@@ -930,14 +963,16 @@
     2 link include <xref target="IEEE-802.1AE"/> and <xref target="IEEE-8802-1X"/>.
       </t>
     </section>
-    <section anchor="sec-iana" numbered="true" toc="default">
+
+    <section anchor="sec-iana" numbered="true">
       <name>IANA Considerations</name>
       <t>
     This document requests the assignment of several values by IANA.  All
     assignments are to registries defined by <xref target="RFC8175" format="default"/>.
       </t>
-      <section anchor="sec-iana-msg" numbered="true" toc="default">
-        <name>Message Values</name>
+
+      <section anchor="sec-iana-msg" numbered="true">
+        <name>Message Type Values</name>
         <t>
       This document requests 2 new assignments to the DLEP Message Registry
       named "Message Values" in the range with the "Specification Required"
@@ -945,7 +980,7 @@
         </t>
         <t keepWithNext="true"/>
         <table anchor="table_msg" align="center">
-          <name>Requested Message Values</name>
+          <name>Requested Message Type Values</name>
           <thead>
             <tr>
               <th align="left">Type Code</th>
@@ -1007,8 +1042,9 @@
         <t keepWithPrevious="true"/>
       </section>
     </section>
-  </middle>
-  <back>
+</middle>
+
+<back>
     <references>
       <name>References</name>
       <references>
@@ -1016,11 +1052,76 @@
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8175.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-traffic-classification.xml"/>
+        <reference anchor="I-D.ietf-manet-dlep-traffic-classification"
+                   target="https://datatracker.ietf.org/doc/draft-ietf-manet-dlep-traffic-classification">
+          <front>
+	    <title>Dynamic Link Exchange Protocol (DLEP) Traffic
+	    Classification Data Item</title>
+	    <author fullname="Bow-Nan Cheng" initials="B."
+	  	    surname="Cheng">
+	      <organization>MIT Lincoln Laboratory</organization>
+	    </author>
+	    <author fullname="David Wiggins" initials="D."
+		    surname="Wiggins"/>
+	    <author fullname="Lou Berger" initials="L." surname="Berger">
+	      <organization>LabN Consulting, L.L.C.</organization>
+	    </author>
+	    <author fullname="Don Fedyk" initials="D." surname="Fedyk">
+	       <organization>LabN Consulting, L.L.C.</organization>
+	    </author>
+	    <date day="19" month="November" year="2024"/>
+	  </front>
+	  <seriesInfo name="Internet-Draft"
+		      value="draft-ietf-manet-dlep-traffic-classification"/>
+        </reference>
       </references>
+
       <references>
         <name>Informative References</name>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-dlep-da-credit-extension.xml"/>
+	<reference anchor="I-D.ietf-manet-dlep-da-credit-extension"
+		   target="https://datatracker.ietf.org/doc/draft-ietf-manet-dlep-da-credit-extension/">
+	  <front>
+	    <title>DLEP DiffServ Aware Credit Window Extension</title>
+	    <author fullname="Bow-Nan Cheng" initials="B."
+		    surname="Cheng">
+	      <organization>MIT Lincoln Laboratory</organization>
+	    </author>
+	    <author fullname="David Wiggins" initials="D."
+		    surname="Wiggins"/>
+	    <author fullname="Lou Berger" initials="L."
+		    surname="Berger">
+	      <organization>LabN Consulting, L.L.C.</organization>
+	    </author>
+	    <author fullname="Donald E. Eastlake 3rd" initials="D. E."
+		    surname="Eastlake">
+	      <organization>Independent</organization>
+	    </author>
+	    <date day="15" month="December" year="2024"/>
+	  </front>
+	  <seriesInfo name="Internet-Draft"
+	    value="draft-ietf-manet-dlep-da-credit-extension"/>
+	</reference>
+	<reference anchor="I-D.ietf-manet-dlep-ether-credit-extension"
+		   target="https://datatracker.ietf.org/doc/draft-ietf-manet-dlep-ether-credit-extension/">
+	  <front>
+	    <title>DLEP IEEE 802.1Q Aware Credit Window
+	    Extension</title>
+	    <author fullname="David Wiggins" initials="D."
+		    surname="Wiggins"/>
+	    <author fullname="Lou Berger" initials="L."
+		    surname="Berger">
+	      <organization>LabN Consulting, L.L.C.</organization>
+
+	    </author>
+	    <author fullname="Donald E. Eastlake 3rd" initials="D. E."
+		    surname="Eastlake">
+	      <organization>Independent</organization>
+	    </author>
+	    <date day="15" month="December" year="2024"/>
+	  </front>
+	  <seriesInfo name="Internet-Draft"
+		      value="draft-ietf-manet-dlep-ether-credit-extension"/>
+	</reference>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-manet-credit-window.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2475.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8651.xml"/>
@@ -1042,7 +1143,8 @@
         </reference>
       </references>
     </references>
-    <section numbered="true" toc="default">
+
+    <section numbered="true">
       <name>Acknowledgments</name>
       <t>
      We mourn the loss of Stan Ratliff who passed away on October 22,
@@ -1051,10 +1153,13 @@
      leadership and friendship shall be missed.
       </t>
       <t>
-     We mourn the loss of David Wiggins who passed away on November 23,
-     2023.  His guidance, leadership and personal contributions were
-     critical in the development of this work and DLEP as a whole. His
-     leadership and friendship shall be missed.
+     We had the honor of working too briefly with David Wiggins on this
+     and related DLEP work. His contribution to the IETF and publication
+     of the first and definitive open source DLEP implementation have
+     been critical to the acceptance of DLEP. We morn his passing on
+     November 23, 2023.  We wish to recognize his guidance, leadership
+     and professional excellence.  We were fortunate to benefit from his
+     leadership and friendship. He shall be missed.
       </t>
       <t>
      Many useful comments were
@@ -1062,16 +1167,6 @@
      Taylor, Ronald in't Velt and David Black.  This
      document was derived from <xref target="I-D.ietf-manet-dlep-da-credit-extension" format="default"/> as a result of
      discussions at IETF 101.
-      </t>
-      <t>
-        We had the honor of working too briefly with David Wiggins on
-        this and related DLEP work. His contribution to the IETF and
-        publication of the first and definitive open source DLEP
-        implementation have been critical to the acceptance of DLEP. We
-        morn his passing on November 23, 2023.  We wish to recognize his
-        guidance, leadership and professional excellence.  We were
-        fortunate to benefit from his leadership and friendship. He
-        shall be missed.
       </t>
     </section>
 
@@ -1135,8 +1230,7 @@ Router                                        Modem
 ]]></artwork>
        </figure>
     </section>
-  </back>
+
+</back>
+
 </rfc>
-<!-- Local Variables: -->
-<!-- fill-column:72 -->
-<!-- End: -->
