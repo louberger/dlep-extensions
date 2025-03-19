@@ -491,9 +491,11 @@
 
             <dt>Reserved:</dt>
             <dd>
-            MUST be set to zero by the sender (a modem) and validated by the
-            receiver (a router).
-	    A received non-zero value in Reserved is treated as an error.
+            For the Credit Window Initialization Data Item this reserved
+            field is currently unused.
+            It MUST set to all zeros for this version of the Data Item
+            and it is currently ignored on reception.
+            This allows for future extensions of the Data Item if needed.
           </dd>
             <dt>Credit Value:</dt>
             <dd>
@@ -688,9 +690,11 @@
 
             <dt>Reserved:</dt>
             <dd>
-            MUST be set to zero by the sender and verified by the
-            receiver.
-	    A received non-zero value in Reserved is treated as an error.
+            For the Credit Window Grant Data Item this reserved field
+            is currently unused.
+            It MUST set to all zeros for this version of the Data Item
+            and it is currently ignored on reception.
+            This allows for future extensions of the Data Item if needed.
           </dd>
             <dt>Additional Credit:</dt>
             <dd>
@@ -789,9 +793,11 @@
 
             <dt>Reserved:</dt>
             <dd>
-            MUST be set to zero by the sender and verified by the
-            receiver.
-	    A received non-zero value in Reserved is treated as an error.
+            For the Credit Window Status Data Item this reserved field
+            is currently unused.
+            It MUST set to all zeros for this version of the Data Item
+            and it is currently ignored on reception.
+            This allows for future extensions of the Data Item if needed.
           </dd>
             <dt>Current Credit Window Size:</dt>
             <dd>
