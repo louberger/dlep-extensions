@@ -239,11 +239,9 @@
         </dd>
           <dt>Reserved:</dt>
           <dd>
-                  This field allows future extensions for this general structure. For the
-                  Traffic Classification Data Item this reserved field is unused 
-                  It MUST be set to all zeros and it is validated on reception, 
-                  in the event it is fails validation an error message MUST be generated and
-                  the session MAY be terminated. 
+                  For the Traffic Classification Data Item this reserved field is currently unused.  
+		  It MUST set to all zeros for this version of the Data Item and it is currently ignored on reception.
+		  This allows for future extensions of the Data Item if needed. 
           </dd>
           <dt>Traffic Classification Sub-Data Item:</dt>
           <dd>
