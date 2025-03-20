@@ -219,7 +219,7 @@
         is the number of octets in the Data Item, excluding the Type and
         Length fields. The length here is limited by the packet data unit (PDU) length 
         supported.  For example if the Packet is limited to 1400 bytes then the 
-        length MUST not exceed this value. If larger packets are supported
+        length MUST NOT exceed this value. If larger packets are supported
         the maximum MUST be adjusted to be smaller or equal to the maximum PDU.
         Multiple messages can be used if there is more than fits in a single TLV. 
             </t>
@@ -633,8 +633,8 @@
         <t keepWithPrevious="true"/>
       </section>
       <section anchor="sec-iana-sdi" numbered="true" toc="default">
-        <name>DLEP Traffic Classification Sub-Data Item Registry</name>
-        <t>
+	      <name>DLEP Traffic Classification Sub-Data Item Registry</name>
+	<t>
       Upon approval of this document, IANA is requested to create a new
       DLEP registry, named "Traffic Classification Sub-Data Item Type Values".
         </t>
@@ -685,7 +685,69 @@
             </tr>
           </tbody>
         </table>
-        <t keepWithPrevious="true"/>
+	<t keepWithPrevious="true"/>
+	<t>
+         This section provides guidance to the Internet Assigned Numbers
+         Authority (IANA) regarding registration of values related to the
+         Traffic Classification Sub-Data Item Type Values registry for
+         the DLEP protocol, in accordance with BCP 26 and [RFC8126].
+	</t>
+	<t>
+         This registry encompasses packet traffic classification, where
+         standard packet header identifiers in packets or data frames
+         indicate Quality of Service (QoS) treatment. It includes two
+         specific registries for widely recognized identifiers used in
+         QoS management for IP and Ethernet networks. Reserved values are
+         set aside for similar future identifiers that may emerge to
+         denote QoS treatment. However, requests for new entries are not
+         expected to be frequent.
+	</t>
+	<t>
+         Allocations within the registry are subject to the following
+         requirements:
+	</t>
+        <ol>
+	<li>
+         Documentation of the intended use of the requested value, in
+         compliance with the "Specification Required" policy defined in
+         <xref target="RFC8126" format="default"/>.
+	</li>
+	<li>
+	<t> Approval by the Designated Expert (DE) appointed by the IESG.
+	The DE must: </t>
+        <ul spacing="compact">
+	<li>
+	 Verify that the requested value is clearly documented and its
+         purpose and usage are unambiguous.
+	</li>
+	<li>
+         Ensure the proposed value does not conflict with existing work
+         or ongoing efforts within the IETF.
+	</li>
+	<li>
+         Confirm that any specification requesting a code point has
+	undergone review by the MANET working group (or a successor mailing 
+	list designated by the IESG).
+	</li>
+	<li>
+         Validate that external specifications requesting code points are
+         publicly available, permanently archived, and do not conflict
+         with active or published IETF work.
+	</li>
+	<li>
+         Ensure the review process is conducted in a timely manner, with
+         any disputes resolved through consultation with the appropriate
+         working groups.
+	</li>
+	</ul>
+	</li>
+	</ol>
+	<t>
+         To simplify future registrations, it is recommended that this
+         guidance serves as a standard reference for all DLEP-related
+         registries. Future specifications may include a header note pointing to this
+	guidance document.
+	</t>
       </section>
     </section>
   </middle>
