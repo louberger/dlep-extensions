@@ -254,7 +254,7 @@
     match other data items, for example see <xref target
     ="I-D.ietf-manet-dlep-ether-credit-extension"/>.
     In the absence of a wildcard, a packet may not match any of the data
-    items and, in this case, SHOULD be dropped by the router.
+    items and, in this case, MUST be dropped by the router.
       </t>
       <t>
     When a destination becomes reachable, a modem "associates"
