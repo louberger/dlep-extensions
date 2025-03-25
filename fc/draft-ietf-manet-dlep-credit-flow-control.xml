@@ -162,6 +162,13 @@
       messages in <xref target="sec-msgs" format="default"/>, and five new DLEP Data
       Items in <xref target="sec-data-items" format="default"/>.
       </t>
+      <t>
+      Various conditions described in this document cause a message to
+      be logged.
+      In all cases, the log message results from the contents of a
+      received Data Item defined here.
+      No messages are logged in response to activity in the data plane.
+      </t>
       <section anchor="sec-1.1" numbered="true" toc="default">
         <name>Key Words</name>
         <t>
@@ -952,12 +959,17 @@
     This document introduces credit window control and flow mechanisms
     to DLEP.  These mechanisms expose vulnerabilities similar to existing
     DLEP messages.
-    For example, a malicious actor masquerading as a DLEP peer could
-    inject a Credit Window Initialization Data Item which resizes a
-    credit window to a value that results in a denial of service.
+    An example of a threat to which flow control might be susceptible is
+    a malicious actor masquerading as a DLEP peer could inject a Credit
+    Window Initialization Data Item, which resizes a credit window to
+    a value that results in a denial of service.
+    Other possible threats are given in the Security Considerations of
+    <xref target="RFC8175" format="default"/> and are also applicable to,
+    but not specific to, flow control.
     The transport layer security mechanisms documented in
-    <xref target="RFC8175" format="default"/> can, with some updates,
-    be applied to this document.
+    <xref target="RFC8175" format="default"/>, with some updated
+    references to external documents listed below, can be applied to
+    this document.
     Implementations following the "networked deployment" model described
     in the "Implementation Scenarios" of
     <xref target="RFC8175" format="default"/> SHOULD refer to
