@@ -11,12 +11,12 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-traffic-classification-14" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" ipr="trust200902" docName="draft-ietf-manet-dlep-traffic-classification-16" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.19.4 -->
   <front>
     <title abbrev="DLEP Traffic Classification">
   Dynamic Link Exchange Protocol (DLEP) Traffic Classification Data Item</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-traffic-classification-14"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-traffic-classification-16"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
       <address>
@@ -577,19 +577,21 @@
       <name>Security Considerations</name>
       <t>
     This document introduces finer grained flow identification mechanisms
-    to DLEP.  These mechanisms expose vulnerabilities similar to existing    DLEP messages. 
-    For example, a malicious actor masquerading as a DLEP peer could
-    inject a modified Traffic Flow Classification Data Item 
-    resulting in changes to class of service for affected flows.
-    The Layer 2 and transport layer security mechanisms documented in
-    <xref target="RFC8175" format="default"/> can be applied equally to
-    the mechanism defined
-    in this document.
+    to DLEP. These mechanisms expose vulnerabilities similar to existing
+    DLEP messages. 
+    An example of a threat to which traffic classification might be susceptible is
+    a malicious actor masquerading as a DLEP peer could inject a Traffic Classification Data Item, 
+    which changes the priorities of marked traffic that causes congestion
+    or loss to one or more service classes that should not be affected. 
+    Other possible threats are given in the Security Considerations of
+    <xref target="RFC8175" format="default"/> and are also applicable to,
+    but not specific to, traffic classification.
     </t>
     <t>
     The transport layer security mechanisms documented in
-    <xref target="RFC8175" format="default"/> can, with some updates,
-    be applied to this document.
+    <xref target="RFC8175" format="default"/>, with some updated
+    references to external documents listed below, can be applied to
+    this document.
     Implementations following the "networked deployment" model described
     in the "Implementation Scenarios" of
     <xref target="RFC8175" format="default"/> SHOULD refer to
@@ -597,8 +599,8 @@
     The Layer 2 security mechanisms documented in
     <xref target="RFC8175" format="default"/> can also, with some updates,
     be applied to the mechanism defined in this document.
-    Examples of technologies that can be deployed to secure the Layer
-            2 link include <xref target="IEEE-802.1AE"/> and <xref target="IEEE-8802-1X"/>.
+    Examples of technologies that can be deployed to secure the Layer 2
+    link include <xref target="IEEE-802.1AE"/> and <xref target="IEEE-8802-1X"/>.
     </t>
     </section>
     <section anchor="sec-iana" numbered="true" toc="default">
