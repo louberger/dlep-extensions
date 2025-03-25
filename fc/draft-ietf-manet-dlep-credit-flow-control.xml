@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE rfc [
-  <!ENTITY filename "draft-ietf-manet-dlep-credit-flow-control-18">
+  <!ENTITY filename "draft-ietf-manet-dlep-credit-flow-control-19">
   <!ENTITY nbsp    "&#160;">
   <!ENTITY zwsp   "&#8203;">
   <!ENTITY nbhy   "&#8209;">
@@ -24,7 +24,7 @@
   <front>
     <title abbrev="DLEP Credit-Based Flow Control">
   Dynamic Link Exchange Protocol (DLEP) Credit-Based Flow Control Messages and Data Items</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-18"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-manet-dlep-credit-flow-control-19"/>
     <author initials="B." surname="Cheng" fullname="Bow-Nan Cheng">
       <organization>MIT Lincoln Laboratory</organization>
       <address>
