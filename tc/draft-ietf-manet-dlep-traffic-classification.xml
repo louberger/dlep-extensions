@@ -580,9 +580,10 @@
     to DLEP. These mechanisms expose vulnerabilities similar to existing
     DLEP messages. 
     An example of a threat to which traffic classification might be susceptible is
-    a malicious actor masquerading as a DLEP peer could inject a Traffic Classification Data Item, 
-    which changes the priorities of marked traffic that causes congestion
-    or loss to one or more service classes that should not be affected. 
+    a malicious actor masquerading as a DLEP peer could inject an alternate
+    Traffic Classification Data Item, changing the mapping of traffic to queues that
+    in turn causes delay, congestion
+    or loss to one or more service classes.
     Other possible threats are given in the Security Considerations of
     <xref target="RFC8175" format="default"/> and are also applicable to,
     but not specific to, traffic classification.
